@@ -1,0 +1,14 @@
+.form {
+    /* background: #EEEEEE; */
+    padding: 30px;
+    box-shadow: 0 5px 15px 0 rgb(46 61 73 / 12%);
+}
+
+.invalid {
+    border: 1px solid #b40e0e;
+    background-color: #fddddd;
+}
+
+.text-inavalid {
+    color: #b40e0e;
+}
