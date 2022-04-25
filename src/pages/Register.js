@@ -78,18 +78,19 @@ const Register = () => {
   return (
     <div className={`container`}>
       <form
-        className={`m-auto col-sm-10 col-md-8 ${classes.form} container`}
+        className={`m-auto col-sm-10 col-md-10 col-lg-8 ${classes.form} container`}
         onSubmit={formSubmissionHandler}
       >
         <div className="row">
           <h1 className="color">Register</h1>
           <p>Please fill in this form to create an account.</p>
           <hr />
-          <div className="col-sm-12 col-md-6">
+          <div className="mb-3 col-sm-12 col-md-6">
             <label htmlFor="firstname">
               <b>First name</b>
             </label>
             <input
+              title="Minimum 2 characters."
               type="text"
               className={firstInputHasError ? ` ${classes.invalid}` : ``}
               id="firstname"
@@ -99,23 +100,26 @@ const Register = () => {
               value={enteredFirst}
               required
             />
-            <div
-              id="firstnameHelp"
-              className={
-                firstInputHasError
-                  ? `form-text ${classes["text-inavalid"]}`
-                  : `form-text`
-              }
-            >
-              Minimum 2 characters.
-            </div>
+            {firstInputHasError && (
+              <div
+                id="firstnameHelp"
+                className={
+                  firstInputHasError
+                    ? `form-text ${classes["text-inavalid"]}`
+                    : `form-text`
+                }
+              >
+                Minimum 2 characters.
+              </div>
+            )}
           </div>
-          <div className="col-sm-12 col-md-6">
+          <div className="mb-3 col-sm-12 col-md-6">
             <label htmlFor="lastname">
               <b>last name</b>
             </label>
             <input
               type="text"
+              title="Minimum 2 characters."
               className={seconedInputHasError ? `${classes.invalid}` : ``}
               id="lastname"
               onChange={seconedChangedHandler}
@@ -124,16 +128,18 @@ const Register = () => {
               placeholder="Enter Last Name"
               required
             />
-            <div
-              id="lastnameHelp"
-              className={
-                seconedInputHasError
-                  ? `form-text ${classes["text-inavalid"]}`
-                  : `form-text`
-              }
-            >
-              Minimum 2 characters.
-            </div>
+            {seconedInputHasError && (
+              <div
+                id="lastnameHelp"
+                className={
+                  seconedInputHasError
+                    ? `form-text ${classes["text-inavalid"]}`
+                    : `form-text`
+                }
+              >
+                Minimum 2 characters.
+              </div>
+            )}
           </div>
 
           <div className="mb-3 col-sm-12 col-md-6">
@@ -141,6 +147,7 @@ const Register = () => {
               <b>Email address</b>
             </label>
             <input
+              title={`please enter valid email contains "@" and "." `}
               type="email"
               className={emailInputHasError ? `${classes.invalid}` : ``}
               id="Email1"
@@ -152,16 +159,18 @@ const Register = () => {
               required
             />
 
-            <div
-              id="emailHelp"
-              className={
-                emailInputHasError
-                  ? `form-text ${classes["text-inavalid"]}`
-                  : `form-text`
-              }
-            >
-              Enter valid Email.
-            </div>
+            {emailInputHasError && (
+              <div
+                id="emailHelp"
+                className={
+                  emailInputHasError
+                    ? `form-text ${classes["text-inavalid"]}`
+                    : `form-text`
+                }
+              >
+                please enter valid email contains "@" and "."
+              </div>
+            )}
           </div>
           <div className="mb-3 col-sm-12 col-md-6">
             <label htmlFor="exampleInputPassword1">
@@ -170,6 +179,7 @@ const Register = () => {
             <input
               type="password"
               id="exampleInputPassword1"
+              title="Minimum 8 characters contains capital and small leters and numbers and spechial character"
               className={pass1InputHasError ? `${classes.invalid}` : ``}
               onChange={pass1ChangedHandler}
               onBlur={pass1BlurHandler}
@@ -177,16 +187,19 @@ const Register = () => {
               value={enteredPass1}
               required
             />
-            <div
-              id="password"
-              className={
-                pass1InputHasError
-                  ? `form-text ${classes["text-inavalid"]}`
-                  : `form-text`
-              }
-            >
-              Minimum 6 characters
-            </div>
+            {pass1InputHasError && (
+              <div
+                id="password"
+                className={
+                  pass1InputHasError
+                    ? `form-text ${classes["text-inavalid"]}`
+                    : `form-text`
+                }
+              >
+                Minimum 8 characters contains capital and small leters and
+                numbers and spechial character
+              </div>
+            )}
           </div>
 
           <div className="mb-3 col-sm-12 col-md-6">
@@ -195,6 +208,7 @@ const Register = () => {
             </label>
             <input
               type="password"
+              title="reapeat password"
               id="exampleInputPassword2"
               className={pass2InputHasError ? `${classes.invalid}` : ``}
               placeholder="Repeat Password"
@@ -203,16 +217,18 @@ const Register = () => {
               value={enteredPass2}
               required
             />
-            <div
-              id="password"
-              className={
-                pass2InputHasError
-                  ? `form-text ${classes["text-inavalid"]}`
-                  : `form-text`
-              }
-            >
-              Minimum 6 characters
-            </div>
+            {pass2InputHasError && (
+              <div
+                id="password"
+                className={
+                  pass2InputHasError
+                    ? `form-text ${classes["text-inavalid"]}`
+                    : `form-text`
+                }
+              >
+                Its not the same password
+              </div>
+            )}
           </div>
 
           <hr />
@@ -225,7 +241,6 @@ const Register = () => {
             Register
           </button>
         </div>
-
         <div className="container signin">
           <p>
             Already have an account? <Link to="/login">Sign in</Link>.

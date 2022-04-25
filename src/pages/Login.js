@@ -45,7 +45,7 @@ const Login = () => {
     <div className={`container`}>
       <div className="row">
         <form
-          className={`col-6  ${classes.form} container`}
+          className={`col-sm-12 col-md-10 col-lg-6  ${classes.form} container`}
           onSubmit={formSubmissionHandler}
         >
           <div className="row">
@@ -60,6 +60,7 @@ const Login = () => {
                 type="email"
                 className={emailInputHasError ? ` ${classes.invalid}` : ``}
                 id="Email1"
+                title={`please enter valid email contains "@" and "."`}
                 aria-describedby="emailHelp"
                 placeholder="Enter Email"
                 onChange={emailChangedHandler}
@@ -67,16 +68,18 @@ const Login = () => {
                 value={enteredEmail}
                 required
               />
-              <div
-                id="emailHelp"
-                className={
-                  emailInputHasError
-                    ? `form-text ${classes["text-inavalid"]}`
-                    : `form-text`
-                }
-              >
-                Enter valid Email.
-              </div>
+              {emailInputHasError && (
+                <div
+                  id="emailHelp"
+                  className={
+                    emailInputHasError
+                      ? `form-text ${classes["text-inavalid"]}`
+                      : `form-text`
+                  }
+                >
+                  please enter valid email contains "@" and "."
+                </div>
+              )}
             </div>
             <div className="mb-3 col-12">
               <label htmlFor="exampleInputPassword1">Password</label>
@@ -84,35 +87,38 @@ const Login = () => {
                 type="password"
                 id="exampleInputPassword1"
                 placeholder="Enter Password"
+                title="Minimum 8 characters contains capital and small leters and
+                numbers and spechial character"
                 className={pass1InputHasError ? `${classes.invalid}` : ``}
                 onChange={pass1ChangedHandler}
                 onBlur={pass1BlurHandler}
                 value={enteredPass1}
                 required
               />
-              <div
-                id="password"
-                className={
-                  pass1InputHasError
-                    ? `form-text ${classes["text-inavalid"]}`
-                    : `form-text`
-                }
-              >
-                Minimum 6 characters
-              </div>
+              {pass1InputHasError && (
+                <div
+                  id="password"
+                  className={
+                    pass1InputHasError
+                      ? `form-text ${classes["text-inavalid"]}`
+                      : `form-text`
+                  }
+                >
+                  Minimum 8 characters contains capital and small leters and
+                  numbers and spechial character
+                </div>
+              )}
             </div>
-
             <button className="registerbtn">Submit</button>
           </div>
         </form>
         <div
-          className={`col-6 ${classes.join} ${classes.form} d-flex flex-column justify-content-between`}
+          className={`m-md-auto m-lg-0 col-sm-12 col-md-10 col-lg-6 ${classes.join} ${classes.form} d-flex flex-column justify-content-between`}
         >
           <div className="">
             <h1 className="color">Join us</h1>
             <hr />
           </div>
-
           <p>
             Create your E-shop customer account in just a few clicks! You can
             register using your e-mail
