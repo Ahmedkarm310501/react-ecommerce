@@ -1,6 +1,5 @@
 import React from "react";
-import Landing from "../components/layout/Landing";
-
+import Slider from "../components/layout/Slider";
 import Products from "./Products";
 
 const products = [
@@ -55,10 +54,9 @@ const products = [
 ];
 const Home = () => {
   return (
-    <div className="container">
-      <Landing />
-      <Products list={products} />
-    </div>
+    <><Slider/><div className="container">
+      {/* <Products list={products} /> */}
+    </div></>
   );
 };
 

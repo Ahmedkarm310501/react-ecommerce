@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    
+<div class="text">
+    <h3>some random content</h3>
+    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum atque eveniet quisquam culpa voluptatum tenetur deserunt dolores dolore non pariatur! Inventore optio assumenda ducimus, obcaecati rem totam quis sapiente dolorum nisi, mollitia suscipit aut provident enim laboriosam illo quia nobis, delectus tempore impedit minus temporibus dolor distinctio. Deleniti corporis nostrum molestias deserunt earum numquam fuga ab veritatis. Iste dolorum et ex praesentium modi ea rem voluptatem inventore nostrum optio molestiae a blanditiis incidunt quidem, vero consequuntur quam est officiis unde quaerat iusto. Tempora, odio aspernatur. Nesciunt, porro placeat qui officiis hic laboriosam, nemo, nobis suscipit sit ipsa in possimus eveniet autem vitae. Ut, saepe. Quis neque repellat praesentium consequuntur reiciendis aut hic, nihil, laborum sapiente earum vero. Odit, doloribus in? Voluptatibus maiores, sequi excepturi totam dignissimos odio fugit tempore voluptate aliquam autem qui quasi minus quo officia id eligendi doloremque consequatur perferendis maxime molestiae deleniti nobis veritatis! Optio itaque temporibus ipsa quos illum molestias, nemo, iusto reprehenderit vero dicta necessitatibus cum eos? Natus expedita porro, ducimus provident facilis labore commodi esse laboriosam omnis ad est! Error, praesentium sed consequatur laboriosam necessitatibus nulla quos tenetur velit unde. Voluptates voluptatem voluptas sequi labore consequuntur facere culpa? Odit, odio temporibus nam praesentium quos atque repudiandae obcaecati quas rem provident sit magni fuga facere qui voluptatem? Eum sequi totam provident quos ex quis itaque asperiores minus explicabo ullam nihil beatae, assumenda nam reprehenderit sunt consectetur id distinctio accusantium voluptatibus? Nostrum voluptatum hic, voluptates voluptatem aut id laboriosam veritatis! Aut dolores, aspernatur corrupti in, aliquam quaerat distinctio delectus error earum nulla sed, modi nobis natus odit odio ea harum corporis? Iusto officia distinctio fugit nisi laudantium error molestias vel doloremque eos ab, at minus quam eveniet aperiam voluptatum autem dolore molestiae natus quis culpa tempore! Eveniet ex ducimus tempora doloremque aliquid sed temporibus. Illo, recusandae.</p>
+</div>
+
+<div class="banner-container">
+
+    <div class="banner">
+        <div class="shoe">
+            <img src="shoe.png" alt="">
+        </div>
+        <div class="content">
+            <span>upto</span>
+            <h3>50% 0ff</h3>
+            <p>offer ends after 5 days</p>
+            <a href="#" class="btn">veiw offer</a>
+        </div>
+        <div class="women">
+            <img src="women.png" alt="">
+        </div>
+    </div>
+
+</div>
+
+
+<div class="text">
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita ea quidem quibusdam praesentium repellendus dolores delectus nemo quo voluptas iure laboriosam quod perferendis obcaecati nulla eligendi, non, adipisci, iste doloremque reiciendis. Laudantium illo consequuntur totam eligendi dolorum modi deserunt! Dolorem aut ipsa quod modi. Praesentium obcaecati fugiat reprehenderit nemo ea quibusdam. Facilis voluptatem ut corporis consequatur repudiandae delectus minima, enim nostrum. Vitae magnam mollitia commodi? Quae repellendus sint qui animi fuga nostrum eaque consequuntur sit deleniti expedita cumque excepturi iure modi inventore assumenda corrupti quos, non possimus quaerat magnam fugiat maxime adipisci voluptatum itaque. Enim, facere iure quis nulla perspiciatis obcaecati sequi iusto nostrum eveniet suscipit porro aspernatur dolore distinctio ipsam cumque! Cum eligendi, ipsum illum officiis iure sapiente esse ex adipisci corrupti, consequatur nostrum tempore nobis nisi ea dicta reprehenderit quia neque nemo dolores! Aliquid facere ea esse sapiente atque qui tempora molestias tempore omnis repellendus voluptates ipsa, laudantium enim vitae animi nulla nam harum reiciendis alias! A reiciendis eveniet laudantium necessitatibus itaque ipsa earum enim commodi, nihil aut tempora illo recusandae aperiam, odit officiis hic dolore cumque deleniti, ab consectetur! Vitae sit soluta nemo eveniet alias repudiandae, non dignissimos, nulla expedita itaque sapiente tempora aliquam natus culpa voluptatum commodi ex quod omnis eos optio recusandae aspernatur. Obcaecati neque commodi minus labore aliquid nulla quas beatae! A, ipsam facere cum magnam quam quibusdam sed rerum expedita vero pariatur est vel modi magni officiis quidem atque laudantium quia assumenda recusandae tempora beatae quas error sequi debitis! Aliquam quae sunt doloremque molestiae? Suscipit eligendi recusandae consequatur quis quibusdam nulla accusamus tenetur earum! Iste quasi temporibus deleniti veniam dignissimos reiciendis, animi neque recusandae non illum sint itaque omnis minima odit molestiae id natus nulla, dolorum et. Ab tempora, neque voluptatibus necessitatibus, pariatur quisquam consequatur harum eum dolorem earum quae illum minus culpa?</p>
+</div>
+
+</body>
+</html>
