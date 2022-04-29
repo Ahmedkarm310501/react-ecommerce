@@ -140,7 +140,7 @@ export default function Footer() {
               <div className="col-md-12">
                 <p>
                   © 2022 All Rights Reserved. <br />
-                  Design by<a href="https://html.design/"> FCI TEAM </a>
+                  Design by<a href="#"> FCI TEAM </a>
                 </p>
               </div>
             </div>

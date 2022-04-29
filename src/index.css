@@ -187,3 +187,16 @@ div.type {
 }
 
 /*test*/
+
+
+.fav{
+  border: 2px solid #ededed;
+}
+
+.content{
+  border-radius: 10px;
+}
+
+.side{
+  border-radius: 10px;
+}
