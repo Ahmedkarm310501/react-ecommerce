@@ -1,9 +1,9 @@
 import React from "react";
 import ProductItem from "../components/product/ProductItem";
-
+import classes from "../components/layout/Cart.module.css"
 const Products = (props) => {
   return (
-    <ul className="row g-3">
+    <ul className={classes.productrow}>
       {props.list.map((item) => (
         <ProductItem
           key={item.id}

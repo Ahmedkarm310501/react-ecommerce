@@ -1,0 +1,68 @@
+h1,
+h2,
+h3 {
+  margin: 0.5rem 0;
+}
+h1 {
+  font-size: 2rem;
+}
+h2 {
+  font-size: 1.3rem;
+}
+h3 {
+  font-size: 1rem;
+}
+.productrow {
+  width: 100%;
+  display: flex;
+  overflow-x: auto;
+}
+.row {
+  width: 100%;
+  display: flex;
+  overflow-x: auto;
+}
+.Itemcols {
+  align-items: center;
+  background-color: #e0e0e0;
+  padding: 1rem;
+  margin: 0.5rem;
+  border-radius: 0.5rem;
+  flex: 3;
+}
+.Checkoutcols {
+  align-items: center;
+  height: 23rem;
+  background-color: #fcb7b7d7;
+  padding: 1rem;
+  margin: 0.5rem;
+  border-radius: 0.5rem;
+  flex: 1;
+}
+.block {
+  background-color: #e0e0e0;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  border-radius: 0.5rem;
+}
+.text-right {
+  text-align: right;
+}
+img.small {
+  max-height: 8rem;
+}
+
+button.add {
+  background-color: #40c0f0;
+  width: 1.5rem;
+}
+button.remove {
+  background-color: #f04040;
+  width: 1.5rem;
+}
+button.badge {
+  background-color: #f04040;
+  border: none;
+  color: #ffffff;
+  width: 1.5rem;
+}
