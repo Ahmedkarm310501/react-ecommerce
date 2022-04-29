@@ -45,7 +45,7 @@ const Login = () => {
     <div className={`container`}>
       <div className="row">
         <form
-          className={`col-sm-12 col-md-10 col-lg-6  ${classes.form} container`}
+          className={`col-sm-12 col-md-10 col-lg-6  ${classes.form} container bg-white`}
           onSubmit={formSubmissionHandler}
         >
           <div className="row">
@@ -113,7 +113,7 @@ const Login = () => {
           </div>
         </form>
         <div
-          className={`m-md-auto m-lg-0 col-sm-12 col-md-10 col-lg-6 ${classes.join} ${classes.form} d-flex flex-column justify-content-between`}
+          className={`m-md-auto m-lg-0 col-sm-12 col-md-10 col-lg-6 ${classes.join} ${classes.form} d-flex flex-column justify-content-between bg-white`}
         >
           <div className="">
             <h1 className="color">Join us</h1>
