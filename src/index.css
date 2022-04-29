@@ -5,23 +5,47 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  background-color: #eee !important;
 }
 
 
 * {
-  box-sizing: border-box
+  box-sizing: border-box;
+  margin: 0;
+  font-family: "Cairo", sans-serif;
+}
+
+.loader {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.card:hover {
+  -o-transition: .5s;
+  -ms-transition: .5s;
+  -moz-transition: .5s;
+  -webkit-transition: .5s;
+  transition: .5s;
+  box-shadow: 1px 1px 20px #888888;
+  transform: scale(1.02);
+}
+
+.btn:hover {
+  background-color: #00adb5;
 }
 
 
 
 
 
-input {
+label {
+  font-weight: bold;
+}
+
+input, select {
   width: 100%;
   padding: 15px;
   margin: 5px 0 22px 0;
@@ -47,6 +71,7 @@ hr {
 
 .registerbtn {
   background-color: #00ADB5;
+  border-radius: 5px;
   color: white;
   padding: 16px 20px;
   margin: 8px 0;
@@ -56,7 +81,27 @@ hr {
   opacity: 0.9;
 }
 
-.registerbtn:hover {
+.secubtn {
+  background-color: #00ADB5;
+  border-radius: 5px;
+  color: white;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  opacity: 0.9;
+}
+
+.invalid {
+  border: 1px solid #b40e0e !important;
+  background-color: #fddddd;
+}
+
+.text-inavalid {
+  color: #b40e0e !important;
+}
+
+.registerbtn:hover, .secubtn:hover {
   opacity: 1;
 }
 
@@ -70,3 +115,74 @@ a {
   background-color: #f1f1f1;
   text-align: center;
 }
+
+
+
+.asid {
+  position: sticky;
+  top: 20px;
+  box-shadow: 0 5px 15px 0 rgb(46 61 73 / 12%);
+}
+
+.link {
+  background-color: white;
+  border-bottom: 2px solid #00ADB5;
+}
+
+.link a {
+  display: block;
+  font-size: 1rem;
+  text-decoration: none;
+  color: black;
+  padding: 15px 0;
+  text-align: center;
+}
+
+.link a:hover {
+  background-color: #eee;
+  color: #00ADB5;
+  font-size: 1.1rem;
+}
+
+.active-profile {
+  background-color: #eee;
+  color: #00ADB5 !important;
+  font-size: 1.1rem;
+}
+
+
+.adderss {
+  position: relative;
+}
+
+.type {
+  display: flex;
+}
+
+.type div {
+  width: 100px;
+  color: rgb(155, 160, 177);
+  padding: 10px;
+}
+
+div.type {
+  font-weight: bold;
+}
+
+.type span {
+  padding: 10px;
+}
+
+
+.last {
+  display: flex;
+  justify-content: space-between;
+}
+
+.del-add {
+  position: absolute;
+  right: 10px;
+  bottom: 15px;
+}
+
+/*test*/

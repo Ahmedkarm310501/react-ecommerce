@@ -1,0 +1,91 @@
+
+.text {
+    padding: 40px;
+    background: #eee;
+}
+
+.text h3 {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 30px;
+    padding: 10px;
+}
+
+.bannercon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bannercon .banner {
+    background: linear-gradient(-55deg, #cc4292 29%, #d63031 29.1%, #d63031 68%, #1380da 68.1%);
+    border-radius: 5px;
+    margin: 20px 100px 20px 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    box-shadow: 0 5px 10px #0005;
+    overflow: hidden;
+}
+
+.bannercon .banner .pc {
+    flex: 1 1 350px;
+    padding: 15px;
+    text-align: center;
+}
+
+.bannercon .banner .pc img {
+    width: 100%;
+}
+
+.bannercon .banner .content {
+    flex: 1 1 250px;
+    text-align: center;
+    padding: 10px;
+    text-transform: uppercase;
+}
+
+.bannercon .banner .content span {
+    color: #eee;
+    font-size: 25px;
+}
+
+.bannercon .banner .content h3 {
+    color: #fff;
+    font-size: 40px;
+}
+
+.bannercon .banner .content p {
+    color: #eee;
+    font-size: 20px;
+    padding: 10px 0;
+}
+
+.bannercon .banner .content .btn {
+    display: block;
+    height: 40px;
+    width: 150px;
+    line-height: 40px;
+    background: #fff;
+    color: #d63031;
+    margin: 5px auto;
+    text-decoration: none;
+}
+
+.bannercon .banner .women {
+    position: relative;
+    bottom: -33px;
+    padding: 10px;
+    flex: 1 1 250px;
+}
+
+.bannercon .banner .women img {
+    width: 100%;
+}
+
+@media (max-width:768px) {
+    .bannercon .banner .women {
+        display: none;
+    }
+}
