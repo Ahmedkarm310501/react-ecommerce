@@ -20,6 +20,7 @@ import OrdersData from "./pages/OrdersData";
 import AdressData from "./pages/AdressData";
 import FavouritesData from "./pages/FavouritesData";
 import AdminPage from "./pages/AdminPage";
+import ProductDetials from "./pages/ProductDetials";
 function App() {
   const [loading, setloading] = useState(false);
   useEffect(() => {
@@ -46,6 +47,7 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/product" element={<Product />} />
               <Route path="/cart" element={<Cart />} />
+              <Route path="/product-detials" element={<ProductDetials />} />
               <Route path="/profile/*" element={<Profile />}>
                 <Route path="profile" element={<ProfileData />} />
                 <Route path="orders" element={<OrdersData />} />
