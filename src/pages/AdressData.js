@@ -39,8 +39,14 @@ const DeleteMessage = (props) => {
 };
 
 const AdressData = () => {
+  const [add, setAdd] = useState(addresses);
   const [deleteModal, setDeleteModal] = useState(false);
   const [addressModal, setAddressModal] = useState(false);
+
+  const addNewAddress = (address) => {
+    setAdd([...add, address]);
+  };
+
   const showDeleteModal = () => {
     setDeleteModal(true);
   };
@@ -66,11 +72,13 @@ const AdressData = () => {
         <button className="secubtn" onClick={showAdressModal}>
           ADD NEW ADDRESS
         </button>
-        {addressModal && <AddAdressForm onClose={hideAdressModal} />}
+        {addressModal && (
+          <AddAdressForm onClose={hideAdressModal} onAdd={addNewAddress} />
+        )}
       </div>
       <div className="addresses-section col-12">
         <div className="addresses">
-          {addresses.map((adderes) => {
+          {add.map((adderes) => {
             return (
               <div key={adderes.address} className="adderss p-3 my-3 bg-white">
                 <div className="type ps-2">{adderes.type}</div>

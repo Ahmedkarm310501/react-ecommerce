@@ -78,7 +78,7 @@ const Register = () => {
   return (
     <div className={`container`}>
       <form
-        className={`m-auto col-sm-10 col-md-10 col-lg-8 ${classes.form} container`}
+        className={`m-auto col-sm-10 col-md-10 col-lg-8 ${classes.form} container bg-white`}
         onSubmit={formSubmissionHandler}
       >
         <div className="row">
@@ -87,7 +87,7 @@ const Register = () => {
           <hr />
           <div className="mb-3 col-sm-12 col-md-6">
             <label htmlFor="firstname">
-              <b>First name</b>
+              First name
             </label>
             <input
               title="Minimum 2 characters."
@@ -115,7 +115,7 @@ const Register = () => {
           </div>
           <div className="mb-3 col-sm-12 col-md-6">
             <label htmlFor="lastname">
-              <b>last name</b>
+              last name
             </label>
             <input
               type="text"
@@ -144,7 +144,7 @@ const Register = () => {
 
           <div className="mb-3 col-sm-12 col-md-6">
             <label htmlFor="Email1">
-              <b>Email address</b>
+              Email address
             </label>
             <input
               title={`please enter valid email contains "@" and "." `}
@@ -174,7 +174,7 @@ const Register = () => {
           </div>
           <div className="mb-3 col-sm-12 col-md-6">
             <label htmlFor="exampleInputPassword1">
-              <b>Password</b>
+              Password
             </label>
             <input
               type="password"
@@ -204,7 +204,7 @@ const Register = () => {
 
           <div className="mb-3 col-sm-12 col-md-6">
             <label htmlFor="exampleInputPassword2">
-              <b>Repeat Password</b>
+              Repeat Password
             </label>
             <input
               type="password"
