@@ -1,0 +1,80 @@
+/* .contanier {
+    margin-left: 350px;
+    margin-top: 110px;
+} */
+
+.content {
+    display: flex;
+}
+
+.discription h3 {
+    padding: 15px;
+}
+
+.discription hr {
+    margin-bottom: 10px;
+    color: rgb(75, 106, 106);
+    height: 3px;
+}
+
+.action {
+    width: 250px;
+    height: 45px;
+    margin-left: 15px;
+    background-color: orange;
+    border-color: orange;
+}
+
+.sideimg {
+    margin-left: 0px;
+}
+
+.sideimg img {
+    width: 180px;
+    height: 170px;
+    display: flex;
+    flex-direction: column;
+}
+
+.qty {
+    width: 90px;
+    margin-left: 5px;
+    height: 40px;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+}
+
+.more p {
+    margin-top: -10px;
+    padding-left: 15px;
+}
+
+.rated {
+    width: 270px;
+    align-items: center;
+}
+
+.para {
+    margin-left: 15px;
+    text-decoration: line-through;
+}
+
+.info {
+    margin-left: 15px;
+}
+
+.icons {
+    margin-top: 5px;
+}
+
+.icons span {
+    color: rgb(123, 123, 58);
+    margin-left: 5px;
+}
+
+.line {
+    text-decoration: line-through;
+}

@@ -55,11 +55,14 @@ const products = [
 
 const Product = () => {
   return (
-      <><div className={classes.Itemcols}>
-      <h1>Products</h1>
-      <Products list={products} />
-    </div><Ads /></>
-    );
+    <div className="container">
+      <div className={`${classes.Itemcols}`}>
+        <h1>Products</h1>
+        <Products list={products} />
+      </div>
+      <Ads />
+    </div>
+      );
 };
 
-export default Product;
+      export default Product;
