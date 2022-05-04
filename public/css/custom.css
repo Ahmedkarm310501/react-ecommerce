@@ -1,0 +1,14 @@
+.card:hover{
+    -o-transition:.5s;
+    -ms-transition:.5s;
+    -moz-transition:.5s;
+    -webkit-transition:.5s;
+    transition:.5s;
+    box-shadow: 1px 1px 20px #888888;
+    transform: scale(1.02);
+  }
+
+  .btn:hover{
+      background-color: #00adb5;
+  }
+  

@@ -1,7 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import logo from '../pics/logo/logofci.png';
-import "./MainNavigation.module.css";
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css"></link>
 
 const MainNavigation = () => {
