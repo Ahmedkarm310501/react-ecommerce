@@ -1,7 +1,7 @@
 import React from "react";
 import classes from "../layout/Cart.module.css";
 function CartItems({ cartItems }) {
-  return (
+  return ( 
     <div className={classes.Itemcols}>
       <h2>Items</h2>
 

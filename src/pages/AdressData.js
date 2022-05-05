@@ -1,6 +1,8 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useRef } from "react";
 import Modal from "../components/layout/UI/Modal";
 import AddAdressForm from "./AddAdressForm";
+import Snackbar from "../components/layout/UI/Snackbar";
+
 const addresses = [
   {
     Name: "Ahmed Karam",
@@ -42,9 +44,10 @@ const AdressData = () => {
   const [add, setAdd] = useState(addresses);
   const [deleteModal, setDeleteModal] = useState(false);
   const [addressModal, setAddressModal] = useState(false);
-
+  const snackbarRef = useRef(null);
   const addNewAddress = (address) => {
     setAdd([...add, address]);
+    snackbarRef.current.show();
   };
 
   const showDeleteModal = () => {
@@ -75,6 +78,13 @@ const AdressData = () => {
         {addressModal && (
           <AddAdressForm onClose={hideAdressModal} onAdd={addNewAddress} />
         )}
+        {
+          <Snackbar
+            ref={snackbarRef}
+            message="Address added  Successfully!"
+            type={"success"}
+          />
+        }
       </div>
       <div className="addresses-section col-12">
         <div className="addresses">

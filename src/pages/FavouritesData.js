@@ -1,90 +1,111 @@
-import React, { Fragment } from "react";
-const products = [
-  {
-    id: 1,
-    name: "product 1",
-    desc: "product 1 desc",
-    price: 50,
-    image:
-      "https://eg.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/06/375812/1.jpg?4079",
-  },
-  {
-    id: 2,
-    name: "product 2",
-    desc: "product 2 desc",
-    price: 75,
-    image:
-      "https://eg.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/77/375812/1.jpg?4701",
-  },
-  {
-    id: 3,
-    name: "product 3",
-    desc: "product 3 desc",
-    price: 500,
-    image:
-      "https://eg.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/87/322481/1.jpg?9812",
-  },
-  {
-    id: 4,
-    name: "product 4",
-    desc: "product 4 desc",
-    price: 48,
-    image:
-      "https://eg.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/18/243212/1.jpg?8604",
-  },
-  {
-    id: 5,
-    name: "product 5",
-    desc: "product 5 desc",
-    price: 50,
-    image:
-      "https://eg.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/40/391651/1.jpg?5204",
-  },
-  {
-    id: 6,
-    name: "product 6",
-    desc: "product 6 desc",
-    price: 50,
-    image:
-      "https://eg.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/74/792102/1.jpg?8947",
-  },
-];
+import React, { Fragment, useContext, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import { FavContex } from "../store/fav-context";
+import { CartContext } from "../store/cart-context";
+import Snackbar from "../components/layout/UI/Snackbar";
+
 const FavouritesData = () => {
+  const favCtx = useContext(FavContex);
+  const cartCtx = useContext(CartContext);
+  const snackbarRef = useRef(null);
+  const [snakbarMessage, setSnakbarMessage] = useState("");
+  const products = favCtx.items;
+  const addToCart = (product) => {
+    const newItem = {
+      id: product.id,
+      brand: product.brand,
+      name: product.name,
+      amount: 1,
+      price: product.price,
+      image: product.image,
+    };
+    cartCtx.addItem(newItem);
+    setSnakbarMessage("Product Added To Cart !");
+    snackbarRef.current.show();
+  };
+  const removeFromFavourite = (id) => {
+    favCtx.removeItem(id);
+    setSnakbarMessage("Product Removed From Favourites");
+    snackbarRef.current.show();
+  };
   return (
     <Fragment>
-      <div className="page-haeder col-12 ">
-        <h1>Favourites</h1>
-        <p>
-          You have items in your wishlist. To buy items from your wishlist, move
-          them to your cart.
-        </p>
-      </div>
-      <div className="content bg-white p-3">
-        
-          {products.map((product) => {
-            return (
-              <div className="fav col-12  p-3 mb-3">
-                <div className="row bg-white">
-                <div className="image col-3 d-flex flex-column justify-content-center ">
-                  <img
-                    src={product.image}
-                    
-                  />
+      {favCtx.items.length > 0 ? (
+        <>
+          <div className="page-haeder col-12 ">
+            <h1>Favourites</h1>
+            <p>
+              You have items in your wishlist. To buy items from your wishlist,
+              move them to your cart.
+            </p>
+          </div>
+          <div className="content bg-white p-3">
+            {
+              <Snackbar
+                ref={snackbarRef}
+                message={snakbarMessage}
+                type={"success"}
+              />
+            }
+            {products.map((product, index) => {
+              return (
+                <div className="fav col-12  p-3 mb-3" key={index}>
+                  <div className="row bg-white">
+                    <div className="image col-3 d-flex flex-column justify-content-center ">
+                      <img src={product.image} />
+                    </div>
+                    <div className="con col-6 d-flex flex-column justify-content-between">
+                      <div className="name fs-5">{product.name}</div>
+                      <div className="price fs-4 ">${product.price}</div>
+                    </div>
+                    <div className="btnn col-3 d-flex flex-column justify-content-between">
+                      <button
+                        className="add secubtn"
+                        onClick={() => {
+                          addToCart(product);
+                        }}
+                      >
+                        add to cart
+                      </button>
+
+                      <button
+                        className="remove secubtn btn-danger"
+                        onClick={() => {
+                          removeFromFavourite(product.id);
+                        }}
+                      >
+                        remove
+                      </button>
+                    </div>
+                  </div>
                 </div>
-                <div className="con col-6 d-flex flex-column justify-content-between">
-                  <div className="name fs-5">{product.name}</div>
-                  <div className="price fs-4 ">${product.price}</div>
-                </div>
-                <div className="btnn col-3 d-flex flex-column justify-content-between">
-                  <button className="add secubtn">add to cart</button>
-                  <button className="remove secubtn btn-danger">remove</button>
-                </div>
-                </div>
-              </div>
-            );
-          })}
-        
-      </div>
+              );
+            })}
+          </div>
+        </>
+      ) : (
+        <div className="no-items">
+          <div className="photo">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="160"
+              height="160"
+              fill="currentColor"
+              className="bi bi-heart-fill"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fillRule="evenodd"
+                d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
+              />
+            </svg>
+          </div>
+          <div className="text">Your Have No Favourites </div>
+          <Link to="/home">
+            <button className="secubtn">Start Shooping</button>
+          </Link>
+        </div>
+      )}
     </Fragment>
   );
 };

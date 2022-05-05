@@ -91,6 +91,7 @@ hr {
   border: none;
   cursor: pointer;
   opacity: 0.9;
+  box-shadow: 0 5px 15px 0 rgb(46 61 73 / 30%);
 }
 
 .invalid {
@@ -119,9 +120,9 @@ a {
 
 
 
-.asid {
+.asid, .checkout .con {
   position: sticky;
-  top: 20px;
+  top: 110px;
   box-shadow: 0 5px 15px 0 rgb(46 61 73 / 12%);
 }
 
@@ -189,14 +190,86 @@ div.type {
 /*test*/
 
 
-.fav{
+.fav {
   border: 2px solid #ededed;
-}
-
-.content{
   border-radius: 10px;
 }
 
-.side{
+.content {
   border-radius: 10px;
+}
+
+.side, .asid, link {
+  border-radius: 10px;
+}
+
+
+/*cart*/
+.con {
+  border-radius: 10px;
+}
+
+.item {
+  border: 2px solid #ededed;
+  margin-bottom: 15px;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.name .light {
+  color: rgb(155, 160, 177);
+}
+
+.item .data .name {
+  width: 70%;
+}
+
+.item .buttons button {
+  padding: 5px 12px;
+}
+
+button svg {
+  margin-right: 5px;
+}
+
+/*cart icon*/
+
+.cart-icon {
+  position: relative;
+}
+
+.cart-num {
+  position: absolute;
+  background-color: white;
+  color: black;
+  left: 52%;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 25px;
+  border-radius: 50%;
+  z-index: 100;
+  top: 20px;
+}
+
+
+
+.no-items {
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+
+}
+
+
+
+.text {
+  font-size: 3rem;
+}
+
+.no-items button {
+  font-size: 2rem;
 }

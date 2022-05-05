@@ -1,11 +1,13 @@
-import React, { Fragment } from "react";
+import React from "react";
+import { Fragment } from "react";
 const orders = [
   {
     image:
       "https://eg.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/06/375812/1.jpg?4079",
     id: 1,
     name: "product 1",
-    status: "Shipped",
+    shippedDate: "2/1/2022",
+    returnedDate: "5/1/2022",
     price: 50,
   },
   {
@@ -13,7 +15,8 @@ const orders = [
       "https://eg.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/77/375812/1.jpg?4701",
     id: 2,
     name: "product 2",
-    status: "Shipped",
+    shippedDate: "2/1/2022",
+    returnedDate: "5/1/2022",
     price: 75,
   },
   {
@@ -21,7 +24,8 @@ const orders = [
       "https://eg.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/87/322481/1.jpg?9812",
     id: 3,
     name: "product 3",
-    status: "Shipped",
+    shippedDate: "2/1/2022",
+    returnedDate: "5/1/2022",
     price: 500,
   },
   {
@@ -29,41 +33,29 @@ const orders = [
       "https://eg.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/18/243212/1.jpg?8604",
     id: 4,
     name: "product 4",
-    status: "Shipped",
+    shippedDate: "2/1/2022",
+    returnedDate: "5/1/2022",
     price: 48,
   },
-  {
-    id: 5,
-    name: "product 5",
-    status: "Shipped",
-    price: 50,
-    image:
-      "https://eg.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/40/391651/1.jpg?5204",
-  },
-  {
-    id: 6,
-    name: "product 6",
-    status: "Shipped",
-    price: 50,
-    image:
-      "https://eg.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/74/792102/1.jpg?8947",
-  },
 ];
-const OrdersData = () => {
+const ReturnsData = () => {
   return (
     <Fragment>
-      <div className="page-haeder  col-12 ">
-        <h1>Orders</h1>
-        <p>Manage your Orders, view your previous orders</p>
+      <div>
+        <div className="page-haeder  col-12 ">
+          <h1>Returns</h1>
+          <p>Show all your returned orders, and it's status</p>
+        </div>
       </div>
       <div className="orders col-12 bg-white mb-5">
         <table className="table table-hover table-bordered text-center  ">
           <thead>
             <tr>
               <th scope="col">Product</th>
-              <th scope="col">Order ID</th>
-              <th scope="col">Order Status</th>
               <th scope="col">Price</th>
+              <th scope="col">Order ID</th>
+              <th scope="col">Shipped Date</th>
+              <th scope="col">Returned Date</th>
             </tr>
           </thead>
           <tbody>
@@ -78,13 +70,16 @@ const OrdersData = () => {
                   </td>
 
                   <td className="">
+                    <p className="">$ {order.price}</p>
+                  </td>
+                  <td className="">
                     <p>{order.id}</p>
                   </td>
                   <td className="">
-                    <p>{order.status}</p>
+                    <p>{order.shippedDate}</p>
                   </td>
                   <td className="">
-                    <p>{order.price}</p>
+                    <p>{order.returnedDate}</p>
                   </td>
                 </tr>
               );
@@ -96,4 +91,4 @@ const OrdersData = () => {
   );
 };
 
-export default OrdersData;
+export default ReturnsData;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import Modal from "../components/layout/UI/Modal";
 import useInput from "../hooks/use-input";
 
@@ -63,11 +63,6 @@ const AddAdressForm = (props) => {
     if (!formIsValid) {
       return;
     }
-    // resetNameInput();
-    // resetPhoneInput();
-    // resetCityInput();
-    // resetAddressInput();
-    // resetTypeInput();
 
     new_address = {
       Name: enteredName,
@@ -78,6 +73,7 @@ const AddAdressForm = (props) => {
     };
     console.log(new_address);
     props.onAdd(new_address);
+
     props.onClose();
   };
   return (
@@ -204,6 +200,7 @@ const AddAdressForm = (props) => {
           </div>
           <div className="buttons d-flex justify-content-between">
             <button className="secubtn col-5 ">submit</button>
+
             <button
               className="secubtn btn-secondary col-5 "
               onClick={props.onClose}
