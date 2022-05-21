@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
-import { Fragment, useState, useEffect } from "react";
+import { Fragment, useState, useEffect, useContext } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import HashLoader from "react-spinners/HashLoader";
 
@@ -21,7 +21,10 @@ import AdminPage from "./pages/AdminPage";
 import ProductDetials from "./pages/ProductDetials";
 import ReturnsData from "./pages/ReturnsData";
 import ScrollToTop from "./components/ScrollToTop";
+import { AuthContext } from "./store/auth-context";
 function App() {
+  const AuthCtx = useContext(AuthContext);
+
   const [loading, setloading] = useState(false);
   useEffect(() => {
     setloading(true);
@@ -44,24 +47,37 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/home" element={<Home />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
               <Route path="/product" element={<Product />} />
-              <Route path="/cart" element={<Cart />} />
               <Route path="/product-detials" element={<ProductDetials />} />
-              <Route path="/profile/*" element={<Profile />}>
-                <Route path="profile" element={<ProfileData />} />
-                <Route path="orders" element={<OrdersData />} />
-                <Route path="adresses" element={<AdressData />} />
-                <Route path="favourites" element={<FavouritesData />} />
-                <Route path="returns" element={<ReturnsData />} />
-                <Route path="" element={<Navigate to="profile" />} />
-              </Route>
-              <Route path="/admin/*" element={<AdminPage />}>
-                <Route path="admin" element={<h1>test</h1>} />
+              {!AuthCtx.isLoggedIn && (
+                <>
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
+                </>
+              )}
+              {AuthCtx.isLoggedIn && (
+                <>
+                  <Route path="/cart" element={<Cart />} />
+                  <Route path="/profile/*" element={<Profile />}>
+                    <Route path="profile" element={<ProfileData />} />
+                    <Route path="orders" element={<OrdersData />} />
+                    <Route path="adresses" element={<AdressData />} />
+                    <Route path="favourites" element={<FavouritesData />} />
+                    <Route path="returns" element={<ReturnsData />} />
+                    <Route path="" element={<Navigate to="profile" />} />
+                  </Route>
+                </>
+              )}
 
-                <Route path="" element={<Navigate to="admin" />} />
-              </Route>
+              {AuthCtx.isAdmin && (
+                <>
+                  <Route path="/admin/*" element={<AdminPage />}>
+                    <Route path="admin" element={<h1>test</h1>} />
+                    <Route path="" element={<Navigate to="admin" />} />
+                  </Route>
+                </>
+              )}
+              <Route path="*" element={<Navigate to="home" />} />
             </Routes>
           </>
         )}

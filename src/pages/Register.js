@@ -29,11 +29,7 @@ const Register = () => {
     valueChangeHandler: pass1ChangedHandler,
     inputBlurHandler: pass1BlurHandler,
     reset: resetPass1Input,
-  } = useInput((value) =>
-    value.match(
-      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/
-    )
-  );
+  } = useInput((value) => value.match(/^(?=.*\d)(?=.*[a-z]).{6,20}$/));
   const {
     value: enteredPass2,
     isValid: enteredPass2IsValid,
@@ -74,7 +70,7 @@ const Register = () => {
         console.log("success");
         res.json().then((data) => {
           console.log(data);
-          navigation("/home", { replace: true });
+          navigation("/login", { replace: true });
         });
       } else {
         res.json().then((data) => {
@@ -170,8 +166,7 @@ const Register = () => {
                     : `form-text`
                 }
               >
-                Minimum 8 characters contains capital and small leters and
-                numbers and spechial character
+                Minimum 6 characters contains leters and numbers
               </div>
             )}
           </div>

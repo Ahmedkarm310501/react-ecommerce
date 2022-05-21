@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import classes from "./Login.module.css";
 import useInput from "../hooks/use-input";
 import { useNavigate, Link } from "react-router-dom";
+import { AuthContext } from "../store/auth-context";
+
 const Login = () => {
   const navigation = useNavigate();
+  const [emailOrPasswordError, setEmailOrPasswordError] = useState(false);
+  const AuthCtx = useContext(AuthContext);
+
   const {
     value: enteredEmail,
     isValid: enteredEmailIsValid,
@@ -19,11 +24,7 @@ const Login = () => {
     valueChangeHandler: pass1ChangedHandler,
     inputBlurHandler: pass1BlurHandler,
     reset: resetPass1Input,
-  } = useInput((value) =>
-    value.match(
-      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/
-    )
-  );
+  } = useInput((value) => value.match(/^(?=.*\d)(?=.*[a-z]).{6,20}$/));
   let formIsValid = false;
   if (enteredEmailIsValid && enteredPass1IsValid) {
     formIsValid = true;
@@ -34,11 +35,43 @@ const Login = () => {
     if (!formIsValid) {
       return;
     }
+    fetch("http://127.0.0.1:8000/api/login", {
+      method: "POST",
+      body: JSON.stringify({
+        email: enteredEmail,
+        password: enteredPass1,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (res.ok) {
+        console.log("success");
+        res.json().then((data) => {
+          if (data.status === 403) {
+            console.log("Email or password is not correct");
+            setEmailOrPasswordError(true);
+            return;
+          }
+          console.log(data);
+          AuthCtx.login(data.token);
+          AuthCtx.setName(data.username);
+          AuthCtx.setIsAdmin(data.isAdmin);
+          console.log(data.username);
+          if (data.isAdmin === 0) {
+            navigation("/home", { replace: true });
+          } else {
+            navigation("/admin", { replace: true });
+          }
+        });
+      } else {
+        res.json().then((data) => {
+          console.log(data);
+        });
+      }
+    });
 
-    resetEmailInput();
-    resetPass1Input();
-
-    navigation("/home", { replace: true });
+    //navigation("/home", { replace: true });
   };
 
   return (
@@ -64,7 +97,10 @@ const Login = () => {
                 aria-describedby="emailHelp"
                 placeholder="Enter Email"
                 onChange={emailChangedHandler}
-                onBlur={emailBlurHandler}
+                onBlur={() => {
+                  emailBlurHandler();
+                  setEmailOrPasswordError(false);
+                }}
                 value={enteredEmail}
                 required
               />
@@ -91,7 +127,10 @@ const Login = () => {
                 numbers and spechial character"
                 className={pass1InputHasError ? `${classes.invalid}` : ``}
                 onChange={pass1ChangedHandler}
-                onBlur={pass1BlurHandler}
+                onBlur={() => {
+                  pass1BlurHandler();
+                  setEmailOrPasswordError(false);
+                }}
                 value={enteredPass1}
                 required
               />
@@ -104,8 +143,15 @@ const Login = () => {
                       : `form-text`
                   }
                 >
-                  Minimum 8 characters contains capital and small leters and
-                  numbers and spechial character
+                  Minimum 6 characters contains leters and numbers
+                </div>
+              )}
+              {emailOrPasswordError && (
+                <div
+                  id="password"
+                  className={`form-text ${classes["text-inavalid"]}`}
+                >
+                  Email or password is not correct
                 </div>
               )}
             </div>
