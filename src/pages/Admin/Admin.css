@@ -1,0 +1,14 @@
+.containerSide{
+    display: flex;
+    margin-top: 10px;
+}
+.others{
+    flex: 4;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+}
+
+.link{
+    text-decoration: none;
+    color: inherit;
+}

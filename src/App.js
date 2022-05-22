@@ -1,15 +1,12 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-
 import { Fragment, useState, useEffect, useContext } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
-import HashLoader from "react-spinners/HashLoader";
-
-import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Product from "./pages/Product";
 import Cart from "./pages/Cart";
+import HashLoader from "react-spinners/HashLoader";
 import MainNavigation from "./components/layout/MainNavigation";
 import Footer from "./components/layout/Footer";
 import Profile from "./pages/Profile";
@@ -17,14 +14,19 @@ import ProfileData from "./pages/ProfileData";
 import OrdersData from "./pages/OrdersData";
 import AdressData from "./pages/AdressData";
 import FavouritesData from "./pages/FavouritesData";
-import AdminPage from "./pages/AdminPage";
 import ProductDetials from "./pages/ProductDetials";
+import AdminData from "./pages/Admin/AdminData";
+import ProductList from "./pages/Admin/ProductList";
+import OrdersList from "./pages/Admin/OrdersList";
+import Homepage from "./pages/Admin/Homepage";
+import UserList from "./pages/Admin/UserList";
 import ReturnsData from "./pages/ReturnsData";
 import ScrollToTop from "./components/ScrollToTop";
+import Home from "./pages/Home";
 import { AuthContext } from "./store/auth-context";
+
 function App() {
   const AuthCtx = useContext(AuthContext);
-
   const [loading, setloading] = useState(false);
   useEffect(() => {
     setloading(true);
@@ -45,8 +47,32 @@ function App() {
             <ScrollToTop />
             <MainNavigation />
             <Routes>
+              {/*
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/product" element={<Product />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/product-detials" element={<ProductDetials />} />
+              
+              <Route path="/profile/*" element={<Profile />}>
+                <Route path="profile" element={<ProfileData />} />
+                <Route path="orders" element={<OrdersData />} />
+                <Route path="adresses" element={<AdressData />} />
+                <Route path="favourites" element={<FavouritesData />} />
+                <Route path="" element={<Navigate to="profile" />} />
+              </Route>
+              
+              <Route path="/dashboard/*" element={<AdminData />}>
+              <Route path="home" element={<Homepage/>} />
+                <Route path="allUsers" element={<UserList />} />
+                <Route path="allProducts" element={<ProductList/>} />
+                <Route path="allOrders" element={<OrdersList />} />
+                <Route path="" element={<Navigate to="home" />} />
+        </Route>*/}
+
               <Route path="/" element={<Home />} />
               <Route path="/home" element={<Home />} />
+
               <Route path="/product" element={<Product />} />
               <Route path="/product-detials" element={<ProductDetials />} />
               {!AuthCtx.isLoggedIn && (
@@ -71,10 +97,17 @@ function App() {
 
               {AuthCtx.isAdmin && (
                 <>
-                  <Route path="/admin/*" element={<AdminPage />}>
+                  <Route path="/dashboard/*" element={<AdminData />}>
+                    <Route path="home" element={<Homepage />} />
+                    <Route path="allUsers" element={<UserList />} />
+                    <Route path="allProducts" element={<ProductList />} />
+                    <Route path="allOrders" element={<OrdersList />} />
+                    <Route path="" element={<Navigate to="home" />} />
+                  </Route>
+                  {/* <Route path="/admin/*" element={<AdminPage />}>
                     <Route path="admin" element={<h1>test</h1>} />
                     <Route path="" element={<Navigate to="admin" />} />
-                  </Route>
+                  </Route> */}
                 </>
               )}
               <Route path="*" element={<Navigate to="home" />} />
@@ -86,5 +119,4 @@ function App() {
     </div>
   );
 }
-
 export default App;

@@ -73,7 +73,6 @@ const AddAdressForm = (props) => {
     };
     console.log(new_address);
     props.onAdd(new_address);
-
     props.onClose();
   };
   return (
@@ -200,7 +199,6 @@ const AddAdressForm = (props) => {
           </div>
           <div className="buttons d-flex justify-content-between">
             <button className="secubtn col-5 ">submit</button>
-
             <button
               className="secubtn btn-secondary col-5 "
               onClick={props.onClose}
