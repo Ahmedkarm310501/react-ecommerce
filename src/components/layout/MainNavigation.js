@@ -8,7 +8,7 @@ import logo from "../pics/logo/logofci.png";
 
 const MainNavigation = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container">
         <a
           style={{ fontSize: "2.5rem" }}

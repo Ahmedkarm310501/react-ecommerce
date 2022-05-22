@@ -55,7 +55,7 @@ const products = [
 
 const Product = () => {
   return (
-    <div className="container">
+    <div id="carouselExampleDark"  className="carousel carousel-dark slide" data-bs-ride="carousel">
       <div className={`${classes.Itemcols}`}>
         <h1>Products</h1>
         <Products list={products} />

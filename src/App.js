@@ -1,6 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-
 import { Fragment } from "react";
 import { useState, useEffect } from "react";
 import Home from "./pages/Home";
@@ -19,8 +18,14 @@ import ProfileData from "./pages/ProfileData";
 import OrdersData from "./pages/OrdersData";
 import AdressData from "./pages/AdressData";
 import FavouritesData from "./pages/FavouritesData";
-import AdminPage from "./pages/AdminPage";
 import ProductDetials from "./pages/ProductDetials";
+import AdminData from "./pages/Admin/AdminData";
+import UsersList from "./pages/Admin/UserList";
+import ProductList from "./pages/Admin/ProductList";
+import OrdersList from "./pages/Admin/OrdersList";
+import Charts from "./pages/Admin/Charts";
+import Homepage from "./pages/Admin/Homepage";
+import UserList from "./pages/Admin/UserList";
 function App() {
   const [loading, setloading] = useState(false);
   useEffect(() => {
@@ -48,6 +53,7 @@ function App() {
               <Route path="/product" element={<Product />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/product-detials" element={<ProductDetials />} />
+              {/* Admin Routes */}
               <Route path="/profile/*" element={<Profile />}>
                 <Route path="profile" element={<ProfileData />} />
                 <Route path="orders" element={<OrdersData />} />
@@ -55,10 +61,13 @@ function App() {
                 <Route path="favourites" element={<FavouritesData />} />
                 <Route path="" element={<Navigate to="profile" />} />
               </Route>
-              <Route path="/admin/*" element={<AdminPage />}>
-                <Route path="admin" element={<h1>test</h1>} />
-
-                <Route path="" element={<Navigate to="admin" />} />
+              {/* Admin Routes */}
+              <Route path="/dashboard/*" element={<AdminData />}>
+              <Route path="home" element={<Homepage/>} />
+                <Route path="allUsers" element={<UserList />} />
+                <Route path="allProducts" element={<ProductList/>} />
+                <Route path="allOrders" element={<OrdersList />} />
+                <Route path="" element={<Navigate to="home" />} />
               </Route>
             </Routes>
           </>
