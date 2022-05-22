@@ -6,20 +6,12 @@ import { useNavigate, Link } from "react-router-dom";
 const Register = () => {
   const navigation = useNavigate();
   const {
-    value: enteredFirst,
-    isValid: enteredFirstIsValid,
-    hasError: firstInputHasError,
-    valueChangeHandler: firstChangedHandler,
-    inputBlurHandler: firstBlurHandler,
-    reset: resetFirstInput,
-  } = useInput((value) => value.length >= 2);
-  const {
-    value: enteredSeconed,
-    isValid: enteredSeconedIsValid,
-    hasError: seconedInputHasError,
-    valueChangeHandler: seconedChangedHandler,
-    inputBlurHandler: seconedBlurHandler,
-    reset: resetSeconedInput,
+    value: enteredName,
+    isValid: enteredNameIsValid,
+    hasError: NameInputHasError,
+    valueChangeHandler: NameChangedHandler,
+    inputBlurHandler: NameBlurHandler,
+    reset: resetNameInput,
   } = useInput((value) => value.length >= 2);
 
   const {
@@ -37,11 +29,7 @@ const Register = () => {
     valueChangeHandler: pass1ChangedHandler,
     inputBlurHandler: pass1BlurHandler,
     reset: resetPass1Input,
-  } = useInput((value) =>
-    value.match(
-      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/
-    )
-  );
+  } = useInput((value) => value.match(/^(?=.*\d)(?=.*[a-z]).{6,20}$/));
   const {
     value: enteredPass2,
     isValid: enteredPass2IsValid,
@@ -54,8 +42,7 @@ const Register = () => {
   let formIsValid = false;
 
   if (
-    enteredFirstIsValid &&
-    enteredSeconedIsValid &&
+    enteredNameIsValid &&
     enteredEmailIsValid &&
     enteredPass1IsValid &&
     enteredPass2IsValid
@@ -68,12 +55,29 @@ const Register = () => {
     if (!formIsValid) {
       return;
     }
-    resetFirstInput();
-    resetSeconedInput();
-    resetEmailInput();
-    resetPass1Input();
-    resetPass2Input();
-    navigation("/home", { replace: true });
+    fetch("http://127.0.0.1:8000/api/register", {
+      method: "POST",
+      body: JSON.stringify({
+        name: enteredName,
+        email: enteredEmail,
+        password: enteredPass1,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (res.ok) {
+        console.log("success");
+        res.json().then((data) => {
+          console.log(data);
+          navigation("/login", { replace: true });
+        });
+      } else {
+        res.json().then((data) => {
+          console.log(data);
+        });
+      }
+    });
   };
   return (
     <div className={`container`}>
@@ -86,53 +90,23 @@ const Register = () => {
           <p>Please fill in this form to create an account.</p>
           <hr />
           <div className="mb-3 col-sm-12 col-md-6">
-            <label htmlFor="firstname">
-              First name
-            </label>
+            <label htmlFor="firstname">User name</label>
             <input
               title="Minimum 2 characters."
               type="text"
-              className={firstInputHasError ? ` ${classes.invalid}` : ``}
+              className={NameInputHasError ? ` ${classes.invalid}` : ``}
               id="firstname"
               placeholder="Enter First Name"
-              onChange={firstChangedHandler}
-              onBlur={firstBlurHandler}
-              value={enteredFirst}
+              onChange={NameChangedHandler}
+              onBlur={NameBlurHandler}
+              value={enteredName}
               required
             />
-            {firstInputHasError && (
+            {NameInputHasError && (
               <div
                 id="firstnameHelp"
                 className={
-                  firstInputHasError
-                    ? `form-text ${classes["text-inavalid"]}`
-                    : `form-text`
-                }
-              >
-                Minimum 2 characters.
-              </div>
-            )}
-          </div>
-          <div className="mb-3 col-sm-12 col-md-6">
-            <label htmlFor="lastname">
-              last name
-            </label>
-            <input
-              type="text"
-              title="Minimum 2 characters."
-              className={seconedInputHasError ? `${classes.invalid}` : ``}
-              id="lastname"
-              onChange={seconedChangedHandler}
-              onBlur={seconedBlurHandler}
-              value={enteredSeconed}
-              placeholder="Enter Last Name"
-              required
-            />
-            {seconedInputHasError && (
-              <div
-                id="lastnameHelp"
-                className={
-                  seconedInputHasError
+                  NameInputHasError
                     ? `form-text ${classes["text-inavalid"]}`
                     : `form-text`
                 }
@@ -143,9 +117,7 @@ const Register = () => {
           </div>
 
           <div className="mb-3 col-sm-12 col-md-6">
-            <label htmlFor="Email1">
-              Email address
-            </label>
+            <label htmlFor="Email1">Email address</label>
             <input
               title={`please enter valid email contains "@" and "." `}
               type="email"
@@ -173,9 +145,7 @@ const Register = () => {
             )}
           </div>
           <div className="mb-3 col-sm-12 col-md-6">
-            <label htmlFor="exampleInputPassword1">
-              Password
-            </label>
+            <label htmlFor="exampleInputPassword1">Password</label>
             <input
               type="password"
               id="exampleInputPassword1"
@@ -196,16 +166,13 @@ const Register = () => {
                     : `form-text`
                 }
               >
-                Minimum 8 characters contains capital and small leters and
-                numbers and spechial character
+                Minimum 6 characters contains leters and numbers
               </div>
             )}
           </div>
 
           <div className="mb-3 col-sm-12 col-md-6">
-            <label htmlFor="exampleInputPassword2">
-              Repeat Password
-            </label>
+            <label htmlFor="exampleInputPassword2">Repeat Password</label>
             <input
               type="password"
               title="reapeat password"

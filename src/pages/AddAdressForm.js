@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import Modal from "../components/layout/UI/Modal";
 import useInput from "../hooks/use-input";
 
@@ -63,11 +63,6 @@ const AddAdressForm = (props) => {
     if (!formIsValid) {
       return;
     }
-    // resetNameInput();
-    // resetPhoneInput();
-    // resetCityInput();
-    // resetAddressInput();
-    // resetTypeInput();
 
     new_address = {
       Name: enteredName,

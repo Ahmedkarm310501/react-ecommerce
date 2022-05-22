@@ -1,14 +1,46 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useContext, useState, useEffect } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../pics/logo/logofci.png";
+import { CartContext } from "../../store/cart-context";
+import { AuthContext } from "../../store/auth-context";
+
 <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css"
 ></link>;
 
 const MainNavigation = () => {
+  const cartCtx = useContext(CartContext);
+  const navigation = useNavigate();
+  const numberOfCartItems = cartCtx.items.reduce((curNumber, item) => {
+    return curNumber + item.amount;
+  }, 0);
+  const AuthCtx = useContext(AuthContext);
+  const name = AuthCtx.name;
+  const logOutHandler = () => {
+    fetch("http://127.0.0.1:8000/api/logout", {
+      method: "POST",
+      body: JSON.stringify({
+        token: AuthCtx.token,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (res.ok) {
+        res.json().then((data) => {
+          console.log(data);
+          AuthCtx.logout();
+          navigation("/home", { replace: true });
+        });
+      } else {
+        console.log(res);
+      }
+    });
+  };
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-5 sticky-top">
       <div className="container">
         <a
           style={{ fontSize: "2.5rem" }}
@@ -57,36 +89,57 @@ const MainNavigation = () => {
                 Home
               </NavLink>
             </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/login">
-                Log In
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/register">
-                Sign up
-              </NavLink>
-            </li>
-            <li className="nav-item">
+            {!AuthCtx.isLoggedIn && (
+              <>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/login">
+                    Log In
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/register">
+                    Sign up
+                  </NavLink>
+                </li>
+              </>
+            )}
+
+            {AuthCtx.isLoggedIn && (
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/profile">
+                  {name}
+                </NavLink>
+              </li>
+            )}
+            {/* <li className="nav-item">
               <NavLink className="nav-link" to="/product">
                 Product
               </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/cart">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="26"
-                  height="26"
-                  fill="currentColor"
-                  className="bi bi-cart-plus"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9V5.5z" />
-                  <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
-                </svg>
-              </NavLink>
-            </li>
+            </li> */}
+            {AuthCtx.isLoggedIn && (
+              <li className="nav-item">
+                <NavLink className="nav-link cart-icon" to="/cart">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="35"
+                    height="35"
+                    fill="currentColor"
+                    className="bi bi-cart-plus"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                  </svg>
+                  <span className="cart-num">{numberOfCartItems}</span>
+                </NavLink>
+              </li>
+            )}
+            {AuthCtx.isLoggedIn && (
+              <li className="nav-item">
+                <div className="nav-link" onClick={logOutHandler}>
+                  logout
+                </div>
+              </li>
+            )}
           </ul>
         </div>
       </div>
