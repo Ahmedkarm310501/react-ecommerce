@@ -1,7 +1,14 @@
-import React, { Fragment, useState, useRef } from "react";
+import React, {
+  Fragment,
+  useState,
+  useRef,
+  useContext,
+  useEffect,
+} from "react";
 import Modal from "../components/layout/UI/Modal";
 import AddAdressForm from "./AddAdressForm";
 import Snackbar from "../components/layout/UI/Snackbar";
+import { AuthContext } from "../store/auth-context";
 
 const addresses = [
   {
@@ -41,10 +48,40 @@ const DeleteMessage = (props) => {
 };
 
 const AdressData = () => {
-  const [add, setAdd] = useState(addresses);
+  const AuthCtx = useContext(AuthContext);
+  const [add, setAdd] = useState([]);
   const [deleteModal, setDeleteModal] = useState(false);
   const [addressModal, setAddressModal] = useState(false);
   const snackbarRef = useRef(null);
+
+  useEffect(() => {
+    fetch("http://127.0.0.1:8000/api/get_all_users_address", {
+      method: "POST",
+      body: JSON.stringify({
+        token: AuthCtx.token,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (res.ok) {
+        console.log("success");
+        res.json().then((data) => {
+          if (data.status == 200) {
+            console.log(data);
+            setAdd(data.addresses);
+          } else {
+            console.log("wrong");
+          }
+        });
+      } else {
+        res.json().then((data) => {
+          console.log(data);
+        });
+      }
+    });
+  }, []);
+
   const addNewAddress = (address) => {
     setAdd([...add, address]);
     snackbarRef.current.show();
@@ -64,7 +101,7 @@ const AdressData = () => {
   };
   return (
     <Fragment>
-      <div className="page-haeder col-12 ">
+      <div className="page-haeder col-12 pt-5">
         <h1>Adresses</h1>
         <p>
           Manage your saved addresses for fast and easy checkout across our
@@ -86,15 +123,17 @@ const AdressData = () => {
           />
         }
       </div>
-      <div className="addresses-section col-12">
+      <div className="addresses-section col-12 pb-5">
         <div className="addresses">
           {add.map((adderes) => {
             return (
               <div key={adderes.address} className="adderss p-3 my-3 bg-white">
-                <div className="type ps-2">{adderes.type}</div>
+                <div className="type ps-2">
+                  {adderes.type == 0 ? "HOME" : "WORK"}
+                </div>
                 <div className="type">
                   <div>Name :</div>
-                  <span>{adderes.Name}</span>
+                  <span>{adderes.name}</span>
                 </div>
                 <div className="type">
                   <div>Address :</div>

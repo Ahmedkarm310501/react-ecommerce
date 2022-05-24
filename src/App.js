@@ -24,6 +24,7 @@ import ReturnsData from "./pages/ReturnsData";
 import ScrollToTop from "./components/ScrollToTop";
 import Home from "./pages/Home";
 import { AuthContext } from "./store/auth-context";
+import CheckOut from "./pages/CheckOut";
 
 function App() {
   const AuthCtx = useContext(AuthContext);
@@ -84,6 +85,7 @@ function App() {
               {AuthCtx.isLoggedIn && (
                 <>
                   <Route path="/cart" element={<Cart />} />
+                  <Route path="/checkout" element={<CheckOut />} />
                   <Route path="/profile/*" element={<Profile />}>
                     <Route path="profile" element={<ProfileData />} />
                     <Route path="orders" element={<OrdersData />} />

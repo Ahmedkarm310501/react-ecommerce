@@ -27,7 +27,7 @@ const Cart = () => {
     cartCtx.removeAllItem(id);
     setSnakbarMessage("Items removed successfully !");
     snackbarRef.current.show();
-  }; 
+  };
   return (
     <div className="cart">
       <div className="container">
@@ -63,7 +63,6 @@ const Cart = () => {
                           </div>
                           <div className="price fs-4">EGP {product.price}</div>
                         </div>
-
                         <div className="buttons d-flex justify-content-between">
                           <button
                             className="remove secubtn btn-danger d-flex justify-content-between align-items-center"
@@ -132,9 +131,11 @@ const Cart = () => {
                     <div>EGP {cartCtx.totalAmount}</div>
                   </div>
                   <div className="d-flex justify-content-center p-3 fs-5">
-                    <button className="secubtn" style={{ width: "100%" }}>
-                      CHECKOUT
-                    </button>
+                    <Link to="/checkout" className="w-100">
+                      <button className="secubtn" style={{ width: "100%" }}>
+                        CHECKOUT
+                      </button>
+                    </Link>
                   </div>
                 </div>
               </div>

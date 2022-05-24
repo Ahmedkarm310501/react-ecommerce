@@ -48,7 +48,7 @@ const Login = () => {
       if (res.ok) {
         console.log("success");
         res.json().then((data) => {
-          if (data.status === 403) {
+          if (data.status == 403) {
             console.log("Email or password is not correct");
             setEmailOrPasswordError(true);
             return;
@@ -60,8 +60,8 @@ const Login = () => {
           console.log(data.username);
           if (data.isAdmin === 0) {
             navigation("/home", { replace: true });
-          } else {
-            navigation("/admin", { replace: true });
+          } else if (data.isAdmin === 1) {
+            navigation("/dashboard", { replace: true });
           }
         });
       } else {

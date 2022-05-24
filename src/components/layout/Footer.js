@@ -7,7 +7,7 @@ import classes from "./Footer.module.css";
 ></link>;
 export default function Footer() {
   return (
-    <footer className="mt-5">
+    <footer className="">
       <div className={classes.footer}>
         <div className="container">
           <div className="row">

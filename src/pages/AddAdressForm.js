@@ -1,8 +1,11 @@
-import React, { useRef } from "react";
+import React, { useRef, useContext } from "react";
 import Modal from "../components/layout/UI/Modal";
 import useInput from "../hooks/use-input";
+import { AuthContext } from "../store/auth-context";
 
 const AddAdressForm = (props) => {
+  const AuthCtx = useContext(AuthContext);
+
   const {
     value: enteredName,
     isValid: enteredNameIsValid,
@@ -58,6 +61,7 @@ const AddAdressForm = (props) => {
     formIsValid = true;
   }
   let new_address = {};
+
   const formSubmissionHandler = (event) => {
     event.preventDefault();
     if (!formIsValid) {
@@ -65,16 +69,49 @@ const AddAdressForm = (props) => {
     }
 
     new_address = {
-      Name: enteredName,
+      name: enteredName,
       address: enteredAddress,
       city: enteredCity,
-      type: enteredType,
+      type: enteredType == "HOME" ? 0 : 1,
       phone: enteredPhone,
     };
+
+    fetch("http://127.0.0.1:8000/api/create_address", {
+      method: "POST",
+      body: JSON.stringify({
+        token: AuthCtx.token,
+        name: enteredName,
+        address: enteredAddress,
+        city: enteredCity,
+        phone: enteredPhone,
+        type: enteredType == "HOME" ? 0 : 1,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (res.ok) {
+        console.log("success");
+        res.json().then((data) => {
+          if (data.status == 200) {
+            console.log(data);
+            props.onAdd(new_address);
+            props.onClose();
+            // snackbarRef.current.show();
+          } else {
+            console.log("wrong");
+          }
+        });
+      } else {
+        res.json().then((data) => {
+          console.log(data);
+        });
+      }
+    });
+
     console.log(new_address);
-    props.onAdd(new_address);
-    props.onClose();
   };
+
   return (
     <Modal onClose={props.onClose}>
       <form className="container" onSubmit={formSubmissionHandler}>
