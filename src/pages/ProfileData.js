@@ -9,6 +9,7 @@ import ResetPassword from "./ResetPassword";
 import DeleteAccountModal from "./DeleteAccountModal";
 import { AuthContext } from "../store/auth-context";
 import Snackbar from "../components/layout/UI/Snackbar";
+import axios from "axios";
 
 const ProfileData = () => {
   const [passwordModal, setPasswordModal] = useState(false);
@@ -19,6 +20,15 @@ const ProfileData = () => {
   const [name, setName] = useState("");
   const [birthDay, setBirthDay] = useState("");
   const [email, setEmail] = useState("");
+  const [userImage, setUserImage] = useState("");
+  const [imageUrl, setImageUrl] = useState(
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6nl-a_HdCoqrQ1SrBeBEyD93i_Cfmrxq9Sg&usqp=CAU"
+  );
+
+  const handleImage = (file) => {
+    setUserImage(file);
+    console.log(file);
+  };
 
   const showModal = (event) => {
     event.preventDefault();
@@ -46,9 +56,9 @@ const ProfileData = () => {
   useEffect(() => {
     fetch("http://127.0.0.1:8000/api/show-profile", {
       method: "POST",
-      body: JSON.stringify({
-        token: AuthCtx.token,
-      }),
+        body: JSON.stringify({
+          token: AuthCtx.token,
+        }),
       headers: {
         "Content-Type": "application/json",
       },
@@ -57,7 +67,14 @@ const ProfileData = () => {
         console.log("success");
         res.json().then((data) => {
           if (data.status == 200) {
-            console.log(data.user);
+            console.log(data);
+            if (data.photo != null) {
+              setImageUrl(
+                `http://localhost:8000/${data.user.profile_photo_path}`
+              );
+            } else {
+              console.log("no photo");
+            }
             setName(data.user.name);
             setBirthDay(data.user.date_of_birth);
             setEmail(data.user.email);
@@ -75,33 +92,61 @@ const ProfileData = () => {
 
   const updateUserData = (event) => {
     event.preventDefault();
-    fetch("http://127.0.0.1:8000/api/update_user_user", {
-      method: "POST",
-      body: JSON.stringify({
-        name: name,
-        token: AuthCtx.token,
-        date_of_birth: birthDay,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((res) => {
-      if (res.ok) {
-        console.log("success");
-        res.json().then((data) => {
-          if (data.status == 200) {
-            console.log(data.name);
-            snackbarRef.current.show();
-          } else {
-            console.log("wrong");
-          }
-        });
-      } else {
-        res.json().then((data) => {
-          console.log(data);
-        });
-      }
-    });
+    console.log(userImage);
+    // fetch("http://127.0.0.1:8000/api/update_user_user", {
+    //   method: "POST",
+    //   body: JSON.stringify({
+    //     name: name,
+    //     token: AuthCtx.token,
+    //     date_of_birth: birthDay,
+    //     photo: userImage,
+    //   }),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // })
+    const formDate = new FormData();
+    formDate.append("name", name);
+    formDate.append("token", AuthCtx.token);
+    formDate.append("date_of_birth", birthDay);
+    formDate.append("photo", userImage);
+    axios
+      .post("http://127.0.0.1:8000/api/update_user_user", formDate)
+      .then((res) => {
+        console.log(res);
+        if (res.status == 200) {
+          console.log("true");
+          setImageUrl(
+            `http://localhost:8000/${res.data.user.profile_photo_path}`
+          );
+          snackbarRef.current.show();
+        } else {
+          console.log("eror");
+          console.log(res);
+        }
+        // if (res.status == 200) {
+        //   console.log("success");
+        //   res.json().then((data) => {
+        //     if (data.status == 200) {
+        //       console.log(data);
+        //       setImageUrl(
+        //         `http://localhost:8000/${data.user.profile_photo_path}`
+        //       );
+        //       snackbarRef.current.show();
+        //     } else {
+        //       console.log("wrong");
+        //     }
+        //   });
+        // } else {
+        //   console.log(res);
+        //   res.json().then((data) => {
+        //     console.log(data);
+        //   });
+        // }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   return (
@@ -145,9 +190,14 @@ const ProfileData = () => {
                 className="img-fluid rounded-circle pointer"
                 title="Click to Change"
                 alt="Click to Change"
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6nl-a_HdCoqrQ1SrBeBEyD93i_Cfmrxq9Sg&usqp=CAU"
+                src={imageUrl}
               />
-              <input type="file" hidden ref={imageRef} />
+              <input
+                type="file"
+                hidden
+                ref={imageRef}
+                onChange={(e) => handleImage(e.target.files[0])}
+              />
             </div>
           </div>
           <button className="secubtn mb-4 " onClick={updateUserData}>

@@ -8,10 +8,10 @@ const Products = (props) => {
         <ProductItem
           key={item.id}
           id={item.id}
-          brand={item.brand}
+          //brand={item.brand}
           name={item.name}
-          image={item.image}
-          desc={item.desc}
+          photo={`http://localhost:8000/${item.photo}`}
+          details={item.details}
           price={item.price}
         />
       ))}

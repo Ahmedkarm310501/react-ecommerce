@@ -1,15 +1,23 @@
-import React, { Fragment, useContext, useRef, useState } from "react";
+import React, {
+  Fragment,
+  useContext,
+  useRef,
+  useState,
+  useEffect,
+} from "react";
 import { Link } from "react-router-dom";
 import { FavContex } from "../store/fav-context";
 import { CartContext } from "../store/cart-context";
 import Snackbar from "../components/layout/UI/Snackbar";
+import { AuthContext } from "../store/auth-context";
 
 const FavouritesData = () => {
+  const AuthCtx = useContext(AuthContext);
   const favCtx = useContext(FavContex);
   const cartCtx = useContext(CartContext);
   const snackbarRef = useRef(null);
   const [snakbarMessage, setSnakbarMessage] = useState("");
-  const products = favCtx.items;
+  const [products, setproducts] = useState([]);
   const addToCart = (product) => {
     const newItem = {
       id: product.id,
@@ -28,9 +36,104 @@ const FavouritesData = () => {
     setSnakbarMessage("Product Removed From Favourites");
     snackbarRef.current.show();
   };
+
+  useEffect(() => {
+    fetch("http://127.0.0.1:8000/api/get_all_favourite", {
+      method: "POST",
+      body: JSON.stringify({
+        token: AuthCtx.token,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (res.ok) {
+        console.log("success");
+        res.json().then((data) => {
+          if (data.status == 200) {
+            setproducts(data.products);
+            console.log(data);
+          } else {
+            console.log("wrong");
+          }
+        });
+      } else {
+        res.json().then((data) => {
+          console.log(data);
+        });
+      }
+    });
+  }, []);
+
+  const addToCartHandler = (id) => {
+    fetch("http://127.0.0.1:8000/api/add_to_cart", {
+      method: "POST",
+      body: JSON.stringify({
+        token: AuthCtx.token,
+        product_id: id,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (res.ok) {
+        console.log("success");
+        res.json().then((data) => {
+          if (data.status == 200) {
+            console.log(data);
+            setSnakbarMessage("Product Added To Cart !");
+            snackbarRef.current.show();
+            //const newProducts = products.filter((pro) => pro.id !== id);
+            //setproducts(newProducts);
+            //addToCart();
+          } else {
+            console.log("wrong");
+          }
+        });
+      } else {
+        res.json().then((data) => {
+          console.log(data);
+        });
+      }
+    });
+  };
+
+  const removeFavouriteHandler = (id) => {
+    fetch("http://127.0.0.1:8000/api/delete_favourite", {
+      method: "DELETE",
+      body: JSON.stringify({
+        token: AuthCtx.token,
+        product_id: id,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (res.ok) {
+        console.log("success");
+        res.json().then((data) => {
+          if (data.status == 200) {
+            console.log(data);
+            setSnakbarMessage("Product Removed From Favourites");
+            snackbarRef.current.show();
+            const newProducts = products.filter((pro) => pro.id !== id);
+            setproducts(newProducts);
+            //addToCart();
+          } else {
+            console.log("wrong");
+          }
+        });
+      } else {
+        res.json().then((data) => {
+          console.log(data);
+        });
+      }
+    });
+  };
+
   return (
     <Fragment>
-      {favCtx.items.length > 0 ? (
+      {products.length > 0 ? (
         <>
           <div className="page-haeder col-12 ">
             <h1>Favourites</h1>
@@ -52,17 +155,17 @@ const FavouritesData = () => {
                 <div className="fav col-12  p-3 mb-3" key={index}>
                   <div className="row bg-white">
                     <div className="image col-3 d-flex flex-column justify-content-center ">
-                      <img src={product.image} />
+                      <img src={`http://localhost:8000/${product.photo}`} />
                     </div>
                     <div className="con col-6 d-flex flex-column justify-content-between">
                       <div className="name fs-5">{product.name}</div>
-                      <div className="price fs-4 ">${product.price}</div>
+                      <div className="price fs-4 ">${+product.price}</div>
                     </div>
                     <div className="btnn col-3 d-flex flex-column justify-content-between">
                       <button
                         className="add secubtn"
                         onClick={() => {
-                          addToCart(product);
+                          addToCartHandler(product.id);
                         }}
                       >
                         add to cart
@@ -71,7 +174,7 @@ const FavouritesData = () => {
                       <button
                         className="remove secubtn btn-danger"
                         onClick={() => {
-                          removeFromFavourite(product.id);
+                          removeFavouriteHandler(product.id);
                         }}
                       >
                         remove

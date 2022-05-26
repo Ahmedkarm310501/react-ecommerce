@@ -18,6 +18,7 @@ body {
 ul a, ul a:hover {
   text-decoration: none !important;
   color: black;
+  
 }
 
 .zz {
@@ -26,6 +27,7 @@ ul a, ul a:hover {
 
 .pointer {
   cursor: pointer;
+  
 }
 
 .img-hover::before {

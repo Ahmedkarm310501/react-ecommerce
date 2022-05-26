@@ -75,7 +75,10 @@ function App() {
               <Route path="/home" element={<Home />} />
 
               <Route path="/product" element={<Product />} />
-              <Route path="/product-detials" element={<ProductDetials />} />
+              <Route
+                path="/product-detials/:productID"
+                element={<ProductDetials />}
+              />
               {!AuthCtx.isLoggedIn && (
                 <>
                   <Route path="/login" element={<Login />} />

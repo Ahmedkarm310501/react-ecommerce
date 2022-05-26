@@ -1,43 +1,65 @@
 import React from "react";
 import classes from "./ProductDetials.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 function ProductDetials() {
-  const [image, setimage] = useState(
-    "https://eg.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/06/375812/1.jpg?4079"
-  );
-  function changeImage(event) {
-    setimage(event.target.src);
-  }
+  const param = useParams();
+  console.log(param.productID);
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState(null);
+  const [desc, setDesc] = useState("");
+  const [image, setimage] = useState(null);
+  const [id, setId] = useState(null);
+
+  useEffect(() => {
+    fetch("http://127.0.0.1:8000/api/get-product", {
+      method: "POST",
+      body: JSON.stringify({
+        id: param.productID,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (res.ok) {
+        console.log("success");
+        res.json().then((data) => {
+          if (data.status == 200) {
+            console.log(data.products);
+            setId(data.products.id);
+            setName(data.products.name);
+            setDesc(data.products.details);
+            setPrice(data.products.price);
+            setimage(`http://localhost:8000/${data.products.photo}`);
+            //setProducts(data.products);
+          } else {
+            console.log("wrong");
+          }
+        });
+      } else {
+        res.json().then((data) => {
+          console.log(data);
+        });
+      }
+    });
+  }, []);
+
   return (
     <div className="product-details bg-white py-5">
       <div className="container">
         <div className="row">
           <div className={`${classes.content} `}>
             <div className=" col-sm-12 col-md-6 d-md-flex">
-              <div className={classes.sideimg}>
-                <img
-                  src="https://eg.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/06/375812/1.jpg?4079"
-                  onClick={changeImage}
-                />
-                <img
-                  src="https://eg.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/77/375812/1.jpg?4701"
-                  onClick={changeImage}
-                />
-                <img
-                  src="https://eg.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/87/322481/1.jpg?9812"
-                  onClick={changeImage}
-                />
-              </div>
               <div className={classes.image}>
                 <img src={image} className="img-fluid" />
               </div>
             </div>
             <div className="col-sm-12 col-md-6">
               <div className={classes.discription}>
-                <p className="fs-2"> Name: Redmi </p>
+                <p className="fs-2"> Name: {name} </p>
                 <hr />
 
-                <p className="fs-2"> Price: 13000 L.E </p>
+                <p className="fs-2"> Price: {price} L.E </p>
 
                 <hr />
                 <div className={classes.details}>
@@ -45,12 +67,7 @@ function ProductDetials() {
                     <p className="fs-2"> Discription: </p>
                   </div>
                   <div className={classes.more}>
-                    <p className="fs-5">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                      ullamco laboris nisi ut aliquip ex ea commodo consequat
-                    </p>
+                    <p className="fs-5">{desc}</p>
                   </div>
                 </div>
                 <hr />
