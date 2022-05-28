@@ -5,6 +5,8 @@
 .newUserForm {
   display: flex;
   flex-wrap: wrap;
+  margin-left: 50px;
+  margin-bottom: 50px;
 }
 
 .newUserItem {
@@ -23,9 +25,9 @@
 }
 
 .newUserItem > input {
-  height: 20px;
+  height: 50px;
   padding: 10px;
-  border: 1px solid gray;
+  border: 1px solid rgba(19, 192, 178, 0.514);
   border-radius: 5px;
 }
 
@@ -42,12 +44,13 @@
 .newUserSelect{
     height: 40px;
     border-radius: 5px;
+    padding: 0px;
 }
 
 .newUserButton{
     width: 200px;
     border: none;
-    background-color: darkblue;
+    background-color: rgb(7, 196, 253);
     color: white;
     padding: 7px 10px;
     font-weight: 600;

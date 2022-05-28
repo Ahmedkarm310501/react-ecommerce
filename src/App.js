@@ -24,7 +24,15 @@ import ReturnsData from "./pages/ReturnsData";
 import ScrollToTop from "./components/ScrollToTop";
 import Home from "./pages/Home";
 import { AuthContext } from "./store/auth-context";
+
+import Allcharts from "./pages/Admin/Chartpage";
+import User from "./pages/Admin/User";
+import NewUser from "./pages/Admin/NewUser";
+import Prod from "./pages/Admin/Prod";
+import NewProduct from "./pages/Admin/NewProduct";
+
 import CheckOut from "./pages/CheckOut";
+
 
 function App() {
   const AuthCtx = useContext(AuthContext);
@@ -100,13 +108,18 @@ function App() {
                 </>
               )}
 
-              {AuthCtx.isAdmin && (
+              { AuthCtx.isAdmin &&(
                 <>
                   <Route path="/dashboard/*" element={<AdminData />}>
                     <Route path="home" element={<Homepage />} />
                     <Route path="allUsers" element={<UserList />} />
+                    <Route path="allUsers/user/:userid" element={<User />} />
                     <Route path="allProducts" element={<ProductList />} />
+                    <Route path="allProducts/product/:productid" element={<Prod/>} />
+                    <Route path="allProducts/product/:productid/newproduct" element={<NewProduct/>} />
+                    <Route path="allUsers/user/:userid/newUser" element={<NewUser />} />
                     <Route path="allOrders" element={<OrdersList />} />
+                    <Route path="Allcharts" element={<Allcharts />} />
                     <Route path="" element={<Navigate to="home" />} />
                   </Route>
                   {/* <Route path="/admin/*" element={<AdminPage />}>

@@ -85,18 +85,22 @@
 }
 
 .productFormLeft > label {
+  cursor: pointer;
   margin-bottom: 10px;
   color: gray;
 }
 
 .productFormLeft > input {
-  margin-bottom: 10px;
   border: none;
-  padding: 5px;
-  border-bottom: 1px solid gray;
+    width: 250px;
+    height: 30px;
+    border-bottom: 1px solid rgb(12, 161, 199);
 }
 
 .productFormLeft >select{
+  border: none;
+    width: 250px;
+    border-bottom: 1px solid rgb(12, 161, 199);
   margin-bottom: 10px;
 }
 
@@ -106,6 +110,7 @@
   border-radius: 10px;
   object-fit: cover;
   margin-right: 20px;
+  
 }
 
 .productFormRight{

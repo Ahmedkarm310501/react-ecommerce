@@ -4,13 +4,14 @@
 
 .addProductForm {
   margin-top: 10px;
+  margin-left: 20px;
+  margin-bottom: 10px;
 }
 
 .addProductItem {
   width: 250px;
   display: flex;
   flex-direction: column;
-  margin-bottom: 10px;
 }
 
 .addProductItem > label {
@@ -32,7 +33,7 @@
   padding: 7px 10px;
   border: none;
   border-radius: 10px;
-  background-color: darkblue;
+  background-color: rgb(9, 107, 187);
   color: white;
   font-weight: 600;
   cursor: pointer;

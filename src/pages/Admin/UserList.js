@@ -4,16 +4,18 @@ import { DeleteOutline } from "@material-ui/icons";
 import { userRows } from "./dummyData";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-
+import { Outlet } from "react-router-dom";
 export default function UserList() {
+ 
   const [data, setData] = useState(userRows);
 
   const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
+    const items = data.filter((item) => item.id !== id)
+    setData(items);
   };
 
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
+    { field: "id", headerName: "ID", width: 100 },
     {
       field: "user",
       headerName: "User",
@@ -31,12 +33,7 @@ export default function UserList() {
     {
       field: "status",
       headerName: "Status",
-      width: 120,
-    },
-    {
-      field: "transaction",
-      headerName: "Transaction Volume",
-      width: 160,
+      width: 150,
     },
     {
       field: "action",
@@ -45,12 +42,15 @@ export default function UserList() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={"/user/" + params.row.id}>
+            <Link to={"user/" + params.row.id}>
               <button className="userListEdit">Edit</button>
             </Link>
             <DeleteOutline
               className="userListDelete"
-              onClick={() => handleDelete(params.row.id)}
+              onClick={() => {
+                console.log(params.row.id)
+                return handleDelete(params.row.id);
+              }}
             />
           </>
         );
@@ -59,19 +59,18 @@ export default function UserList() {
   ];
 
   return (
-    <div>
-      <div style={{ display: "flex", height: "100%" }}>
+    <><h2>Users List</h2><div style={{ height: 550, width: '100%' }}>
+      <div style={{ display: 'flex', height: '100%' }}>
         <div style={{ flexGrow: 1 }}>
-        <DataGrid
-        rows={userRows}
-        disableSelectionOnClick
-        columns={columns}
-        pageSize={8}
-        checkboxSelection
-      />
+          <DataGrid
+            rows={data}
+            columns={columns}
+            pageSize={8}
+            disableSelectionOnClick
+            checkboxSelection />
         </div>
       </div>
-      
-    </div>
+      <Outlet />
+    </div></>
   );
 }

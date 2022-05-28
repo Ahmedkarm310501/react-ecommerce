@@ -4,14 +4,8 @@ import "./Admin.css";
 import {
   Home,
   Timeline,
-  TrendingUp,
   PermIdentity,
-  Storefront,
-  MailOutline,
-  DynamicFeed,
-  ChatBubbleOutline,
-  WorkOutline,
-  Report,
+  Storefront
 } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import "./Sidebar.css";
@@ -25,20 +19,21 @@ export default function AdminData() {
             <div className="sidebarMenu">
               <h3 className="sidebarTitle">Dashboard</h3>
               <ul className="sidebarList">
+
                 <Link to="/dashboard/home" className="link">
                   <li className="sidebarListItem active">
                     <Home className="sidebarIcon" />
                     Home
                   </li>
                 </Link>
+
+                <Link to="/dashboard/Allcharts" className="link">
                 <li className="sidebarListItem">
                   <Timeline className="sidebarIcon" />
-                  Analytics
+                  Charts
                 </li>
-                <li className="sidebarListItem">
-                  <TrendingUp className="sidebarIcon" />
-                  Sales
-                </li>
+                </Link>
+
               </ul>
             </div>
             <div className="sidebarMenu">
@@ -50,10 +45,16 @@ export default function AdminData() {
                     Users
                   </li>
                 </Link>
-                <Link to="/products" className="link">
+                <Link to="/dashboard/allProducts" className="link">
                   <li className="sidebarListItem">
                     <Storefront className="sidebarIcon" />
                     Products
+                  </li>
+                </Link>
+                <Link to="/dashboard/allorders" className="link">
+                  <li className="sidebarListItem">
+                    <Storefront className="sidebarIcon" />
+                    Orders
                   </li>
                 </Link>
               </ul>
