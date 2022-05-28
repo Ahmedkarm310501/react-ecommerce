@@ -24,11 +24,15 @@ import ReturnsData from "./pages/ReturnsData";
 import ScrollToTop from "./components/ScrollToTop";
 import Home from "./pages/Home";
 import { AuthContext } from "./store/auth-context";
+
 import Allcharts from "./pages/Admin/Chartpage";
 import User from "./pages/Admin/User";
 import NewUser from "./pages/Admin/NewUser";
 import Prod from "./pages/Admin/Prod";
 import NewProduct from "./pages/Admin/NewProduct";
+
+import CheckOut from "./pages/CheckOut";
+
 
 function App() {
   const AuthCtx = useContext(AuthContext);
@@ -79,7 +83,10 @@ function App() {
               <Route path="/home" element={<Home />} />
 
               <Route path="/product" element={<Product />} />
-              <Route path="/product-detials" element={<ProductDetials />} />
+              <Route
+                path="/product-detials/:productID"
+                element={<ProductDetials />}
+              />
               {!AuthCtx.isLoggedIn && (
                 <>
                   <Route path="/login" element={<Login />} />
@@ -89,6 +96,7 @@ function App() {
               {AuthCtx.isLoggedIn && (
                 <>
                   <Route path="/cart" element={<Cart />} />
+                  <Route path="/checkout" element={<CheckOut />} />
                   <Route path="/profile/*" element={<Profile />}>
                     <Route path="profile" element={<ProfileData />} />
                     <Route path="orders" element={<OrdersData />} />

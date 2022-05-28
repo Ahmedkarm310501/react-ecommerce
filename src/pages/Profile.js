@@ -6,7 +6,7 @@ const Profile = () => {
     <main className="profile">
       <div className="container ">
         <div className="row">
-          <div className="side col-12   col-md-3">
+          <div className="side col-12   col-md-3 py-5">
             <aside className="asid d-flex flex-row  flex-md-column ">
               <div className="link col">
                 <NavLink

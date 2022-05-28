@@ -3,7 +3,11 @@ import { useContext, useRef, useState } from "react";
 import { CartContext } from "../../store/cart-context";
 import { FavContex } from "../../store/fav-context";
 import Snackbar from "../layout/UI/Snackbar";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../store/auth-context";
+
 const ProductItem = (props) => {
+  const AuthCtx = useContext(AuthContext);
   const cartCtx = useContext(CartContext);
   const favCtx = useContext(FavContex);
   const snackbarRef = useRef(null);
@@ -34,25 +38,86 @@ const ProductItem = (props) => {
     setSnakbarMessage("product Added To Favourites !");
     snackbarRef.current.show();
   };
+
+   const addToCartHandler = () => {
+    fetch("http://127.0.0.1:8000/api/add_to_cart", {
+      method: "POST",
+      body: JSON.stringify({
+        token: AuthCtx.token,
+        product_id: props.id,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (res.ok) {
+        console.log("success");
+        res.json().then((data) => {
+          if (data.status == 200) {
+            console.log(data);
+            addToCart();
+          } else {
+            console.log("wrong");
+          }
+        });
+      } else {
+        res.json().then((data) => {
+          console.log(data);
+        });
+      }
+    });
+  };
+
+  const addToFavouriteHandler = () => {
+    fetch("http://127.0.0.1:8000/api/add_to_favourite", {
+      method: "POST",
+      body: JSON.stringify({
+        token: AuthCtx.token,
+        product_id: props.id,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (res.ok) {
+        console.log("success");
+        res.json().then((data) => {
+          if (data.status == 200) {
+            console.log(data);
+            addToFavourites();
+          } else {
+            console.log("wrong");
+          }
+        });
+      } else {
+        res.json().then((data) => {
+          console.log(data);
+        });
+      }
+    });
+  };
+
   return (
-    <div>
-      <li
-        className="card"
-        style={{ margin: "5px", width: "17rem", backgroundColor: "#85aeec" }}
-      >
-        <img src={props.image} className="card-img-top" alt="..." />
-        <div className="card-body">
-          <h5 className="card-title">{props.name}</h5>
-          <h4 className="card-text">
-            <b>{props.price}$</b>
-          </h4>
-          <h6 className="card-text">
+    <li
+      className="card"
+      style={{ margin: "5px", width: "17rem", backgroundColor: "#85aeec" }}
+    >
+      <Link to={`/product-detials/${props.id}`}>
+        <img src={props.photo} className="card-img-top" alt="..." />
+      </Link>
+      <div className="card-body">
+        <h5 className="card-title">{props.name}</h5>
+        <h4 className="card-text">
+          <b>{+props.price}$</b>
+        </h4>
+        {/* <h6 className="card-text">
             <del>{props.price + 20}$</del>
-          </h6>
+          </h6> */}
+        <div className="buttons d-flex flex-between">
           <button
-            style={{ margin: "3px", backgroundColor: "green" }}
-            className="btn btn-primary"
-            onClick={addToCart}
+            style={{ backgroundColor: "green" }}
+            className=" btn btn-primary"
+            onClick={addToCartHandler}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -74,7 +139,7 @@ const ProductItem = (props) => {
               type={"success"}
             />
           }
-          <button className="btn btn-primary" onClick={addToFavourites}>
+          <button className="btn btn-primary" onClick={addToFavouriteHandler}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -91,8 +156,8 @@ const ProductItem = (props) => {
             To Favourite
           </button>
         </div>
-      </li>
-    </div>
+      </div>
+    </li>
   );
 };
 

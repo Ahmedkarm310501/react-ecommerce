@@ -40,7 +40,7 @@ const MainNavigation = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-5 sticky-top">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
       <div className="container">
         <a
           style={{ fontSize: "2.5rem" }}

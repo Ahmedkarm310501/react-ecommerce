@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Ads from "../components/layout/Ads";
 import Products from "./Products";
 import classes from "../components/layout/Cart.module.css";
-const products = [
+const listProducts = [
   {
     id: 1,
     brand: "realme",
@@ -66,6 +66,34 @@ const products = [
 ];
 
 const Product = () => {
+  const [products, setProducts] = useState([]);
+
+  
+  useEffect(() => {
+    fetch("http://127.0.0.1:8000/api/all-products", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (res.ok) {
+        console.log("success");
+        res.json().then((data) => {
+          if (data.status == 200) {
+            console.log(data);
+            setProducts(data.products);
+          } else {
+            console.log("wrong");
+          }
+        });
+      } else {
+        res.json().then((data) => {
+          console.log(data);
+        });
+      }
+    });
+  }, []);
+
   return (
     <div className="container">
       <div className={`${classes.Itemcols}`}>
@@ -77,4 +105,4 @@ const Product = () => {
   );
 };
 
-      export default Product;
+export default Product;

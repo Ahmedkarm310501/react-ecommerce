@@ -38,14 +38,27 @@ const Register = () => {
     inputBlurHandler: pass2BlurHandler,
     reset: resetPass2Input,
   } = useInput((value) => value.match(enteredPass1));
+  var dateFrom = "01/01/1930";
+  var dateTo = "01/01/2005";
 
+  var from = Date.parse(dateFrom);
+  var to = Date.parse(dateTo);
+  const {
+    value: enteredDate,
+    isValid: enteredDateIsValid,
+    hasError: dateHasError,
+    valueChangeHandler: dateChangedHandler,
+    inputBlurHandler: dateBlurHandler,
+    reset: resetDateInput,
+  } = useInput((value) => Date.parse(value) <= to && Date.parse(value) >= from);
   let formIsValid = false;
 
   if (
     enteredNameIsValid &&
     enteredEmailIsValid &&
     enteredPass1IsValid &&
-    enteredPass2IsValid
+    enteredPass2IsValid &&
+    enteredDateIsValid
   ) {
     formIsValid = true;
   }
@@ -61,6 +74,7 @@ const Register = () => {
         name: enteredName,
         email: enteredEmail,
         password: enteredPass1,
+        date_of_birth: enteredDate,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -194,6 +208,32 @@ const Register = () => {
                 }
               >
                 Its not the same password
+              </div>
+            )}
+          </div>
+
+          <div className="mb-3 col-sm-12 col-md-6">
+            <label htmlFor="date">Enter Date</label>
+            <input
+              type="date"
+              title="Enter Date"
+              id="date"
+              className={dateHasError ? `${classes.invalid}` : ``}
+              onChange={dateChangedHandler}
+              onBlur={dateBlurHandler}
+              value={enteredDate}
+              required
+            />
+            {dateHasError && (
+              <div
+                id="date"
+                className={
+                  dateHasError
+                    ? `form-text ${classes["text-inavalid"]}`
+                    : `form-text`
+                }
+              >
+                Date must be between 1930 and 2004
               </div>
             )}
           </div>

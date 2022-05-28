@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useContext, useRef } from "react";
 import Modal from "../components/layout/UI/Modal";
 import useInput from "../hooks/use-input";
+import { AuthContext } from "../store/auth-context";
+import Snackbar from "../components/layout/UI/Snackbar";
 
 const ResetPassword = (props) => {
+  const AuthCtx = useContext(AuthContext);
+  const snackbarRef = useRef(null);
   const {
     value: enteredCur,
     isValid: enteredCurIsValid,
@@ -10,11 +14,7 @@ const ResetPassword = (props) => {
     valueChangeHandler: curChangedHandler,
     inputBlurHandler: curBlurHandler,
     reset: resetCurInput,
-  } = useInput((value) =>
-    value.match(
-      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/
-    )
-  );
+  } = useInput((value) => value.match(/^(?=.*\d)(?=.*[a-z]).{6,20}$/));
 
   const {
     value: enteredNew1,
@@ -23,11 +23,7 @@ const ResetPassword = (props) => {
     valueChangeHandler: new1ChangedHandler,
     inputBlurHandler: new1BlurHandler,
     reset: resetNew1Input,
-  } = useInput((value) =>
-    value.match(
-      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/
-    )
-  );
+  } = useInput((value) => value.match(/^(?=.*\d)(?=.*[a-z]).{6,20}$/));
 
   const {
     value: enteredNew2,
@@ -49,10 +45,34 @@ const ResetPassword = (props) => {
     if (!formIsValid) {
       return;
     }
-    resetCurInput();
-    resetNew1Input();
-    resetNew2Input();
-    console.log(enteredCur, enteredNew1, enteredNew2);
+    fetch("http://127.0.0.1:8000/api/reset-pasword", {
+      method: "POST",
+      body: JSON.stringify({
+        token: AuthCtx.token,
+        password: enteredCur,
+        newpassword: enteredNew1,
+        repassword: enteredNew2,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (res.ok) {
+        console.log("success");
+        res.json().then((data) => {
+          if (data.status == 200) {
+            snackbarRef.current.show();
+            props.onClose();
+          } else {
+            console.log("wrong");
+          }
+        });
+      } else {
+        res.json().then((data) => {
+          console.log(data);
+        });
+      }
+    });
   };
 
   return (
@@ -129,6 +149,13 @@ const ResetPassword = (props) => {
         <button className="secubtn btn-secondary" onClick={props.onClose}>
           Cancel
         </button>
+        {
+          <Snackbar
+            ref={snackbarRef}
+            message="Password Updated  Successfully!"
+            type={"success"}
+          />
+        }
       </form>
     </Modal>
   );

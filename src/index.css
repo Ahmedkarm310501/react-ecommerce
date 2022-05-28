@@ -15,6 +15,25 @@ body {
   font-family: "Cairo", sans-serif;
 }
 
+ul a, ul a:hover {
+  text-decoration: none !important;
+  color: black;
+  
+}
+
+.zz {
+  z-index: 100;
+}
+
+.pointer {
+  cursor: pointer;
+  
+}
+
+.img-hover::before {
+  content: "";
+}
+
 .loader {
   display: flex;
   height: 100vh;
@@ -175,6 +194,25 @@ div.type {
   padding: 10px;
 }
 
+.typee {
+  display: flex;
+}
+
+.typee div {
+  width: 150px;
+
+  padding: 10px;
+}
+
+div.typee {
+  font-weight: bold;
+}
+
+.typee span {
+  padding: 10px;
+  color: rgb(155, 160, 177);
+}
+
 
 .last {
   display: flex;
@@ -190,7 +228,7 @@ div.type {
 /*test*/
 
 
-.fav {
+.fav, .add {
   border: 2px solid #ededed;
   border-radius: 10px;
 }
@@ -272,4 +310,11 @@ button svg {
 
 .no-items button {
   font-size: 2rem;
+}
+
+/*Checkout*/
+
+.rad {
+  margin-top: 14px;
+  width: fit-content;
 }

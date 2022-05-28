@@ -1,12 +1,17 @@
 import React from "react";
-import { useContext, useRef, useState } from "react";
+import { useContext, useRef, useState, useEffect } from "react";
 import { CartContext } from "../store/cart-context";
 import { Link } from "react-router-dom";
 import Snackbar from "../components/layout/UI/Snackbar";
+import { AuthContext } from "../store/auth-context";
 
 const Cart = () => {
+  const AuthCtx = useContext(AuthContext);
   const cartCtx = useContext(CartContext);
-  const products = cartCtx.items;
+  const [products, setProducts] = useState([]);
+  const [quantity, setQuantity] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(null);
+  //const products = cartCtx.items;
   const snackbarRef = useRef(null);
   const [snakbarMessage, setSnakbarMessage] = useState("");
   const addItem = (product) => {
@@ -27,12 +32,148 @@ const Cart = () => {
     cartCtx.removeAllItem(id);
     setSnakbarMessage("Items removed successfully !");
     snackbarRef.current.show();
-  }; 
+  };
+
+  useEffect(() => {
+    fetch("http://127.0.0.1:8000/api/get_cart_total", {
+      method: "POST",
+      body: JSON.stringify({
+        token: AuthCtx.token,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (res.ok) {
+        console.log("success");
+        res.json().then((data) => {
+          if (data.status == 200) {
+            console.log(data);
+            setProducts(data.products);
+            setQuantity(data.cartID);
+            setTotalPrice(data.total_price);
+          } else {
+            console.log("wrong");
+          }
+        });
+      } else {
+        res.json().then((data) => {
+          console.log(data);
+        });
+      }
+    });
+  }, []);
+
+  const addToCartHandler = (id, index) => {
+    fetch("http://127.0.0.1:8000/api/add_to_cart", {
+      method: "POST",
+      body: JSON.stringify({
+        token: AuthCtx.token,
+        product_id: id,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (res.ok) {
+        console.log("success");
+        res.json().then((data) => {
+          if (data.status == 200) {
+            console.log(data);
+            const newQuantity = [...quantity, { id: index }];
+            newQuantity[index].quantity++;
+            const newPrice = +totalPrice + +products[index].price;
+            setTotalPrice(newPrice);
+            setQuantity(newQuantity);
+            console.log(quantity);
+          } else {
+            console.log("wrong");
+          }
+        });
+      } else {
+        res.json().then((data) => {
+          console.log(data);
+        });
+      }
+    });
+  };
+  const removeToCartHandler = (id, index) => {
+    fetch("http://127.0.0.1:8000/api/delete_one_cart", {
+      method: "DELETE",
+      body: JSON.stringify({
+        token: AuthCtx.token,
+        product_id: id,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (res.ok) {
+        console.log("success");
+        res.json().then((data) => {
+          if (data.status == 200) {
+            console.log(data);
+            const newQuantity = [...quantity, { id: index }];
+            newQuantity[index].quantity--;
+            const newPrice = +totalPrice - +products[index].price;
+            setTotalPrice(newPrice);
+            if (newQuantity[index].quantity == 0) {
+              console.log("less zero");
+              setQuantity(newQuantity.filter((pro) => pro.id !== id));
+              const newProducts = products.filter((pro) => pro.id !== id);
+              setProducts(newProducts);
+            } else {
+              setQuantity(newQuantity);
+            }
+            console.log(quantity);
+          } else {
+            console.log("wrong");
+          }
+        });
+      } else {
+        res.json().then((data) => {
+          console.log(data);
+        });
+      }
+    });
+  };
+  const removeAllCartHandler = (id) => {
+    fetch("http://127.0.0.1:8000/api/delete_all_cart", {
+      method: "DELETE",
+      body: JSON.stringify({
+        token: AuthCtx.token,
+        product_id: id,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (res.ok) {
+        console.log("success");
+        res.json().then((data) => {
+          if (data.status == 200) {
+            console.log(data);
+            const newProducts = products.filter((pro) => pro.id !== id);
+            const newCartId = quantity.filter((pro) => pro.id !== id);
+            setProducts(newProducts);
+            setQuantity(newCartId);
+          } else {
+            console.log("wrong");
+          }
+        });
+      } else {
+        res.json().then((data) => {
+          console.log(data);
+        });
+      }
+    });
+  };
+
   return (
-    <div className="cart">
+    <div className="cart py-5">
       <div className="container">
         <div className="row">
-          {cartCtx.items.length > 0 ? (
+          {products.length > 0 ? (
             <>
               <div className="items order-2 order-lg-1 col-12 col-lg-8 ">
                 <div className="con bg-white pb-2">
@@ -49,26 +190,23 @@ const Cart = () => {
                   }
                   {products.map((product, index) => {
                     return (
-                      <div className="item mx-3" key={product.id}>
+                      <div className="item mx-3" key={index}>
                         <div className="data mb-2 pb-2 d-flex justify-content-between">
                           <img
-                            src={product.image}
-                            width={"72px"}
-                            height={"72px"}
+                            src={`http://localhost:8000/${product.photo}`}
+                            width={"82px"}
+                            height={"82px"}
                           />
                           <div className="name ">
-                            <span className="light fs-4">{product.brand}</span>
-                            <br />
-                            <span className="fs-5">{product.name}</span>
+                            <span className="fs-4">{product.name}</span>
                           </div>
-                          <div className="price fs-4">EGP {product.price}</div>
+                          <div className="price fs-4">EGP {+product.price}</div>
                         </div>
-
                         <div className="buttons d-flex justify-content-between">
                           <button
                             className="remove secubtn btn-danger d-flex justify-content-between align-items-center"
                             onClick={() => {
-                              removeAllItem(product.id);
+                              removeAllCartHandler(product.id);
                             }}
                           >
                             <svg
@@ -91,16 +229,19 @@ const Cart = () => {
                             <button
                               className="secubtn "
                               onClick={() => {
-                                removeItem(product.id);
+                                removeToCartHandler(product.id, index);
                               }}
                             >
                               -
                             </button>
-                            <div className="mx-2">{product.amount}</div>
+                            <div className="mx-2">
+                              {console.log(quantity)}
+                              {quantity[index].quantity}
+                            </div>
                             <button
                               className="secubtn"
                               onClick={() => {
-                                addItem(product);
+                                addToCartHandler(product.id, index);
                               }}
                             >
                               +
@@ -120,7 +261,7 @@ const Cart = () => {
                   </div>
                   <div className="sec d-flex justify-content-between p-3 fs-5 ">
                     <div>Subtotal ({products.length} items)</div>
-                    <div>EGP {cartCtx.totalAmount}</div>
+                    <div>EGP {totalPrice}</div>
                   </div>
                   <div className="sec d-flex justify-content-between p-3 fs-5">
                     <div>Shipping Details</div>
@@ -129,12 +270,14 @@ const Cart = () => {
                   <hr />
                   <div className="sec d-flex justify-content-between p-3 fs-5">
                     <div>Total</div>
-                    <div>EGP {cartCtx.totalAmount}</div>
+                    <div>EGP {totalPrice}</div>
                   </div>
                   <div className="d-flex justify-content-center p-3 fs-5">
-                    <button className="secubtn" style={{ width: "100%" }}>
-                      CHECKOUT
-                    </button>
+                    <Link to="/checkout" className="w-100">
+                      <button className="secubtn" style={{ width: "100%" }}>
+                        CHECKOUT
+                      </button>
+                    </Link>
                   </div>
                 </div>
               </div>
