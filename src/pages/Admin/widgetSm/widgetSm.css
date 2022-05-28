@@ -1,8 +1,7 @@
 .widgetSm{
-    flex: 1;
     -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
     box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
-    padding: 20px;
+    padding:  20px;
     margin-right: 20px;
 }
 
@@ -25,7 +24,7 @@
 }
 
 .widgetSmListItem{
-    display: flex;
+    display:flex;
     align-items: center;
     justify-content: space-between;
     margin: 20px 0px;
@@ -41,18 +40,8 @@
 }
 
 .widgetSmUserTitle{
+    
     font-weight: 300;
-}
-
-.widgetSmButton{
-    display: flex;
-    align-items: center;
-    border: none;
-    border-radius: 10px;
-    padding: 7px 10px;
-    background-color: #eeeef7;
-    color: #555;
-    cursor: pointer;
 }
 
 .widgetSmIcon{

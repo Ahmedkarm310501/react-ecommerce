@@ -1,14 +1,15 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState , useRef} from "react";
 import classes from "./Login.module.css";
 import useInput from "../hooks/use-input";
 import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../store/auth-context";
+import Snackbar from "../components/layout/UI/Snackbar";
 
 const Login = () => {
   const navigation = useNavigate();
   const [emailOrPasswordError, setEmailOrPasswordError] = useState(false);
   const AuthCtx = useContext(AuthContext);
-
+  const snackbarRef = useRef(null);
   const {
     value: enteredEmail,
     isValid: enteredEmailIsValid,
@@ -61,7 +62,14 @@ const Login = () => {
           if (data.isAdmin === 0) {
             navigation("/home", { replace: true });
           } else {
-            navigation("/admin", { replace: true });
+            navigation("/dashboard", { replace: true });
+            snackbarRef.current.show();
+            <Snackbar
+            ref={snackbarRef}
+            message="Welcome Admin!"
+            type={"success"}
+          />
+          
           }
         });
       } else {

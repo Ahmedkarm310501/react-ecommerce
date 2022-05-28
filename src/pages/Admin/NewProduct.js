@@ -1,4 +1,4 @@
-import "./newProduct.css";
+import "./NewProduct.css";
 
 export default function NewProduct() {
   return (
@@ -14,8 +14,8 @@ export default function NewProduct() {
           <input type="text" placeholder="Apple Airpods" />
         </div>
         <div className="addProductItem">
-          <label>Stock</label>
-          <input type="text" placeholder="123" />
+          <label>Price</label>
+          <input type="text" placeholder="$4000" />
         </div>
         <div className="addProductItem">
           <label>Active</label>
