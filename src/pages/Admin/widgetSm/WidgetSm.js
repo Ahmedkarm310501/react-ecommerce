@@ -17,9 +17,10 @@ export default function WidgetSm() {
       if (res.ok) {
         console.log("success");
         res.json().then((data) => {
-          if (data.status === "200") {
-            setadd(data.newusers);
-            console.log(data.newusers);
+          if (data.status == 200) {
+            let newArrayDataOfOjbect = Object.values(data.newusers);
+            console.log(newArrayDataOfOjbect);
+            setadd(newArrayDataOfOjbect);
           }
         });
       } else {
@@ -33,25 +34,25 @@ export default function WidgetSm() {
 
   return (
     <div className="widgetSm">
-            <span className="widgetSmTitle">New Join Members</span>
-            <ul className="widgetSmList">
-            {[add].map((newusers) => {
-            return (
-              <li className="widgetSmListItem">
-                <img
-                  src={newusers.profile_photo_path}
-                  alt=""
-                  className="widgetSmImg"
-                />
-                <div className="widgetSmUser">
-                  <span className="widgetSmUsername">{newusers.name}</span>
-                  <span className="widgetSmUserTitle">{newusers.email}</span>
-                </div>
-              </li>
-              );
-            })}
-            </ul>
-          </div>
-
+      <span className="widgetSmTitle">New Join Members</span>
+      <ul className="widgetSmList">
+        {console.log(add)}
+        {add.map((newusers, index) => {
+          return (
+            <li className="widgetSmListItem" key={index}>
+              <img
+                src={`http://localhost:8000/${newusers.profile_photo_path}`}
+                alt=""
+                className="widgetSmImg"
+              />
+              <div className="widgetSmUser">
+                <span className="widgetSmUsername">{newusers.name}</span>
+                <span className="widgetSmUserTitle">{newusers.email}</span>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
   );
 }

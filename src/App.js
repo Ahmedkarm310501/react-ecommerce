@@ -33,7 +33,6 @@ import NewProduct from "./pages/Admin/NewProduct";
 
 import CheckOut from "./pages/CheckOut";
 
-
 function App() {
   const AuthCtx = useContext(AuthContext);
   const [loading, setloading] = useState(false);
@@ -108,16 +107,19 @@ function App() {
                 </>
               )}
 
-              { AuthCtx.isAdmin &&(
+              {AuthCtx.isAdmin && (
                 <>
                   <Route path="/dashboard/*" element={<AdminData />}>
                     <Route path="home" element={<Homepage />} />
                     <Route path="allUsers" element={<UserList />} />
                     <Route path="allUsers/user/:userid" element={<User />} />
                     <Route path="allProducts" element={<ProductList />} />
-                    <Route path="allProducts/product/:productid" element={<Prod/>} />
-                    <Route path="allProducts/product/:productid/newproduct" element={<NewProduct/>} />
-                    <Route path="allUsers/user/:userid/newUser" element={<NewUser />} />
+                    <Route
+                      path="allProducts/product/:productid"
+                      element={<Prod />}
+                    />
+                    <Route path="newproduct" element={<NewProduct />} />
+                    <Route path="newUser" element={<NewUser />} />
                     <Route path="allOrders" element={<OrdersList />} />
                     <Route path="Allcharts" element={<Allcharts />} />
                     <Route path="" element={<Navigate to="home" />} />

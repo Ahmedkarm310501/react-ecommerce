@@ -1,72 +1,81 @@
 import "./Charts.css";
 import React from "react";
-import { Area, Bar, CartesianGrid, ComposedChart, Legend, Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import {
+  Area,
+  Bar,
+  CartesianGrid,
+  ComposedChart,
+  Legend,
+  BarChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 
-const data = [
-    {
-      name: "Product A",
-      uv: 590,
-      pv: 800,
-      amt: 1400
-    },
-    {
-      name: "Product B",
-      uv: 868,
-      pv: 967,
-      amt: 1506
-    },
-    {
-      name: "Product C",
-      uv: 1397,
-      pv: 1098,
-      amt: 989
-    },
-    {
-      name: "Product D",
-      uv: 1480,
-      pv: 1200,
-      amt: 1228
-    },
-    {
-      name: "Product E",
-      uv: 1520,
-      pv: 1108,
-      amt: 1100
-    },
-    {
-      name: "Product F",
-      uv: 1400,
-      pv: 680,
-      amt: 1700
-    }
-  ];
+// const data = [
+//   {
+//     name: "Product A",
 
-export default function ComCharts({ title,
-    // dataKey1 , dataKey2 , dataKey3, dataKey4
-}) {
+//     pv: 800,
+//     amt: 1400,
+//   },
+//   {
+//     name: "Product B",
+
+//     pv: 967,
+//     amt: 1506,
+//   },
+//   {
+//     name: "Product C",
+
+//     pv: 1098,
+//     amt: 989,
+//   },
+//   {
+//     name: "Product D",
+
+//     pv: 1200,
+//     amt: 1228,
+//   },
+//   {
+//     name: "Product E",
+
+//     pv: 1108,
+//     amt: 1100,
+//   },
+//   {
+//     name: "Product F",
+
+//     pv: 680,
+//     amt: 1700,
+//   },
+// ];
+
+export default function ComCharts({ title, data, dataKey, nameKey }) {
   return (
     <div className="chart">
       <h3 className="chartTitle">{title}</h3>
       <ResponsiveContainer width="100%" aspect={4 / 1}>
-      <ComposedChart
-          width={800}
-          height={400}
+        <BarChart
+          width={500}
+          height={500}
           data={data}
           margin={{
-            top: 20,
-            right: 20,
-            bottom: 20,
-            left: 20
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5,
           }}
         >
-          <CartesianGrid stroke="#f5f5f5" />
-          <XAxis dataKey="name" scale="band" />
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey={nameKey} />
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="pv" barSize={20} fill="#413ea0" />
-        </ComposedChart>
-</ResponsiveContainer>
+          <Bar dataKey={dataKey} fill="#8884d8" />
+        </BarChart>
+      </ResponsiveContainer>
     </div>
   );
 }

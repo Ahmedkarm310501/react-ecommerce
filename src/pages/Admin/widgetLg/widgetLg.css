@@ -43,14 +43,13 @@
   border-radius: 10px;
 }
 
-.widgetLgButton.Approved{
+.widgetLgButton.Confirmed{
     background-color: #e5faf2;
     color: #3bb077;
 }
 .widgetLgButton.Declined{
     background-color: #fff0f1;
     color: #d95087;
-
 }
 .widgetLgButton.Pending{
     background-color: #ebf1fe;

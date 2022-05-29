@@ -103,6 +103,13 @@ const MainNavigation = () => {
                 </li>
               </>
             )}
+            {AuthCtx.isAdmin && (
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/dashboard">
+                  Dashboard
+                </NavLink>
+              </li>
+            )}
 
             {AuthCtx.isLoggedIn && (
               <li className="nav-item">

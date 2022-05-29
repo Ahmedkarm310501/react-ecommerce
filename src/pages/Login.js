@@ -1,4 +1,4 @@
-import React, { useContext, useState , useRef} from "react";
+import React, { useContext, useState, useRef } from "react";
 import classes from "./Login.module.css";
 import useInput from "../hooks/use-input";
 import { useNavigate, Link } from "react-router-dom";
@@ -17,7 +17,7 @@ const Login = () => {
     valueChangeHandler: emailChangedHandler,
     inputBlurHandler: emailBlurHandler,
     reset: resetEmailInput,
-  } = useInput((value) => value.includes("@") && value.includes("."));
+  } = useInput((value) => value.length >= 2);
   const {
     value: enteredPass1,
     isValid: enteredPass1IsValid,
@@ -39,7 +39,7 @@ const Login = () => {
     fetch("http://127.0.0.1:8000/api/login", {
       method: "POST",
       body: JSON.stringify({
-        email: enteredEmail,
+        name: enteredEmail,
         password: enteredPass1,
       }),
       headers: {
@@ -61,20 +61,8 @@ const Login = () => {
           console.log(data.username);
           if (data.isAdmin === 0) {
             navigation("/home", { replace: true });
-
-          } else {
-            navigation("/dashboard", { replace: true });
-            snackbarRef.current.show();
-            <Snackbar
-            ref={snackbarRef}
-            message="Welcome Admin!"
-            type={"success"}
-          />
-          
-
           } else if (data.isAdmin === 1) {
             navigation("/dashboard", { replace: true });
-
           }
         });
       } else {
@@ -101,14 +89,14 @@ const Login = () => {
               <hr />
             </div>
             <div className="mb-3 col-12">
-              <label htmlFor="Email1">Email address</label>
+              <label htmlFor="Email1">User name</label>
               <input
-                type="email"
+                type="text"
                 className={emailInputHasError ? ` ${classes.invalid}` : ``}
                 id="Email1"
-                title={`please enter valid email contains "@" and "."`}
+                title={`more than 2 charcter`}
                 aria-describedby="emailHelp"
-                placeholder="Enter Email"
+                placeholder="Enter User name"
                 onChange={emailChangedHandler}
                 onBlur={() => {
                   emailBlurHandler();
@@ -126,7 +114,7 @@ const Login = () => {
                       : `form-text`
                   }
                 >
-                  please enter valid email contains "@" and "."
+                  more than 2 charcter
                 </div>
               )}
             </div>
