@@ -61,7 +61,22 @@ const Login = () => {
           console.log(data.username);
           if (data.isAdmin === 0) {
             navigation("/home", { replace: true });
+
+
+          } else {
+            navigation("/dashboard", { replace: true });
+            snackbarRef.current.show();
+            <Snackbar
+            ref={snackbarRef}
+            message="Welcome Admin!"
+            type={"success"}
+          />
+          
+
+          } if (data.isAdmin === 1) {
+
           } else if (data.isAdmin === 1) {
+
             navigation("/dashboard", { replace: true });
           }
         });

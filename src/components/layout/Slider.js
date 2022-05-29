@@ -6,6 +6,7 @@ import { carousel } from "react-bootstrap";
 import classes from "../layout/Slider.module.css";
 export default function Slider() {
   return (
+
     <div className="container my-5 rounded-50">
       <div
         id="carouselExampleDark"
