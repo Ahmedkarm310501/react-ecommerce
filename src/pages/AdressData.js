@@ -113,7 +113,8 @@ const AdressData = () => {
         res.json().then((data) => {
           if (data.status == 200) {
             console.log(data);
-            setAdd(data.addresses);
+            let newArrayDataOfOjbect = Object.values(data.addresses);
+            setAdd(newArrayDataOfOjbect);
           } else {
             console.log("wrong");
           }

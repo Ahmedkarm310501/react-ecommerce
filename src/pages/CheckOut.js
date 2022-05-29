@@ -49,7 +49,9 @@ const CheckOut = () => {
             if (data.productIDs.length == 0) {
               navigation("/home", { replace: true });
             }
-            setAddress(data.addresses);
+            let newArrayDataOfOjbect = Object.values(data.addresses);
+
+            setAddress(newArrayDataOfOjbect);
             setSubTotal(data.total_price);
             setTotal(data.total_price);
             setProductIDs(data.productIDs);

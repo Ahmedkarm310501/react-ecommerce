@@ -144,7 +144,6 @@ const Register = () => {
               placeholder="Eneter Email"
               required
             />
-
             {emailInputHasError && (
               <div
                 id="emailHelp"
