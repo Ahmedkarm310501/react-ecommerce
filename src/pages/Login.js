@@ -72,7 +72,7 @@ const Login = () => {
           />
           
 
-          } else if (data.isAdmin === 1) {
+          } if (data.isAdmin === 1) {
             navigation("/dashboard", { replace: true });
 
           }
