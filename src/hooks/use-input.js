@@ -20,6 +20,10 @@ const useInput = (validateValue) => {
     setIsTouched(false);
   };
 
+  const setValue = (value) => {
+    setEnteredValue(value);
+  };
+
   return {
     value: enteredValue,
     isValid: valueIsValid,
@@ -27,6 +31,7 @@ const useInput = (validateValue) => {
     valueChangeHandler,
     inputBlurHandler,
     reset,
+    setValue,
   };
 };
 

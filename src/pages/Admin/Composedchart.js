@@ -1,50 +1,30 @@
 import "./Charts.css";
 import React from "react";
-import { Area, Bar, CartesianGrid, ComposedChart, Legend, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-
-// export default function ComCharts({
-//   title,
-//   data,
-//   dataKey,
-//   nameKey,
-//   // dataKey1 , dataKey2 , dataKey3, dataKey4
-// }) {
-//   return (
-//     <div className="chart">
-//       <h3 className="chartTitle">{title}</h3>
-//       <ResponsiveContainer width="100%" aspect={4 / 1}>
-//         <ComposedChart
-//           width={800}
-//           height={400}
-//           data={data}
-//           margin={{
-//             top: 20,
-//             right: 20,
-//             bottom: 20,
-//             left: 20,
-//           }}
-//         >
-//           <CartesianGrid stroke="#f5f5f5" />
-//           {/* <XAxis dataKey="name" scale="band" /> */}
-//           <XAxis dataKey="name" scale="band" />
-//           <YAxis />
-//           <Tooltip />
-//           <Legend />
-//           <Bar dataKey={dataKey} barSize={20} fill="#413ea0" />
-//           {/* <Bar dataKey="pv" barSize={20} fill="#413ea0" /> */}
-//         </ComposedChart>
-//       </ResponsiveContainer>
-//     </div>
-//   );
 
 export default function ComCharts({ title,data,dataKey,dataname}) {
+import {
+  Area,
+  Bar,
+  CartesianGrid,
+  ComposedChart,
+  Legend,
+  BarChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
+
+export default function ComCharts({ title, data, dataKey, nameKey }) {
+
   return (
     <div className="chart">
       <h3 className="chartTitle">{title}</h3>
       <ResponsiveContainer width="100%" aspect={4 / 1}>
         <BarChart
           width={500}
-          height={300}
+          height={500}
+
           data={data}
           margin={{
             top: 5,
@@ -54,7 +34,8 @@ export default function ComCharts({ title,data,dataKey,dataname}) {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataname={dataname} />
+          <XAxis dataKey={nameKey} />
+
           <YAxis />
           <Tooltip />
           <Legend />
