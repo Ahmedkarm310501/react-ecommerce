@@ -1,7 +1,5 @@
 import "./Charts.css";
 import React from "react";
-
-export default function ComCharts({ title,data,dataKey,dataname}) {
 import {
   Area,
   Bar,
