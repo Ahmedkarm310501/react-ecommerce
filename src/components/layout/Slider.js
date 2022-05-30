@@ -7,7 +7,7 @@ import React from "react";
 export default function Slider() {
   return (
       
-    <div className="container" >
+    <div className="container my-5" >
       <div
         id="carouselExampleDark"
         className="carousel carousel-dark slide"
