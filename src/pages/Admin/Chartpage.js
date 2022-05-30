@@ -7,6 +7,7 @@ import { productRows, userData } from "./dummyData";
 import { Outlet } from "react-router-dom";
 import ComCharts from "./Composedchart";
 import { AuthContext } from "../../store/auth-context";
+
 export default function Allcharts() {
   const [userDataa, setUserData] = useState([]);
   const [userStatus, setUserStatus] = useState([]);
