@@ -8,6 +8,11 @@ const Home = () => {
   return (
     <>
       <Slider />
+      <div class="row">
+        <div class="col-1">col-4</div>
+        <div class="col-10">col-8</div>
+        <div class="col-1">col-4</div>
+      </div>
       <div class="container">
         <div class="row">
           <div class="col">
@@ -17,6 +22,10 @@ const Home = () => {
               controls
               autostart
               autoPlay
+              style={{
+                boxShadow:
+                  "0 4px 20px 8px rgb(10, 128, 202), 0 10px 50px 0 rgb(10, 128, 202)",
+              }}
               src={Video1}
               type="video/mp4"
             />
@@ -28,13 +37,16 @@ const Home = () => {
               controls
               autostart
               autoPlay
+              style={{
+                boxShadow:
+                  "0 4px 20px 8px rgb(10, 128, 202), 0 10px 50px 0 rgb(10, 128, 202)",
+              }}
               src={Video2}
               type="video/mp4"
             />
           </div>
         </div>
       </div>
-
       <Ads />
       <div style={{ width: "100%" }}>
         <Product />

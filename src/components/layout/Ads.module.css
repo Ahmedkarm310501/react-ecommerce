@@ -13,14 +13,15 @@
 
 .bannercon {
     display: flex;
+    width: 100%;
     align-items: center;
     justify-content: center;
 }
 
 .bannercon .banner {
-    background: linear-gradient(-55deg, #cc4292 29%, #d63031 29.1%, #d63031 68%, #1380da 68.1%);
+    background: linear-gradient(90deg, rgba(255,230,230,1) 0%, rgba(9,9,121,1) 62%, rgba(3,7,16,1) 100%);
     border-radius: 5px;
-    margin: 20px 100px 20px 100px;
+    margin: 10px 50px 10px 50px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -71,6 +72,7 @@
     color: #d63031;
     margin: 5px auto;
     text-decoration: none;
+    border-radius: 20px;
 }
 
 .bannercon .banner .women {

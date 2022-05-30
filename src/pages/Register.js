@@ -94,10 +94,11 @@ const Register = () => {
     });
   };
   return (
-    <div className={`container`}>
+    <div className={`container my-5`} >
       <form
         className={`m-auto col-sm-10 col-md-10 col-lg-8 ${classes.form} container bg-white`}
         onSubmit={formSubmissionHandler}
+        style={{ boxShadow: "0 4px 20px 8px rgb(0, 173, 181), 0 10px 50px 0 rgb(0, 173, 181)" }}
       >
         <div className="row">
           <h1 className="color">Register</h1>

@@ -4,6 +4,7 @@ import pc from "../pics/ads/pc.png";
 import women from "../pics/ads/women.png";
 export default function Ads() {
   return (
+    <div className="container">
     <div className={classes.bannercon}>
       <div className={classes.banner}>
         <div className={classes.pc}>
@@ -21,6 +22,7 @@ export default function Ads() {
           <img src={women} alt="" />
         </div>
       </div>
+    </div>
     </div>
   );
 }
