@@ -5,7 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background:url(./components/pics/technology-circle-blue-background-digital-transformation-concept.jpg)!important;
+  background:url(./components/pics/3d-abstract-background-with-futuristic-particles.jpg)!important;
   background: 100% 100% no-repeat;
 }
 
@@ -290,6 +290,7 @@ button svg {
   border-radius: 50%;
   z-index: 100;
   top: 20px;
+
 }
 
 
@@ -320,3 +321,133 @@ button svg {
   margin-top: 14px;
   width: fit-content;
 }
+
+
+.banner_main {
+  background: url(../src/components/pics/3d-render-background-design-network-communications.jpg);
+  background-repeat: no-repeat;
+  min-height: 900px;
+  background-size: 100% 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  position: relative;
+}
+.banner_main::before {
+  position: absolute;
+  content: "";
+  width:50px; 
+  height:40px;
+  background: url(../src/components/pics/cross.png);
+  background-repeat: no-repeat;
+  bottom: -38px;
+  right: 38px;
+}
+.banner_main::after {
+  position: absolute;
+  content: "";
+  width:50px; 
+  height:40px;
+  background: url(../src/components/pics/cross.png);
+  background-repeat: no-repeat;
+  bottom: -38px;
+  left: 38px;
+}
+.text-bg {
+  text-align: left;
+}
+
+.text-bg h1 {
+  color: #fff;
+  font-size: 81px;
+  line-height: 80px;
+  padding-bottom: 45px;
+  font-weight: bold;
+}
+
+.text-bg span {
+  color: #fff;
+  font-size: 42px;
+  line-height: 50px;
+  font-weight: normal;
+  padding-bottom: 18px;
+  display: block;
+}
+
+.text-bg p {
+  line-height: 28px;
+  font-weight: 500;
+  padding-bottom: 60px;
+  display: block;
+}
+
+.text-bg figure img {
+  width: 100%;
+  padding-top: 70px;
+}
+
+.text_img {
+  margin-right: -130px;
+}
+
+.text_img figure {
+  margin: 0;
+}
+
+.text_img figure img {
+  width: 100%;
+}
+
+.carousel-caption {
+  position: inherit;
+}
+
+#banner1 .carousel-inner {
+  padding-right: 130px;
+}
+
+#banner1 .carousel-indicators {
+  left: inherit;
+  bottom: 40px;
+}
+
+#banner1 .carousel-indicators li {
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  background: #48ca95;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+#banner1 .carousel-indicators li.active {
+  background: #ffffff;
+}
+
+#banner1 a.carousel-control-next,
+#banner1 a.carousel-control-prev {
+  display: none;
+}
+
+.text-bg a {
+  font-size: 17px;
+  background-color: transparent;
+  border: #fff solid 2px;
+  color: #fff;
+  font-weight: 500;
+  padding: 14px 0px;
+  width: 100%;
+  max-width: 215px;
+  text-align: center;
+  display: inline-block;
+  transition: ease-in all 0.5s;
+  margin-right: 10px;
+}
+
+.text-bg a:hover {
+  background-color: #48ca95;
+  color: #fff;
+  transition: ease-in all 0.5s;
+}
+
