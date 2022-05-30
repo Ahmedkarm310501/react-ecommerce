@@ -30,7 +30,7 @@ import User from "./pages/Admin/User";
 import NewUser from "./pages/Admin/NewUser";
 import Prod from "./pages/Admin/Prod";
 import NewProduct from "./pages/Admin/NewProduct";
-
+import ForgetPassword from "./pages/ForgetPassword";
 import CheckOut from "./pages/CheckOut";
 
 function App() {
@@ -90,6 +90,8 @@ function App() {
                 <>
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
+                  <Route path="/forget-password" element={<ForgetPassword />} />
+
                 </>
               )}
               {AuthCtx.isLoggedIn && (
