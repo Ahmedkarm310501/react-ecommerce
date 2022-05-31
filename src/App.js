@@ -91,7 +91,6 @@ function App() {
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
                   <Route path="/forget-password" element={<ForgetPassword />} />
-
                 </>
               )}
               {AuthCtx.isLoggedIn && (
@@ -103,7 +102,7 @@ function App() {
                     <Route path="orders" element={<OrdersData />} />
                     <Route path="adresses" element={<AdressData />} />
                     <Route path="favourites" element={<FavouritesData />} />
-                    <Route path="returns" element={<ReturnsData />} />
+                    {/* <Route path="returns" element={<ReturnsData />} /> */}
                     <Route path="" element={<Navigate to="profile" />} />
                   </Route>
                 </>

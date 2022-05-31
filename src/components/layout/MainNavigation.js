@@ -12,9 +12,8 @@ import { AuthContext } from "../../store/auth-context";
 const MainNavigation = () => {
   const cartCtx = useContext(CartContext);
   const navigation = useNavigate();
-  const numberOfCartItems = cartCtx.items.reduce((curNumber, item) => {
-    return curNumber + item.amount;
-  }, 0);
+  const [quantity, setQuantity] = useState(0);
+
   const AuthCtx = useContext(AuthContext);
   const name = AuthCtx.name;
   const logOutHandler = () => {
@@ -38,7 +37,33 @@ const MainNavigation = () => {
       }
     });
   };
-
+  useEffect(() => {
+    fetch("http://127.0.0.1:8000/api/get_cart_total", {
+      method: "POST",
+      body: JSON.stringify({
+        token: AuthCtx.token,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (res.ok) {
+        console.log("success");
+        res.json().then((data) => {
+          if (data.status == 200) {
+            console.log(data);
+            setQuantity(data.products.length);
+          } else {
+            console.log("wrong");
+          }
+        });
+      } else {
+        res.json().then((data) => {
+          console.log(data);
+        });
+      }
+    });
+  }, []);
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
       <div className="container">
@@ -55,7 +80,7 @@ const MainNavigation = () => {
             className="d-inline-block align-medium mr-2"
           />
         </a>
-        <form className="d-flex">
+        {/* <form className="d-flex">
           <input
             style={{ width: "auto" }}
             className="form-control me-2"
@@ -66,7 +91,7 @@ const MainNavigation = () => {
           <button className="btn btn-outline-success" type="submit">
             Search
           </button>
-        </form>
+        </form> */}
         <button
           className="navbar-toggler"
           type="button"
@@ -136,7 +161,7 @@ const MainNavigation = () => {
                   >
                     <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
                   </svg>
-                  <span className="cart-num">{numberOfCartItems}</span>
+                  <span className="cart-num">{quantity}</span>
                 </NavLink>
               </li>
             )}

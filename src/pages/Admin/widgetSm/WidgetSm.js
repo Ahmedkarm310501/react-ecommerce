@@ -36,7 +36,6 @@ export default function WidgetSm() {
     <div className="widgetSm">
       <span className="widgetSmTitle">New Join Members</span>
       <ul className="widgetSmList">
-        {console.log(add)}
         {add.map((newusers, index) => {
           return (
             <li className="widgetSmListItem" key={index}>

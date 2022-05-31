@@ -1,9 +1,13 @@
 import React from "react";
 import classes from "./ProductDetials.module.css";
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useEffect, useContext, useRef } from "react";
+import { AuthContext } from "../store/auth-context";
+import { useParams, Link } from "react-router-dom";
+import Snackbar from "../components/layout/UI/Snackbar";
 function ProductDetials() {
+  const AuthCtx = useContext(AuthContext);
   const param = useParams();
+  const snackbarRef = useRef(null);
   console.log(param.productID);
   const [name, setName] = useState("");
   const [price, setPrice] = useState(null);
@@ -44,6 +48,35 @@ function ProductDetials() {
     });
   }, []);
 
+  const addToCartHandler = () => {
+    fetch("http://127.0.0.1:8000/api/add_to_cart", {
+      method: "POST",
+      body: JSON.stringify({
+        token: AuthCtx.token,
+        product_id: param.productID,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (res.ok) {
+        console.log("success");
+        res.json().then((data) => {
+          if (data.status == 200) {
+            console.log(data);
+            snackbarRef.current.show();
+          } else {
+            console.log("wrong");
+          }
+        });
+      } else {
+        res.json().then((data) => {
+          console.log(data);
+        });
+      }
+    });
+  };
+
   return (
     <div className="product-details bg-white py-5">
       <div className="container">
@@ -59,7 +92,7 @@ function ProductDetials() {
                 <p className="fs-2"> Name: {name} </p>
                 <hr />
 
-                <p className="fs-2"> Price: {price} L.E </p>
+                <p className="fs-2"> Price: {+price} L.E </p>
 
                 <hr />
                 <div className={classes.details}>
@@ -72,10 +105,27 @@ function ProductDetials() {
                 </div>
                 <hr />
                 <div className={classes.info}>
-                  <button className="secubtn w-100">
-                    {" "}
-                    <i className="fa-solid fa-cart-plus"></i> Add to cart
-                  </button>
+                  {AuthCtx.isLoggedIn ? (
+                    <button
+                      className="secubtn w-100"
+                      onClick={addToCartHandler}
+                    >
+                      {" "}
+                      <i className="fa-solid fa-cart-plus"></i> Add to cart
+                    </button>
+                  ) : (
+                    <Link to="/login">
+                      <button className="secubtn w-100">Login to buy</button>
+                    </Link>
+                  )}
+
+                  {
+                    <Snackbar
+                      ref={snackbarRef}
+                      message="Product added to cart"
+                      type={"success"}
+                    />
+                  }
                 </div>
               </div>
             </div>

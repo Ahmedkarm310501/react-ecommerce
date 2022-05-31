@@ -8,6 +8,7 @@ import Snackbar from "../components/layout/UI/Snackbar";
 const Login = () => {
   const navigation = useNavigate();
   const [emailOrPasswordError, setEmailOrPasswordError] = useState(false);
+  const [verify, setVerify] = useState(false);
   const AuthCtx = useContext(AuthContext);
   const snackbarRef = useRef(null);
   const {
@@ -53,6 +54,10 @@ const Login = () => {
             console.log("Email or password is not correct");
             setEmailOrPasswordError(true);
             return;
+          } else if (data.status == 405) {
+            console.log("Email is not verified");
+            setVerify(true);
+            return;
           }
           console.log(data);
           AuthCtx.login(data.token);
@@ -71,11 +76,16 @@ const Login = () => {
         });
       }
     });
-
   };
 
   return (
-    <div className={`container my-5`} style={{ boxShadow: "0 4px 20px 8px rgb(0, 173, 181), 0 10px 50px 0 rgb(0, 173, 181)" }}>
+    <div
+      className={`container my-5`}
+      style={{
+        boxShadow:
+          "0 4px 20px 8px rgb(0, 173, 181), 0 10px 50px 0 rgb(0, 173, 181)",
+      }}
+    >
       <div className="row">
         <form
           className={`col-sm-12 col-md-10 col-lg-6  ${classes.form} container bg-white`}
@@ -154,8 +164,19 @@ const Login = () => {
                   Email or password is not correct
                 </div>
               )}
+              {verify && (
+                <div
+                  id="password"
+                  className={`form-text ${classes["text-inavalid"]}`}
+                >
+                  Email is not verified
+                </div>
+              )}
             </div>
             <button className="registerbtn">Submit</button>
+            <Link to="/forget-password" className="m-1">
+              forget password{" "}
+            </Link>
           </div>
         </form>
         <div

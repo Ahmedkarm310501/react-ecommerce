@@ -44,14 +44,14 @@ const Profile = () => {
                   Favourites
                 </NavLink>
               </div>
-              <div className="link col">
+              {/* <div className="link col">
                 <NavLink
                   className={(cur) => (cur.isActive ? `active-profile` : ``)}
                   to="returns"
                 >
                   <i className="fa-solid fa-arrow-rotate-left me-3"></i> Returns
                 </NavLink>
-              </div>
+              </div> */}
             </aside>
           </div>
           <div className="main-content col-12 col-md-9">

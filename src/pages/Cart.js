@@ -50,7 +50,9 @@ const Cart = () => {
           if (data.status == 200) {
             console.log(data);
             setProducts(data.products);
-            setQuantity(data.cartID);
+            let newArrayDataOfOjbect = Object.values(data.cartID);
+
+            setQuantity(newArrayDataOfOjbect);
             setTotalPrice(data.total_price);
           } else {
             console.log("wrong");
@@ -235,7 +237,6 @@ const Cart = () => {
                               -
                             </button>
                             <div className="mx-2">
-                              {console.log(quantity)}
                               {quantity[index].quantity}
                             </div>
                             <button

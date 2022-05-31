@@ -181,7 +181,7 @@ const CheckOut = () => {
                 <hr />
               </div>
               <div className="sec d-flex justify-content-between p-3 fs-5 ">
-                <div>Subtotal (5 items)</div>
+                <div>Subtotal</div>
                 <div>EGP {subTotal}</div>
               </div>
               <div className="sec d-flex justify-content-between p-3 fs-5">

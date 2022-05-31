@@ -1,55 +1,6 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import { AuthContext } from "../store/auth-context";
-// const orders = [
-//   {
-//     image:
-//       "https://eg.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/06/375812/1.jpg?4079",
-//     id: 1,
-//     name: "product 1",
-//     status: "Shipped",
-//     price: 50,
-//   },
-//   {
-//     image:
-//       "https://eg.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/77/375812/1.jpg?4701",
-//     id: 2,
-//     name: "product 2",
-//     status: "Shipped",
-//     price: 75,
-//   },
-//   {
-//     image:
-//       "https://eg.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/87/322481/1.jpg?9812",
-//     id: 3,
-//     name: "product 3",
-//     status: "Shipped",
-//     price: 500,
-//   },
-//   {
-//     image:
-//       "https://eg.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/18/243212/1.jpg?8604",
-//     id: 4,
-//     name: "product 4",
-//     status: "Shipped",
-//     price: 48,
-//   },
-//   {
-//     id: 5,
-//     name: "product 5",
-//     status: "Shipped",
-//     price: 50,
-//     image:
-//       "https://eg.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/40/391651/1.jpg?5204",
-//   },
-//   {
-//     id: 6,
-//     name: "product 6",
-//     status: "Shipped",
-//     price: 50,
-//     image:
-//       "https://eg.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/74/792102/1.jpg?8947",
-//   },
-// ];
+
 const OrdersData = () => {
   const [orders, setOrders] = useState([]);
   const AuthCtx = useContext(AuthContext);
@@ -101,9 +52,9 @@ const OrdersData = () => {
             </tr>
           </thead>
           <tbody>
-            {orders.map((order) => {
+            {orders.map((order, index) => {
               return (
-                <tr key={order.id} className="">
+                <tr key={index} className="">
                   <td className="d-flex align-items-center justify-content-evenly">
                     <div className="image">
                       <img
@@ -119,7 +70,7 @@ const OrdersData = () => {
                     <p>{order.order_id}</p>
                   </td>
                   <td className="">
-                    <p>{order.status}</p>
+                    <p>{order.status==0?"Pending":"Completed"}</p>
                   </td>
                   <td className="">
                     <p>{order.Quantity}</p>
@@ -127,7 +78,7 @@ const OrdersData = () => {
                   <td className="">
                     <p>{order.total_price}</p>
                   </td>
-                </tr>
+                </tr> 
               );
             })}
           </tbody>
