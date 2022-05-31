@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import classes from "./Register.module.css";
 import useInput from "../hooks/use-input";
 import { useNavigate, Link } from "react-router-dom";
 
 const Register = () => {
   const navigation = useNavigate();
+  const [emailExists, setEmailExists] = useState(false);
+  const [userNameExists, setUserNameExists] = useState(false);
   const {
     value: enteredName,
     isValid: enteredNameIsValid,
@@ -63,6 +65,54 @@ const Register = () => {
     formIsValid = true;
   }
 
+  const check_email = () => {
+    fetch("http://127.0.0.1:8000/api/check-email", {
+      method: "POST",
+      body: JSON.stringify({
+        email: enteredEmail,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (res.ok) {
+        res.json().then((data) => {
+          if (data.status == 200) {
+            setEmailExists(true);
+            console.log(data);
+          }
+        });
+      } else {
+        res.json().then((data) => {
+          console.log(data);
+        });
+      }
+    });
+  };
+  const check_username = () => {
+    fetch("http://127.0.0.1:8000/api/check-username", {
+      method: "POST",
+      body: JSON.stringify({
+        name: enteredName,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (res.ok) {
+        res.json().then((data) => {
+          if (data.status == 200) {
+            setUserNameExists(true);
+            console.log(data);
+          }
+        });
+      } else {
+        res.json().then((data) => {
+          console.log(data);
+        });
+      }
+    });
+  };
   const formSubmissionHandler = (event) => {
     event.preventDefault();
     if (!formIsValid) {
@@ -93,6 +143,7 @@ const Register = () => {
       }
     });
   };
+
   return (
     <div className={`container my-5`}>
       <form
@@ -112,11 +163,19 @@ const Register = () => {
             <input
               title="Minimum 2 characters."
               type="text"
-              className={NameInputHasError ? ` ${classes.invalid}` : ``}
+              className={
+                NameInputHasError || userNameExists ? ` ${classes.invalid}` : ``
+              }
               id="firstname"
               placeholder="Enter First Name"
-              onChange={NameChangedHandler}
-              onBlur={NameBlurHandler}
+              onChange={(event) => {
+                NameChangedHandler(event);
+                setUserNameExists(false);
+              }}
+              onBlur={() => {
+                NameBlurHandler();
+                check_username();
+              }}
               value={enteredName}
               required
             />
@@ -132,6 +191,18 @@ const Register = () => {
                 Minimum 2 characters.
               </div>
             )}
+            {userNameExists && (
+              <div
+                id="emailHelp"
+                className={
+                  userNameExists
+                    ? `form-text ${classes["text-inavalid"]}`
+                    : `form-text`
+                }
+              >
+                this user name is already registered
+              </div>
+            )}
           </div>
 
           <div className="mb-3 col-sm-12 col-md-6">
@@ -139,11 +210,19 @@ const Register = () => {
             <input
               title={`please enter valid email contains "@" and "." `}
               type="email"
-              className={emailInputHasError ? `${classes.invalid}` : ``}
+              className={
+                emailInputHasError || emailExists ? `${classes.invalid}` : ``
+              }
               id="Email1"
               aria-describedby="emailHelp"
-              onChange={emailChangedHandler}
-              onBlur={emailBlurHandler}
+              onChange={(event) => {
+                emailChangedHandler(event);
+                setEmailExists(false);
+              }}
+              onBlur={() => {
+                emailBlurHandler();
+                check_email();
+              }}
               value={enteredEmail}
               placeholder="Eneter Email"
               required
@@ -158,6 +237,18 @@ const Register = () => {
                 }
               >
                 please enter valid email contains "@" and "."
+              </div>
+            )}
+            {emailExists && (
+              <div
+                id="emailHelp"
+                className={
+                  emailExists
+                    ? `form-text ${classes["text-inavalid"]}`
+                    : `form-text`
+                }
+              >
+                this Email is already registered
               </div>
             )}
           </div>
