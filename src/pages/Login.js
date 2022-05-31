@@ -60,9 +60,10 @@ const Login = () => {
             return;
           }
           console.log(data);
-          AuthCtx.login(data.token);
+          AuthCtx.login(data.token, +data.session_time);
           AuthCtx.setName(data.username);
           AuthCtx.setIsAdmin(data.isAdmin);
+          // AuthCtx.setLoggedOutTime(+data.session_time);
           console.log(data.username);
           if (data.isAdmin === 0) {
             navigation("/home", { replace: true });
