@@ -135,14 +135,14 @@ const FavouritesData = () => {
     <Fragment>
       {products.length > 0 ? (
         <>
-          <div className="page-haeder col-12 ">
+          <div className="page-haeder col-12 text-white mt-5">
             <h1>Favourites</h1>
             <p>
               You have items in your wishlist. To buy items from your wishlist,
               move them to your cart.
             </p>
           </div>
-          <div className="content bg-white p-3">
+          <div className="content bg-white p-3 mb-5">
             {
               <Snackbar
                 ref={snackbarRef}

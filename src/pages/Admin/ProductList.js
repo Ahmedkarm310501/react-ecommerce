@@ -103,7 +103,14 @@ export default function ProductList() {
         res.json().then((data) => {
           if (data.status == 200) {
             console.log(data);
-            setData(data.products);
+            const newData = data.products.map((item) => {
+              return {
+                ...item,
+                price: Number(item.price),
+                Quantity: Number(item.Quantity),
+              };
+            });
+            setData(newData);
           } else {
             console.log("wrong");
           }

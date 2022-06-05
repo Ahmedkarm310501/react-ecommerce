@@ -36,7 +36,7 @@ const OrdersData = () => {
 
   return (
     <Fragment>
-      <div className="page-haeder  col-12 ">
+      <div className="page-haeder  col-12 text-white mt-5">
         <h1>Orders</h1>
         <p>Manage your Orders, view your previous orders</p>
       </div>

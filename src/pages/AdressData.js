@@ -151,7 +151,7 @@ const AdressData = () => {
   };
   return (
     <Fragment>
-      <div className="page-haeder col-12 pt-5">
+      <div className="page-haeder col-12 mt-5 text-white">
         <h1>Adresses</h1>
         <p>
           Manage your saved addresses for fast and easy checkout across our

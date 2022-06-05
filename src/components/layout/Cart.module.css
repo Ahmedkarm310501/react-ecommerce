@@ -19,7 +19,8 @@ h3 {
 .productrow {
   width: 100%;
   display: flex;
-  overflow-x: auto;
+  flex-wrap: wrap;
+  /* overflow-x: auto; */
 }
 
 .row {

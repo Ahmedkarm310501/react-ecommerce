@@ -146,7 +146,9 @@ const AddAdressForm = (props) => {
             <input
               id="phone"
               type="tel"
-              placeholder="Enter Your Phone"
+              pattern="^01[0-2]\d{1,8}$"
+              placeholder="012-222-222-22"
+              
               required
               className={phoneHasError ? `invalid` : ``}
               onChange={phoneChangedHandler}
@@ -160,7 +162,7 @@ const AddAdressForm = (props) => {
                   phoneHasError ? "form-text text-inavalid" : `form-text`
                 }
               >
-                Enter a avalid number.
+                Enter a avalid number like :- 012-222-222-22.
               </div>
             )}
           </div>

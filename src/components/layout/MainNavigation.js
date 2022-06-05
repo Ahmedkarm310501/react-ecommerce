@@ -37,39 +37,13 @@ const MainNavigation = () => {
       }
     });
   };
-  useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/get_cart_total", {
-      method: "POST",
-      body: JSON.stringify({
-        token: AuthCtx.token,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((res) => {
-      if (res.ok) {
-        console.log("success");
-        res.json().then((data) => {
-          if (data.status == 200) {
-            console.log(data);
-            setQuantity(data.products.length);
-          } else {
-            console.log("wrong");
-          }
-        });
-      } else {
-        res.json().then((data) => {
-          console.log(data);
-        });
-      }
-    });
-  }, []);
+  
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
       <div className="container">
         <a
           style={{ fontSize: "2.5rem" }}
-          className="brand navbar-brand"
+          className="brand navbar-brand d-flex align-items-center"
           href="/home"
         >
           <img
@@ -79,6 +53,7 @@ const MainNavigation = () => {
             alt="logo"
             className="d-inline-block align-medium mr-2"
           />
+          <span className="ms-2 fs-2">FCI Shop</span>
         </a>
         {/* <form className="d-flex">
           <input
@@ -109,11 +84,7 @@ const MainNavigation = () => {
             style={{ fontSize: "1.25rem" }}
             className="navbar-nav ms-auto mb-2 mb-lg-0"
           >
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/home">
-                Home
-              </NavLink>
-            </li>
+       
             {!AuthCtx.isLoggedIn && (
               <>
                 <li className="nav-item">
@@ -128,6 +99,11 @@ const MainNavigation = () => {
                 </li>
               </>
             )}
+                 <li className="nav-item">
+              <NavLink className="nav-link" to="/home">
+                Home
+              </NavLink>
+            </li>
             {AuthCtx.isAdmin && (
               <li className="nav-item">
                 <NavLink className="nav-link" to="/dashboard">
@@ -161,13 +137,12 @@ const MainNavigation = () => {
                   >
                     <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
                   </svg>
-                  <span className="cart-num">{quantity}</span>
                 </NavLink>
               </li>
             )}
             {AuthCtx.isLoggedIn && (
               <li className="nav-item">
-                <div className="nav-link" onClick={logOutHandler}>
+                <div className="nav-link ff" onClick={logOutHandler}>
                   logout
                 </div>
               </li>

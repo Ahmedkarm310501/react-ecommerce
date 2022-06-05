@@ -7,7 +7,7 @@ import WidgetLg from "./widgetLg/WidgetLg";
 
 export default function Homepage() {
   return (
-    <div className="home">
+    <div className="home m-5">
       <FeaturedInfo />
       <div className="homeWidgets">
         <WidgetSm/>

@@ -16,8 +16,10 @@ const Home = () => {
               width="100%"
               height="100%"
               controls
-              // autostart
-              // autoPlay
+               autostart
+               autoPlay
+               muted
+               loop
               style={{
                 boxShadow:
                   "0 4px 20px 8px rgb(10, 128, 202), 0 10px 50px 0 rgb(10, 128, 202)",
@@ -31,8 +33,10 @@ const Home = () => {
               width="100%"
               height="100%"
               controls
-              // autostart
-              // autoPlay
+               autostart
+               autoPlay
+               muted
+               loop
               style={{
                 boxShadow:
                   "0 4px 20px 8px rgb(10, 128, 202), 0 10px 50px 0 rgb(10, 128, 202)",

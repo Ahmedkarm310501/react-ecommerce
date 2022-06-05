@@ -151,7 +151,7 @@ const ProfileData = () => {
 
   return (
     <Fragment>
-      <div className="page-haeder  col-12 ">
+      <div className="page-haeder  col-12 text-white mt-5">
         <h1>Profile</h1>
         <p>
           Manage your details, view your tier status and change your password

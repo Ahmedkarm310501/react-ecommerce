@@ -139,6 +139,7 @@ export default function Prod() {
       return;
     }
     const formDate = new FormData();
+    console.log(enteredName);
     formDate.append("token", AuthCtx.token);
     formDate.append("name", enteredName);
     formDate.append("id", param.productid);

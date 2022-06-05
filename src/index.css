@@ -450,4 +450,8 @@ button svg {
   color: #fff;
   transition: ease-in all 0.5s;
 }
+.ff{
+  cursor: pointer !important;
+
+}
 

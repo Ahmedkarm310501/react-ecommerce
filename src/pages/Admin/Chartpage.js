@@ -30,9 +30,21 @@ export default function Allcharts() {
           if (data.status == 200) {
             console.log(data);
             let newArrayDataOfOjbect = Object.values(data.chart_one);
+            newArrayDataOfOjbect.forEach((element) => {
+              element.total_price = Number(element.total_price);
+            });
             setUserData(newArrayDataOfOjbect);
             setUserStatus(data.chart_two);
-            setProductsSales(data.chart_three);
+            let newArrayDataOfOjbect2 = Object.values(data.chart_three);
+            newArrayDataOfOjbect2.forEach((element) => {
+              element.NumberOfProductsSales = Number(
+                element.NumberOfProductsSales
+              );
+            });
+            let newArrayDataOfOjbect3 = newArrayDataOfOjbect2.filter(
+              (element) => element.NumberOfProductsSales !== 0
+            );
+            setProductsSales(newArrayDataOfOjbect3);
             // console.log(typeof data.chart_three[0].NumberOfProductsSales);
             //setAdd(data.addresses);
           } else {

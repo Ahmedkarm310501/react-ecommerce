@@ -79,7 +79,11 @@ export default function OrdersList() {
         res.json().then((data) => {
           if (data.status == 200) {
             console.log(data);
-            setData(data.orders_array);
+            let newData = data.orders_array.map((item) => {
+              item.total_price = parseInt(item.total_price);
+              return item;
+            });
+            setData(newData);
           } else {
             console.log("wrong");
           }
