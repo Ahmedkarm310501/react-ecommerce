@@ -27,12 +27,12 @@ export default function AdminData() {
                   </li>
                 </Link>
 
-                <Link to="/dashboard/Allcharts" className="link">
+                {/* <Link to="/dashboard/Allcharts" className="link">
                 <li className="sidebarListItem">
                   <Timeline className="sidebarIcon" />
                   Charts
                 </li>
-                </Link>
+                </Link> */}
 
               </ul>
             </div>

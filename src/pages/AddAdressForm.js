@@ -76,10 +76,9 @@ const AddAdressForm = (props) => {
       phone: enteredPhone,
     };
 
-    fetch("http://127.0.0.1:8000/api/create_address", {
+    fetch("http://127.0.0.1:8000/user/add-address", {
       method: "POST",
       body: JSON.stringify({
-        token: AuthCtx.token,
         name: enteredName,
         address: enteredAddress,
         city: enteredCity,
@@ -88,20 +87,20 @@ const AddAdressForm = (props) => {
       }),
       headers: {
         "Content-Type": "application/json",
+        Authorization: AuthCtx.token,
       },
     }).then((res) => {
       if (res.ok) {
         console.log("success");
-        res.json().then((data) => {
-          if (data.status == 200) {
+        if (res.status === 201) {
+          res.json().then((data) => {
             console.log(data);
             props.onAdd(new_address);
             props.onClose();
-            // snackbarRef.current.show();
-          } else {
-            console.log("wrong");
-          }
-        });
+          });
+        } else {
+          console.log("wrong");
+        }
       } else {
         res.json().then((data) => {
           console.log(data);
@@ -109,7 +108,6 @@ const AddAdressForm = (props) => {
       }
     });
 
-    console.log(new_address);
   };
 
   return (
@@ -148,7 +146,6 @@ const AddAdressForm = (props) => {
               type="tel"
               pattern="^01[0-2]\d{1,8}$"
               placeholder="012-222-222-22"
-              
               required
               className={phoneHasError ? `invalid` : ``}
               onChange={phoneChangedHandler}

@@ -40,20 +40,20 @@ const ProductItem = (props) => {
   };
 
   const addToCartHandler = () => {
-    fetch("http://127.0.0.1:8000/api/add_to_cart", {
+    fetch("http://127.0.0.1:8000/user/add-to-cart", {
       method: "POST",
       body: JSON.stringify({
-        token: AuthCtx.token,
-        product_id: props.id,
+        productId: props.id,
       }),
       headers: {
+        Authorization: AuthCtx.token,
         "Content-Type": "application/json",
       },
     }).then((res) => {
       if (res.ok) {
         console.log("success");
         res.json().then((data) => {
-          if (data.status == 200) {
+          if (res.status == 200) {
             console.log(data);
             addToCart();
           } else {
@@ -69,20 +69,20 @@ const ProductItem = (props) => {
   };
 
   const addToFavouriteHandler = () => {
-    fetch("http://127.0.0.1:8000/api/add_to_favourite", {
+    fetch("http://127.0.0.1:8000/user/add-to-favourites", {
       method: "POST",
       body: JSON.stringify({
-        token: AuthCtx.token,
-        product_id: props.id,
+        productId: props.id,
       }),
       headers: {
         "Content-Type": "application/json",
+        Authorization: AuthCtx.token
       },
     }).then((res) => {
       if (res.ok) {
         console.log("success");
         res.json().then((data) => {
-          if (data.status == 200) {
+          if (res.status == 201) {
             console.log(data);
             addToFavourites();
           } else {
@@ -100,7 +100,7 @@ const ProductItem = (props) => {
   return (
     <li
       className="card"
-      style={{ margin: "5px", width: "17rem", backgroundColor: "#85aeec" }}
+      style={{ margin: "5px", width: "24%", backgroundColor: "#85aeec" }}
     >
       <Link to={`/product-detials/${props.id}`}>
         <img src={props.photo} className="card-img-top" alt="..." />

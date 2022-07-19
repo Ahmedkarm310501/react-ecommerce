@@ -37,7 +37,7 @@ const Login = () => {
     if (!formIsValid) {
       return;
     }
-    fetch("http://127.0.0.1:8000/api/login", {
+    fetch("http://127.0.0.1:8000/auth/login", {
       method: "POST",
       body: JSON.stringify({
         name: enteredEmail,
@@ -48,23 +48,24 @@ const Login = () => {
       },
     }).then((res) => {
       if (res.ok) {
+        if (res.status == 403) {
+          console.log("Email or password is not correct");
+          setEmailOrPasswordError(true);
+          return;
+        }
+        // else if (data.status == 405) {
+        //   console.log("Email is not verified");
+        //   setVerify(true);
+        //   return;
+        // }
         console.log("success");
         res.json().then((data) => {
-          if (data.status == 403) {
-            console.log("Email or password is not correct");
-            setEmailOrPasswordError(true);
-            return;
-          } else if (data.status == 405) {
-            console.log("Email is not verified");
-            setVerify(true);
-            return;
-          }
           console.log(data);
           AuthCtx.login(data.token, +data.session_time);
-          AuthCtx.setName(data.username);
+          AuthCtx.setName(data.userName);
           AuthCtx.setIsAdmin(data.isAdmin);
           // AuthCtx.setLoggedOutTime(+data.session_time);
-          console.log(data.username);
+          console.log(data.useName);
           if (data.isAdmin === 0) {
             navigation("/home", { replace: true });
           } else if (data.isAdmin === 1) {
@@ -72,6 +73,7 @@ const Login = () => {
           }
         });
       } else {
+        console.log("error in else");
         res.json().then((data) => {
           console.log(data);
         });

@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 export default function NewUser() {
   const AuthCtx = useContext(AuthContext);
   const [isAdmin, setIsAdmin] = useState(0);
-  const [suspended, setSuspended] = useState(0);
+  const [suspended, setSuspended] = useState(1);
   const navigation = useNavigate();
   const snackbarRef = useRef(null);
   const {
@@ -68,25 +68,25 @@ export default function NewUser() {
     if (!formIsValid) {
       return;
     }
-    fetch("http://127.0.0.1:8000/api/add-user", {
+    fetch("http://127.0.0.1:8000/admin/add-user", {
       method: "POST",
       body: JSON.stringify({
-        token: AuthCtx.token,
         name: enteredName,
         email: enteredEmail,
-        date_of_birth: enteredDate,
+        dateOfBirth: enteredDate,
         status: suspended,
-        Is_Admin: isAdmin,
+        isAdmin: isAdmin,
         password: enteredPass1,
       }),
       headers: {
         "Content-Type": "application/json",
+        Authorization: AuthCtx.token,
       },
     }).then((res) => {
       if (res.ok) {
         console.log("success");
         res.json().then((data) => {
-          if (data.status == 200) {
+          if (res.status == 201) {
             console.log(data);
             snackbarRef.current.show();
             setTimeout(() => {
@@ -236,10 +236,12 @@ export default function NewUser() {
               <input
                 type="checkbox"
                 className="userUpdateInput text-right"
-                onChange={() => {}}
-                onClick={() => {
-                  suspended == 0 ? setSuspended(1) : setSuspended(0);
+                onChange={(event) => {
+                  event.target.checked ? setSuspended(0) : setSuspended(1);
                 }}
+                // onClick={() => {
+                //   suspended == 0 ? setSuspended(1) : setSuspended(0);
+                // }}
               />
             </div>
           </div>

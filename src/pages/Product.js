@@ -6,18 +6,12 @@ import classes from "../components/layout/Cart.module.css";
 const Product = () => {
   const [products, setProducts] = useState([]);
 
-  
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/all-products", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((res) => {
+    fetch("http://127.0.0.1:8000/shop/products").then((res) => {
       if (res.ok) {
         console.log("success");
         res.json().then((data) => {
-          if (data.status == 200) {
+          if (res.status == 200) {
             console.log(data);
             setProducts(data.products);
           } else {
@@ -33,13 +27,21 @@ const Product = () => {
   }, []);
 
   return (
-    <><div className="container">
-      <div className={`${classes.Itemcols}`} style={{ boxShadow: "0 4px 20px 8px rgb(10, 128, 202), 0 10px 50px 0 rgb(10, 128, 202)" }}>
-        <h1>Products</h1>
-        <Products list={products} />
+    <>
+      <div className="container">
+        <div
+          className={`${classes.Itemcols}`}
+          style={{
+            boxShadow:
+              "0 4px 20px 8px rgb(10, 128, 202), 0 10px 50px 0 rgb(10, 128, 202)",
+          }}
+        >
+          <h1>Products</h1>
+          <Products list={products} />
+        </div>
       </div>
-
-    </div><Ads /></>
+      <Ads />
+    </>
   );
 };
 

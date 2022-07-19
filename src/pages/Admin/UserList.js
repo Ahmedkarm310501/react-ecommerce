@@ -26,7 +26,7 @@ export default function UserList() {
           <div className="userListUser">
             <img
               className="userListImg"
-              src={`http://localhost:8000/${params.row.profile_photo_path}`}
+              src={`http://localhost:8000/${params.row.photo}`}
               alt=""
             />
             {params.row.name}
@@ -57,21 +57,17 @@ export default function UserList() {
   ];
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/list-allUser", {
-      method: "POST",
-      body: JSON.stringify({
-        token: AuthCtx.token,
-      }),
+    fetch("http://127.0.0.1:8000/admin/get-all-users", {
       headers: {
-        "Content-Type": "application/json",
+        Authorization: AuthCtx.token,
       },
     }).then((res) => {
       if (res.ok) {
         console.log("success");
         res.json().then((data) => {
-          if (data.status == 200) {
+          if (res.status == 200) {
             console.log(data);
-            setData(data.allUser);
+            setData(data.users);
           } else {
             console.log("wrong");
           }
@@ -82,7 +78,7 @@ export default function UserList() {
         });
       }
     });
-  }, []); 
+  }, []);
   return (
     <>
       <div className="d-flex justify-content-between p-2">

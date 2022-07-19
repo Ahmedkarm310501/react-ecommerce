@@ -34,7 +34,7 @@ export const userRows = [
     status: "active",
     transaction: "$120.00",
   },     
-  {
+  { 
     id: 2,
     username: "Jon Snow",
     avatar:

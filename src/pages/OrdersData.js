@@ -5,23 +5,17 @@ const OrdersData = () => {
   const [orders, setOrders] = useState([]);
   const AuthCtx = useContext(AuthContext);
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/get_order_user", {
-      method: "POST",
-      body: JSON.stringify({
-        token: AuthCtx.token,
-      }),
+    fetch("http://127.0.0.1:8000/user//get-orders", {
       headers: {
-        "Content-Type": "application/json",
+        Authorization: AuthCtx.token,
       },
     }).then((res) => {
       if (res.ok) {
         console.log("success");
         res.json().then((data) => {
-          if (data.status == 200) {
+          if (res.status == 200) {
             console.log(data);
-            setOrders(data.orders_array);
-            // let newArrayDataOfOjbect = Object.values(data.addresses);
-            // setOrders(newArrayDataOfOjbect);
+            setOrders(data.orders);
           } else {
             console.log("wrong");
           }
@@ -58,27 +52,26 @@ const OrdersData = () => {
                   <td className="d-flex align-items-center justify-content-evenly">
                     <div className="image">
                       <img
-                        src={`http://localhost:8000/${order.photo}`}
+                        src={`http://localhost:8000/${order.productPhoto}`}
                         height="100px"
                         alt=""
                       />
                     </div>
-                    <p>{order.product_name}</p>
-                  </td>
-
-                  <td className="">
-                    <p>{order.order_id}</p>
+                    <p>{order.productName}</p>
                   </td>
                   <td className="">
-                    <p>{order.status==0?"Pending":"Completed"}</p>
+                    <p>{order.orderId}</p>
                   </td>
                   <td className="">
-                    <p>{order.Quantity}</p>
+                    <p>{order.orderStatus == 0 ? "Pending" : "Completed"}</p>
                   </td>
                   <td className="">
-                    <p>{order.total_price}</p>
+                    <p>{order.productQuantity}</p>
                   </td>
-                </tr> 
+                  <td className="">
+                    <p>{order.productPrice}</p>
+                  </td>
+                </tr>
               );
             })}
           </tbody>

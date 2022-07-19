@@ -32,29 +32,23 @@ const CheckOut = () => {
   const snackbarRef2 = useRef(null);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/check_out", {
-      method: "POST",
-      body: JSON.stringify({
-        token: AuthCtx.token,
-      }),
+    fetch("http://127.0.0.1:8000/user/check-out", {
       headers: {
-        "Content-Type": "application/json",
+        Authorization: AuthCtx.token,
       },
     }).then((res) => {
       if (res.ok) {
         console.log("success");
         res.json().then((data) => {
-          if (data.status == 200) {
+          if (res.status == 200) {
             console.log(data);
-            if (data.productIDs.length == 0) {
+            if (data.products.length == 0) {
               navigation("/home", { replace: true });
             }
-            let newArrayDataOfOjbect = Object.values(data.addresses);
-
-            setAddress(newArrayDataOfOjbect);
-            setSubTotal(data.total_price);
-            setTotal(data.total_price);
-            setProductIDs(data.productIDs);
+            setAddress(data.userAddresses);
+            setSubTotal(data.totalPrice);
+            setTotal(data.totalPrice);
+            setProductIDs(data.products);
           } else {
             console.log("wrong");
           }
@@ -72,23 +66,22 @@ const CheckOut = () => {
       snackbarRef.current.show();
       return;
     }
-    fetch("http://127.0.0.1:8000/api/add-order", {
+    fetch("http://127.0.0.1:8000/user/add-order", {
       method: "POST",
       body: JSON.stringify({
-        token: AuthCtx.token,
-        products: productIDs,
-        address_id: selectedAddress,
-        delivery_type: deliveryFee,
+        addressId: selectedAddress,
+        deleviryType: deliveryFee,
       }),
       headers: {
         "Content-Type": "application/json",
+        Authorization: AuthCtx.token,
       },
     }).then((res) => {
       if (res.ok) {
         console.log("success");
 
         res.json().then((data) => {
-          if (data.status == 200) {
+          if (res.status == 200) {
             snackbarRef2.current.show();
             setTimeout(() => {
               navigation("/home", { replace: true });

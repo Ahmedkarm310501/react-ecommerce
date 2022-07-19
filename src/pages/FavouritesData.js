@@ -38,19 +38,15 @@ const FavouritesData = () => {
   };
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/get_all_favourite", {
-      method: "POST",
-      body: JSON.stringify({
-        token: AuthCtx.token,
-      }),
+    fetch("http://127.0.0.1:8000/user/get-favourite-items", {
       headers: {
-        "Content-Type": "application/json",
+        Authorization: AuthCtx.token,
       },
     }).then((res) => {
       if (res.ok) {
         console.log("success");
         res.json().then((data) => {
-          if (data.status == 200) {
+          if (res.status == 200) {
             setproducts(data.products);
             console.log(data);
           } else {
@@ -66,26 +62,24 @@ const FavouritesData = () => {
   }, []);
 
   const addToCartHandler = (id) => {
-    fetch("http://127.0.0.1:8000/api/add_to_cart", {
+    fetch("http://127.0.0.1:8000/user/add-to-cart", {
       method: "POST",
       body: JSON.stringify({
         token: AuthCtx.token,
-        product_id: id,
+        productId: id,
       }),
       headers: {
         "Content-Type": "application/json",
+        Authorization: AuthCtx.token,
       },
     }).then((res) => {
       if (res.ok) {
         console.log("success");
         res.json().then((data) => {
-          if (data.status == 200) {
+          if (res.status == 200) {
             console.log(data);
             setSnakbarMessage("Product Added To Cart !");
             snackbarRef.current.show();
-            //const newProducts = products.filter((pro) => pro.id !== id);
-            //setproducts(newProducts);
-            //addToCart();
           } else {
             console.log("wrong");
           }
@@ -99,26 +93,25 @@ const FavouritesData = () => {
   };
 
   const removeFavouriteHandler = (id) => {
-    fetch("http://127.0.0.1:8000/api/delete_favourite", {
+    fetch("http://127.0.0.1:8000/user/remove-from-favourites", {
       method: "DELETE",
       body: JSON.stringify({
-        token: AuthCtx.token,
-        product_id: id,
+        productId: id,
       }),
       headers: {
         "Content-Type": "application/json",
+        Authorization: AuthCtx.token,
       },
     }).then((res) => {
       if (res.ok) {
         console.log("success");
         res.json().then((data) => {
-          if (data.status == 200) {
+          if (res.status == 200) {
             console.log(data);
             setSnakbarMessage("Product Removed From Favourites");
             snackbarRef.current.show();
             const newProducts = products.filter((pro) => pro.id !== id);
             setproducts(newProducts);
-            //addToCart();
           } else {
             console.log("wrong");
           }

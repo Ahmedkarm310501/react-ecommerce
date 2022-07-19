@@ -61,25 +61,14 @@ export default function NewProduct() {
   };
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/category_names", {
-      method: "POST",
-      body: JSON.stringify({
-        token: AuthCtx.token,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((res) => {
+    fetch("http://127.0.0.1:8000/shop/categories", {}).then((res) => {
       if (res.ok) {
-        console.log("success");
-        res.json().then((data) => {
-          if (data.status == 200) {
-            console.log(data);
-            setCategories(data.categeries_names);
-          } else {
-            console.log("wrong");
-          }
-        });
+        if (res.status === 200) {
+          res.json().then((data) => {
+            console.log(data.category_names);
+            setCategories(data.category_names);
+          });
+        }
       } else {
         res.json().then((data) => {
           console.log(data);
@@ -108,18 +97,22 @@ export default function NewProduct() {
       return;
     }
     const formDate = new FormData();
-    formDate.append("token", AuthCtx.token);
     formDate.append("name", enteredName);
     formDate.append("price", enteredPrice);
-    formDate.append("Quantity", enteredQuantity);
+    formDate.append("quantity", enteredQuantity);
     formDate.append("details", enteredDesc);
-    formDate.append("category_name", enteredCategory);
+    formDate.append("category", enteredCategory);
     formDate.append("photo", productImage);
+    console.log(formDate);
     axios
-      .post("http://127.0.0.1:8000/api/add-product", formDate)
+      .post("http://127.0.0.1:8000/admin/add-product", formDate, {
+        headers: {
+          Authorization: AuthCtx.token,
+        },
+      })
       .then((res) => {
         console.log(res);
-        if (res.status == 200) {
+        if (res.status == 201) {
           console.log(res);
           snackbarRef.current.show();
           setTimeout(() => {

@@ -39,28 +39,21 @@ const DeleteMessage = (props) => {
   const AuthCtx = useContext(AuthContext);
 
   const deleteAddressHandler = () => {
-    fetch("http://127.0.0.1:8000/api/delete_address", {
+    fetch(`http://127.0.0.1:8000/user/delete-address/${props.id}`, {
       method: "DELETE",
-      body: JSON.stringify({
-        token: AuthCtx.token,
-        id: props.id,
-      }),
       headers: {
-        "Content-Type": "application/json",
+        Authorization: AuthCtx.token,
       },
     }).then((res) => {
       if (res.ok) {
-        console.log("success");
-        console.log(props.id);
-        res.json().then((data) => {
-          if (data.status == 200) {
-            // navigation("/profile/adresses", { replace: true });
-            // snackbarRef.current.show();
+        if (res.status === 200) {
+          res.json().then((data) => {
+            console.log(data);
             props.onDelete();
-          } else {
-            console.log("wrong");
-          }
-        });
+          });
+        } else {
+          console.log("error");
+        }
       } else {
         res.json().then((data) => {
           console.log(data);
@@ -99,26 +92,19 @@ const AdressData = () => {
   const snackbarRef = useRef(null);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/get_all_users_address", {
-      method: "POST",
-      body: JSON.stringify({
-        token: AuthCtx.token,
-      }),
+    fetch("http://127.0.0.1:8000/user/get-addresses", {
       headers: {
-        "Content-Type": "application/json",
+        Authorization: AuthCtx.token,
       },
     }).then((res) => {
       if (res.ok) {
         console.log("success");
-        res.json().then((data) => {
-          if (data.status == 200) {
+        if (res.status === 200) {
+          res.json().then((data) => {
             console.log(data);
-            let newArrayDataOfOjbect = Object.values(data.addresses);
-            setAdd(newArrayDataOfOjbect);
-          } else {
-            console.log("wrong");
-          }
-        });
+            setAdd(data.addresses);
+          });
+        }
       } else {
         res.json().then((data) => {
           console.log(data);

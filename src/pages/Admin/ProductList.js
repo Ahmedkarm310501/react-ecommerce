@@ -13,20 +13,16 @@ export default function ProductList() {
   const snackbarRef = useRef(null);
 
   const handleDelete = (id) => {
-    fetch("http://127.0.0.1:8000/api/delete-product", {
+    fetch(`http://127.0.0.1:8000/admin/delete-product/${id}`, {
       method: "DELETE",
-      body: JSON.stringify({
-        id: id,
-        token: AuthCtx.token,
-      }),
       headers: {
-        "Content-Type": "application/json",
+        Authorization: AuthCtx.token,
       },
     }).then((res) => {
       if (res.ok) {
         console.log("success");
         res.json().then((data) => {
-          if (data.status == 200) {
+          if (res.status == 200) {
             console.log(data);
             snackbarRef.current.show();
             const items = dataa.filter((item) => item.id !== id);
@@ -62,7 +58,7 @@ export default function ProductList() {
         );
       },
     },
-    { field: "Quantity", headerName: "Stock", width: 200 },
+    { field: "quantity", headerName: "Stock", width: 200 },
 
     {
       field: "price",
@@ -92,7 +88,7 @@ export default function ProductList() {
     },
   ];
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/all-products", {
+    fetch("http://127.0.0.1:8000/shop/products", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -101,7 +97,7 @@ export default function ProductList() {
       if (res.ok) {
         console.log("success");
         res.json().then((data) => {
-          if (data.status == 200) {
+          if (res.status == 200) {
             console.log(data);
             const newData = data.products.map((item) => {
               return {

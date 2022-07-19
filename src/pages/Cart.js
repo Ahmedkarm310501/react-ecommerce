@@ -35,25 +35,18 @@ const Cart = () => {
   };
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/get_cart_total", {
-      method: "POST",
-      body: JSON.stringify({
-        token: AuthCtx.token,
-      }),
+    fetch("http://127.0.0.1:8000/user/get-cart-items", {
       headers: {
-        "Content-Type": "application/json",
+        Authorization: AuthCtx.token,
       },
     }).then((res) => {
       if (res.ok) {
         console.log("success");
         res.json().then((data) => {
-          if (data.status == 200) {
+          if (res.status == 200) {
             console.log(data);
             setProducts(data.products);
-            let newArrayDataOfOjbect = Object.values(data.cartID);
-
-            setQuantity(newArrayDataOfOjbect);
-            setTotalPrice(data.total_price);
+            setTotalPrice(data.totalPrice);
           } else {
             console.log("wrong");
           }
@@ -67,27 +60,27 @@ const Cart = () => {
   }, []);
 
   const addToCartHandler = (id, index) => {
-    fetch("http://127.0.0.1:8000/api/add_to_cart", {
+    fetch("http://127.0.0.1:8000/user/add-to-cart", {
       method: "POST",
       body: JSON.stringify({
-        token: AuthCtx.token,
-        product_id: id,
+        productId: id,
       }),
       headers: {
+        Authorization: AuthCtx.token,
         "Content-Type": "application/json",
       },
     }).then((res) => {
       if (res.ok) {
         console.log("success");
         res.json().then((data) => {
-          if (data.status == 200) {
+          if (res.status == 200) {
             console.log(data);
-            const newQuantity = [...quantity, { id: index }];
-            newQuantity[index].quantity++;
+
+            const updatedProducts = [...products];
+            updatedProducts[index].cartItem.quantity++;
+            setProducts(updatedProducts);
             const newPrice = +totalPrice + +products[index].price;
             setTotalPrice(newPrice);
-            setQuantity(newQuantity);
-            console.log(quantity);
           } else {
             console.log("wrong");
           }
@@ -100,34 +93,27 @@ const Cart = () => {
     });
   };
   const removeToCartHandler = (id, index) => {
-    fetch("http://127.0.0.1:8000/api/delete_one_cart", {
+    fetch(`http://127.0.0.1:8000/user/remove-from-cart-one/${id}`, {
       method: "DELETE",
-      body: JSON.stringify({
-        token: AuthCtx.token,
-        product_id: id,
-      }),
       headers: {
-        "Content-Type": "application/json",
+        Authorization: AuthCtx.token,
       },
     }).then((res) => {
       if (res.ok) {
         console.log("success");
         res.json().then((data) => {
-          if (data.status == 200) {
+          if (res.status == 200) {
             console.log(data);
-            const newQuantity = [...quantity, { id: index }];
-            newQuantity[index].quantity--;
+
             const newPrice = +totalPrice - +products[index].price;
-            setTotalPrice(newPrice);
-            if (newQuantity[index].quantity == 0) {
-              console.log("less zero");
-              setQuantity(newQuantity.filter((pro) => pro.id !== id));
-              const newProducts = products.filter((pro) => pro.id !== id);
-              setProducts(newProducts);
+            const updatedProducts = [...products];
+            if (updatedProducts[index].cartItem.quantity > 1) {
+              updatedProducts[index].cartItem.quantity--;
+              setProducts(updatedProducts);
             } else {
-              setQuantity(newQuantity);
+              setProducts(updatedProducts.filter((pro) => pro.id !== id));
             }
-            console.log(quantity);
+            setTotalPrice(newPrice);
           } else {
             console.log("wrong");
           }
@@ -139,26 +125,24 @@ const Cart = () => {
       }
     });
   };
-  const removeAllCartHandler = (id) => {
-    fetch("http://127.0.0.1:8000/api/delete_all_cart", {
+  const removeAllCartHandler = (id,index) => {
+    fetch(`http://127.0.0.1:8000/user/remove-from-cart-all/${id}`, {
       method: "DELETE",
-      body: JSON.stringify({
-        token: AuthCtx.token,
-        product_id: id,
-      }),
       headers: {
-        "Content-Type": "application/json",
+        Authorization: AuthCtx.token,
       },
     }).then((res) => {
       if (res.ok) {
         console.log("success");
         res.json().then((data) => {
-          if (data.status == 200) {
+          if (res.status == 200) {
             console.log(data);
             const newProducts = products.filter((pro) => pro.id !== id);
-            const newCartId = quantity.filter((pro) => pro.id !== id);
             setProducts(newProducts);
-            setQuantity(newCartId);
+            const newPrice =
+              +totalPrice -
+              +products[index].price * products[index].cartItem.quantity;
+            setTotalPrice(newPrice);
           } else {
             console.log("wrong");
           }
@@ -208,7 +192,7 @@ const Cart = () => {
                           <button
                             className="remove secubtn btn-danger d-flex justify-content-between align-items-center"
                             onClick={() => {
-                              removeAllCartHandler(product.id);
+                              removeAllCartHandler(product.id,index);
                             }}
                           >
                             <svg
@@ -237,7 +221,7 @@ const Cart = () => {
                               -
                             </button>
                             <div className="mx-2">
-                              {quantity[index].quantity}
+                              {product.cartItem.quantity}
                             </div>
                             <button
                               className="secubtn"

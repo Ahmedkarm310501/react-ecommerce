@@ -14,7 +14,7 @@ export default function OrdersList() {
   const columns = [
     { field: "id", headerName: "ID", width: 120 },
     {
-      field: "username",
+      field: "userName",
       headerName: "User",
       width: 200,
       renderCell: (params) => {
@@ -22,22 +22,22 @@ export default function OrdersList() {
           <div className="userListUser">
             <img
               className="userListImg"
-              src={`http://localhost:8000/${params.row.user_photo}`}
+              src={`http://localhost:8000/${params.row.userPhoto}`}
               alt=""
             />
-            {params.row.username}
+            {params.row.userName}
           </div>
         );
       },
     },
-    { field: "email_user", headerName: "Email", width: 150 },
+    { field: "userEmail", headerName: "Email", width: 150 },
     {
-      field: "status",
+      field: "orderStatus",
       headerName: "Status",
       width: 150,
     },
     {
-      field: "total_price",
+      field: "totalPrice",
       headerName: "Price",
       width: 150,
     },
@@ -48,7 +48,7 @@ export default function OrdersList() {
       renderCell: (params) => {
         return (
           <>
-            {params.row.status == 0 && (
+            {params.row.orderStatus == 0 && (
               <button
                 className="userListEdit"
                 onClick={() => {
@@ -65,25 +65,18 @@ export default function OrdersList() {
   ];
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/get-orders", {
-      method: "POST",
-      body: JSON.stringify({
-        token: AuthCtx.token,
-      }),
+    fetch("http://127.0.0.1:8000/admin/orders", {
       headers: {
-        "Content-Type": "application/json",
+        Authorization: AuthCtx.token,
       },
     }).then((res) => {
       if (res.ok) {
         console.log("success");
         res.json().then((data) => {
-          if (data.status == 200) {
+          if (res.status == 200) {
             console.log(data);
-            let newData = data.orders_array.map((item) => {
-              item.total_price = parseInt(item.total_price);
-              return item;
-            });
-            setData(newData);
+
+            setData(data.orders);
           } else {
             console.log("wrong");
           }
@@ -96,20 +89,25 @@ export default function OrdersList() {
     });
   }, []);
   const confirmOrder = (id) => {
-    fetch("http://127.0.0.1:8000/api/activate_order", {
-      method: "POST",
-      body: JSON.stringify({
-        token: AuthCtx.token,
-        order_id: id,
-      }),
+    fetch(`http://127.0.0.1:8000/admin/confirm-order/${id}`, {
+      method: "PUT",
       headers: {
-        "Content-Type": "application/json",
+        Authorization: AuthCtx.token,
       },
     }).then((res) => {
       if (res.ok) {
         console.log("success");
         res.json().then((data) => {
-          if (data.status == 200) {
+          if (res.status == 200) {
+            // update state of order status to true
+            const newData = dataa.map((item) => {
+              if (item.id == id) {
+                item.orderStatus = 1;
+              }
+              return item;
+            });
+            setData(newData);
+
             snackbarRef.current.show();
             console.log(data);
           } else {

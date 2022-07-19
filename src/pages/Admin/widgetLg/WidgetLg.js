@@ -1,36 +1,7 @@
 import "./widgetLg.css";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../store/auth-context";
-export default function WidgetLg() {
-  const AuthCtx = useContext(AuthContext);
-  const [add, setAdd] = useState([]);
-
-  useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/get-newOrders", {
-      method: "POST",
-      body: JSON.stringify({
-        token: AuthCtx.token,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((res) => {
-      if (res.ok) {
-        console.log("success");
-        res.json().then((data) => {
-          if (data.status == 200) {
-            console.log(data);
-            // console.log(data.newusers);
-            setAdd(data.orders_array);
-          }
-        });
-      } else {
-        res.json().then((data) => {
-          console.log(data);
-        });
-      }
-    });
-  }, []);
+export default function WidgetLg(props) {
   const Button = ({ type }) => {
     return <button className={"widgetLgButton " + type}>{type}</button>;
   };
@@ -47,19 +18,19 @@ export default function WidgetLg() {
           </tr>
         </thead>
         <tbody>
-          {add.map((order, index) => {
+          {props.lastOrders.map((order, index) => {
             return (
               <tr className="widgetLgTr" key={index}>
                 <td className="widgetLgUser">
                   <img
-                    src={`http://localhost:8000/${order.user_photo}`}
+                    src={`http://localhost:8000/${order.user.photo}`}
                     alt=""
                     className="widgetLgImg"
                   />
                   <span className="widgetLgName">{order.name}</span>
                 </td>
-                <td className="widgetLgDate">{order.date}</td>
-                <td className="widgetLgAmount">EGP {+order.total_price}</td>
+                <td className="widgetLgDate">{order.createdAt}</td>
+                <td className="widgetLgAmount">EGP {+order.totalPrice}</td>
                 <td className="widgetLgStatus">
                   {order.status == 1 ? (
                     <Button type="Confirmed" />

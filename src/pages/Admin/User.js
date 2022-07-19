@@ -65,29 +65,27 @@ export default function User() {
   } = useInput((value) => Date.parse(value) <= to && Date.parse(value) >= from);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/get-user", {
-      method: "POST",
-      body: JSON.stringify({
-        token: AuthCtx.token,
-        id: param.userid,
-      }),
+    fetch(`http://127.0.0.1:8000/admin/get-user/${param.userid}`, {
       headers: {
-        "Content-Type": "application/json",
+        Authorization: AuthCtx.token,
       },
     }).then((res) => {
       if (res.ok) {
         console.log("success");
         res.json().then((data) => {
-          if (data.status == 200) {
+          if (res.status == 200) {
             console.log(data);
             setName(data.user.name);
             setEmail(data.user.email);
-            setDate(data.user.date_of_birth);
-            setIsAdmin(data.user.Is_Admin);
+            setIsAdmin(data.user.isAdmin);
             setSuspended(data.user.status);
-            if (data.user.profile_photo_path != null) {
-              setPhoto(`http://localhost:8000/${data.user.profile_photo_path}`);
+            if (data.user.photo != null) {
+              setPhoto(`http://localhost:8000/${data.user.photo}`);
             }
+            const date = new Date(data.user.dateOfBirth)
+              .toISOString()
+              .slice(0, 10);
+            setDate(date);
           } else {
             console.log("wrong");
           }
@@ -104,7 +102,7 @@ export default function User() {
   if (
     enteredNameIsValid &&
     enteredEmailIsValid &&
-    enteredPass1IsValid &&
+    // enteredPass1IsValid &&
     enteredDateIsValid
   ) {
     formIsValid = true;
@@ -114,26 +112,25 @@ export default function User() {
     if (!formIsValid) {
       return;
     }
-    fetch("http://127.0.0.1:8000/api/update-user", {
-      method: "POST",
+    fetch(`http://127.0.0.1:8000/admin/update-user/${param.userid}`, {
+      method: "PUT",
       body: JSON.stringify({
-        token: AuthCtx.token,
         name: enteredName,
-        id: param.userid,
         email: enteredEmail,
-        date_of_birth: enteredDate,
+        dateOfBirth: enteredDate,
         status: suspended,
-        Is_Admin: isAdmin,
+        isAdmin: isAdmin,
         password: enteredPass1,
       }),
       headers: {
         "Content-Type": "application/json",
+        Authorization: AuthCtx.token,
       },
     }).then((res) => {
       if (res.ok) {
         console.log("success");
         res.json().then((data) => {
-          if (data.status == 200) {
+          if (res.status == 200) {
             console.log(data);
             snackbarRef.current.show();
             setTimeout(() => {
@@ -157,7 +154,7 @@ export default function User() {
         <h1 className="userTitle">Edit User</h1>
         <Link to="newUser">
           <button className="userAddButton">Create</button>
-        </Link> 
+        </Link>
       </div>
       <div className="userContainer">
         <div className="userUpdate">

@@ -45,22 +45,21 @@ const ResetPassword = (props) => {
     if (!formIsValid) {
       return;
     }
-    fetch("http://127.0.0.1:8000/api/reset-pasword", {
-      method: "POST",
+    fetch("http://127.0.0.1:8000/user/update-password", {
+      method: "PUT",
       body: JSON.stringify({
-        token: AuthCtx.token,
-        password: enteredCur,
-        newpassword: enteredNew1,
-        repassword: enteredNew2,
+        oldPassword: enteredCur,
+        newPassword: enteredNew1,
       }),
       headers: {
         "Content-Type": "application/json",
+        Authorization: AuthCtx.token,
       },
     }).then((res) => {
       if (res.ok) {
         console.log("success");
         res.json().then((data) => {
-          if (data.status == 200) {
+          if (res.status == 200) {
             snackbarRef.current.show();
             props.onClose();
           } else {

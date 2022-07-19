@@ -63,21 +63,13 @@ export default function Prod() {
   };
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/category_names", {
-      method: "POST",
-      body: JSON.stringify({
-        token: AuthCtx.token,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((res) => {
+    fetch("http://127.0.0.1:8000/shop/categories").then((res) => {
       if (res.ok) {
         console.log("success");
         res.json().then((data) => {
-          if (data.status == 200) {
+          if (res.status == 200) {
             console.log(data);
-            setCategories(data.categeries_names);
+            setCategories(data.category_names);
           } else {
             console.log("wrong");
           }
@@ -91,36 +83,30 @@ export default function Prod() {
   }, []);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/get-product", {
-      method: "POST",
-      body: JSON.stringify({
-        id: param.productid,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((res) => {
-      if (res.ok) {
-        console.log("success");
-        res.json().then((data) => {
-          if (data.status == 200) {
+    fetch(`http://127.0.0.1:8000/shop/product/${param.productid}`).then(
+      (res) => {
+        if (res.ok) {
+          console.log("success");
+          res.json().then((data) => {
+            if (res.status == 200) {
+              console.log(data);
+              setName(data.product.name);
+              setDesc(data.product.details);
+              setPrice(data.product.price);
+              setProductImage(data.product.photo);
+              setQuantity(data.product.quantity);
+              setCategory(data.product.category.name);
+            } else {
+              console.log("wrong");
+            }
+          });
+        } else {
+          res.json().then((data) => {
             console.log(data);
-            setName(data.products.name);
-            setDesc(data.products.details);
-            setPrice(data.products.price);
-            setProductImage(data.products.photo);
-            setQuantity(data.products.Quantity);
-            setCategory(data.category.name);
-          } else {
-            console.log("wrong");
-          }
-        });
-      } else {
-        res.json().then((data) => {
-          console.log(data);
-        });
+          });
+        }
       }
-    });
+    );
   }, []);
   let formIsValid;
   if (
@@ -140,19 +126,25 @@ export default function Prod() {
     }
     const formDate = new FormData();
     console.log(enteredName);
-    formDate.append("token", AuthCtx.token);
     formDate.append("name", enteredName);
-    formDate.append("id", param.productid);
     formDate.append("price", enteredPrice);
-    formDate.append("Quantity", enteredQuantity);
+    formDate.append("quantity", enteredQuantity);
     formDate.append("details", enteredDesc);
     formDate.append("category_name", enteredCategory);
     formDate.append("photo", productImage);
     axios
-      .post("http://127.0.0.1:8000/api/update-product", formDate)
+      .put(
+        `http://127.0.0.1:8000/admin/update-product/${param.productid}`,
+        formDate,
+        {
+          headers: {
+            Authorization: AuthCtx.token,
+          },
+        }
+      )
       .then((res) => {
         console.log(res);
-        if (res.status == 200) {
+        if (res.status == 201) {
           console.log(res);
           snackbarRef.current.show();
           setTimeout(() => {

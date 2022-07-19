@@ -20,8 +20,14 @@ h3 {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+  /* justify-content: space-around; */
+  padding: 0;
   /* overflow-x: auto; */
 }
+
+/* .card {
+  width: 24%;
+} */
 
 .row {
   width: 100%;

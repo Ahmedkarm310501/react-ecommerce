@@ -19,7 +19,7 @@ export default function Allcharts() {
       method: "POST",
       body: JSON.stringify({
         token: AuthCtx.token,
-      }),
+      }), 
       headers: {
         "Content-Type": "application/json",
       },
@@ -73,7 +73,6 @@ export default function Allcharts() {
         dataKey="numberOfActiveUsers"
         nameKey="name"
       />
-      {console.log(productsSales)}
       <ComCharts
         title="product Status Analytics"
         data={productsSales}

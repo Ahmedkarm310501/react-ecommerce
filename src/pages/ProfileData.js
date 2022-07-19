@@ -54,29 +54,26 @@ const ProfileData = () => {
   };
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/show-profile", {
-      method: "POST",
-        body: JSON.stringify({
-          token: AuthCtx.token,
-        }),
+    fetch("http://127.0.0.1:8000/user/profile", {
       headers: {
-        "Content-Type": "application/json",
+        Authorization: AuthCtx.token,
       },
     }).then((res) => {
       if (res.ok) {
         console.log("success");
         res.json().then((data) => {
-          if (data.status == 200) {
+          if (res.status == 200) {
             console.log(data);
-            if (data.photo != null) {
-              setImageUrl(
-                `http://localhost:8000/${data.user.profile_photo_path}`
-              );
+            if (data.user.photo != null) {
+              setImageUrl(`http://localhost:8000/${data.user.photo}`);
             } else {
               console.log("no photo");
             }
             setName(data.user.name);
-            setBirthDay(data.user.date_of_birth);
+            const date = new Date(data.user.dateOfBirth)
+              .toISOString()
+              .slice(0, 10);
+            setBirthDay(date);
             setEmail(data.user.email);
           } else {
             console.log("wrong");
@@ -93,56 +90,28 @@ const ProfileData = () => {
   const updateUserData = (event) => {
     event.preventDefault();
     console.log(userImage);
-    // fetch("http://127.0.0.1:8000/api/update_user_user", {
-    //   method: "POST",
-    //   body: JSON.stringify({
-    //     name: name,
-    //     token: AuthCtx.token,
-    //     date_of_birth: birthDay,
-    //     photo: userImage,
-    //   }),
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // })
     const formDate = new FormData();
     formDate.append("name", name);
-    formDate.append("token", AuthCtx.token);
-    formDate.append("date_of_birth", birthDay);
+    formDate.append("dateOfBirth", birthDay);
     formDate.append("photo", userImage);
     axios
-      .post("http://127.0.0.1:8000/api/update_user_user", formDate)
+      .put("http://127.0.0.1:8000/user/update-profile", formDate, {
+        headers: {
+          Authorization: AuthCtx.token,
+        },
+      })
       .then((res) => {
         console.log(res);
         if (res.status == 200) {
           console.log("true");
-          setImageUrl(
-            `http://localhost:8000/${res.data.user.profile_photo_path}`
-          );
+          if (res.data.user.photo != null) {
+            setImageUrl(`http://localhost:8000/${res.data.user.photo}`);
+          }
           snackbarRef.current.show();
         } else {
           console.log("eror");
           console.log(res);
         }
-        // if (res.status == 200) {
-        //   console.log("success");
-        //   res.json().then((data) => {
-        //     if (data.status == 200) {
-        //       console.log(data);
-        //       setImageUrl(
-        //         `http://localhost:8000/${data.user.profile_photo_path}`
-        //       );
-        //       snackbarRef.current.show();
-        //     } else {
-        //       console.log("wrong");
-        //     }
-        //   });
-        // } else {
-        //   console.log(res);
-        //   res.json().then((data) => {
-        //     console.log(data);
-        //   });
-        // }
       })
       .catch((e) => {
         console.log(e);

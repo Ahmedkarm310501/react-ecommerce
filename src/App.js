@@ -55,29 +55,6 @@ function App() {
             <ScrollToTop />
             <MainNavigation />
             <Routes>
-              {/*
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/product" element={<Product />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/product-detials" element={<ProductDetials />} />
-              
-              <Route path="/profile/*" element={<Profile />}>
-                <Route path="profile" element={<ProfileData />} />
-                <Route path="orders" element={<OrdersData />} />
-                <Route path="adresses" element={<AdressData />} />
-                <Route path="favourites" element={<FavouritesData />} />
-                <Route path="" element={<Navigate to="profile" />} />
-              </Route>
-              
-              <Route path="/dashboard/*" element={<AdminData />}>
-              <Route path="home" element={<Homepage/>} />
-                <Route path="allUsers" element={<UserList />} />
-                <Route path="allProducts" element={<ProductList/>} />
-                <Route path="allOrders" element={<OrdersList />} />
-                <Route path="" element={<Navigate to="home" />} />
-        </Route>*/}
-
               <Route path="/" element={<Home />} />
               <Route path="/home" element={<Home />} />
 
@@ -122,7 +99,6 @@ function App() {
                     <Route path="newproduct" element={<NewProduct />} />
                     <Route path="newUser" element={<NewUser />} />
                     <Route path="allOrders" element={<OrdersList />} />
-                    <Route path="Allcharts" element={<Allcharts />} />
                     <Route path="" element={<Navigate to="home" />} />
                   </Route>
                   {/* <Route path="/admin/*" element={<AdminPage />}>

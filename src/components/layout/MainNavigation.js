@@ -17,27 +17,10 @@ const MainNavigation = () => {
   const AuthCtx = useContext(AuthContext);
   const name = AuthCtx.name;
   const logOutHandler = () => {
-    fetch("http://127.0.0.1:8000/api/logout", {
-      method: "POST",
-      body: JSON.stringify({
-        token: AuthCtx.token,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((res) => {
-      if (res.ok) {
-        res.json().then((data) => {
-          console.log(data);
-          AuthCtx.logout();
-          navigation("/home", { replace: true });
-        });
-      } else {
-        console.log(res);
-      }
-    });
+    AuthCtx.logout();
+    navigation("/home", { replace: true });
   };
-  
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
       <div className="container">
@@ -55,18 +38,6 @@ const MainNavigation = () => {
           />
           <span className="ms-2 fs-2">FCI Shop</span>
         </a>
-        {/* <form className="d-flex">
-          <input
-            style={{ width: "auto" }}
-            className="form-control me-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          />
-          <button className="btn btn-outline-success" type="submit">
-            Search
-          </button>
-        </form> */}
         <button
           className="navbar-toggler"
           type="button"
@@ -84,7 +55,6 @@ const MainNavigation = () => {
             style={{ fontSize: "1.25rem" }}
             className="navbar-nav ms-auto mb-2 mb-lg-0"
           >
-       
             {!AuthCtx.isLoggedIn && (
               <>
                 <li className="nav-item">
@@ -99,11 +69,12 @@ const MainNavigation = () => {
                 </li>
               </>
             )}
-                 <li className="nav-item">
+            <li className="nav-item">
               <NavLink className="nav-link" to="/home">
                 Home
               </NavLink>
             </li>
+            {console.log(`is admin ${AuthCtx.isAdmin}`)}
             {AuthCtx.isAdmin && (
               <li className="nav-item">
                 <NavLink className="nav-link" to="/dashboard">

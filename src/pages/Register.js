@@ -118,25 +118,27 @@ const Register = () => {
     if (!formIsValid) {
       return;
     }
-    fetch("http://127.0.0.1:8000/api/v1/register", {
+    fetch("http://127.0.0.1:8000/auth/register", {
       method: "POST",
       body: JSON.stringify({
         name: enteredName,
         email: enteredEmail,
         password: enteredPass1,
-        date_of_birth: enteredDate,
+        dateOfBirth: enteredDate,
       }),
       headers: {
         "Content-Type": "application/json",
       },
     }).then((res) => {
-      if (res.ok) {
+      console.log(res);
+      if (res.status === 201) {
         console.log("success");
         res.json().then((data) => {
           console.log(data);
           navigation("/login", { replace: true });
         });
       } else {
+        console.log("else");
         res.json().then((data) => {
           console.log(data);
         });
@@ -183,7 +185,7 @@ const Register = () => {
               <div
                 id="firstnameHelp"
                 className={
-                  NameInputHasError
+                  NameInputHasError || userNameExists
                     ? `form-text ${classes["text-inavalid"]}`
                     : `form-text`
                 }
@@ -257,7 +259,7 @@ const Register = () => {
             <input
               type="password"
               id="exampleInputPassword1"
-              title="Minimum 8 characters contains capital and small leters and numbers and spechial character"
+              title="Minimum 6 characters contains leters and numbers"
               className={pass1InputHasError ? `${classes.invalid}` : ``}
               onChange={pass1ChangedHandler}
               onBlur={pass1BlurHandler}
